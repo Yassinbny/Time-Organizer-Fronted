@@ -6,6 +6,10 @@ export default {
       colors: {
         fondo: "#f9e0c8",
       },
+      backgroundImage: {
+        frase: "url(images/palabras.png)",
+        logo: "url(images/logo.png)",
+      },
     },
   },
   plugins: [],
