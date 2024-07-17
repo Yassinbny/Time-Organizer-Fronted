@@ -33,7 +33,7 @@ const Login = () => {
   };
   useEffect(() => {
     currentUser && navigate("/");
-  }, [currentUser]);
+  }, [currentUser]); //Aquí me salta un advertencia de las reglas de hooks de React. La advertencia dice que navigate debería estar incluido en la lista de dependencias del hook useEffect.
   return (
     <UsersLayout componente={"Iniciar Sesión"}>
       <div className="flex flex-col justify-evenly w-full h-full content-center">
