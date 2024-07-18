@@ -42,20 +42,28 @@ const AddTask = ({ setAddTask }) => {
     setBody(formInfo);
   }, [title, description, start, end]);
   return (
-    <div className="fixed -inset-y-4 -inset-x-0 z-10 flex flex-col items-center justify-center  w-[100vw] h-[100vh] bg-gray-800 bg-opacity-85">
-      <h2 className="bg-fondoPopup pt-4 text-white rounded-t-2xl w-[70vw] sm:w-[60vw] md:w-[50vw] text-center text-6xl">
+    <div
+      className="fixed -inset-y-0 z-30 -inset-x-0 z-10 flex flex-col items-center justify-center 
+     w-[100vw] h-[100vh] bg-gray-800 bg-opacity-85"
+    >
+      <h2
+        className="bg-fondoPopup pt-4 text-white rounded-t-2xl w-[70vw] sm:w-[60vw] md:w-[50vw]
+       text-center text-3xl sm:text-6xl"
+      >
         Añadir Evento
       </h2>
       <form
         onSubmit={(e) => {
           handleSubmit(e);
         }}
-        className="flex flex-col items-center justify-evenly sm:justify-center content-center space-y-12  bg-fondoPopup p-6 rounded-b-2xl shadow-lg w-[70vw] sm:w-[60vw] md:w-[50vw] h-[50vh] text-center"
+        className="flex flex-col items-center justify-evenly sm:justify-center content-center 
+        space-y-12  bg-fondoPopup p-6 
+        rounded-b-2xl shadow-lg w-[70vw] sm:w-[60vw] md:w-[50vw] h-[70vh] sm:text-4xl text-center"
       >
         <input
           type="text"
           placeholder="añade un titulo"
-          className="text-3xl w-full bg-transparent border-b-4 text-center text-gray-400 font-bold mb-4"
+          className="text-3xl w-full bg-transparent border-b-4 text-center sm:text-6xl text-gray-400 font-bold mb-4"
           onChange={(e) => {
             setTitle(e.target.value);
             setBody(formInfo);
@@ -64,7 +72,7 @@ const AddTask = ({ setAddTask }) => {
         <input
           type="text"
           placeholder="añade una descripcion"
-          className="mb-4 w-full bg-transparent border-b-4 text-gray-400 text-xl text-center"
+          className="mb-4 w-full bg-transparent border-b-4 text-gray-400 sm:text-5xl text-xl text-center"
           onChange={(e) => {
             setDescription(e.target.value);
             setBody(formInfo);
