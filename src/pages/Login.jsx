@@ -67,7 +67,7 @@ const Login = () => {
               id="password"
             />
             <a
-              href=""
+              href="/forgot-password"
               className="text-sm text-orange-400 underline decoration-solid"
             >
               ¿Olvidaste tu contraseña?
