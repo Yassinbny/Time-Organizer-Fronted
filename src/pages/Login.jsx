@@ -1,7 +1,7 @@
 import UsersLayout from "../layouts/UsersLayout.jsx";
 import useForm from "../hooks/useForm.jsx";
 import useAuth from "../hooks/useAuth.jsx";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 
 const Login = () => {
@@ -34,6 +34,7 @@ const Login = () => {
   useEffect(() => {
     currentUser && navigate("/");
   }, [currentUser]); //Aquí me salta un advertencia de las reglas de hooks de React. La advertencia dice que navigate debería estar incluido en la lista de dependencias del hook useEffect.
+
   return (
     <UsersLayout componente={"Iniciar Sesión"}>
       <div className="flex flex-col justify-evenly w-full h-full content-center">
@@ -79,9 +80,9 @@ const Login = () => {
         </form>
         <div className="flex flex-col items-center rounded-2xl content-center justify-evenly text-[4vw] sm:text-[24px] md:text-[32px] bg-black text-1xl text-white h-20 sm:h-32 md:h-44">
           <p>¿No tienes una cuenta?</p>
-          <a href="" className="text-teal-500  underline decoration-solid ">
+          <Link to="/signup" className="text-teal-500  underline decoration-solid ">
             Registrate AQUÍ
-          </a>
+          </Link>
         </div>
       </div>
     </UsersLayout>
