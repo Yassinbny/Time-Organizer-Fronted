@@ -31,6 +31,29 @@ export function AuthContextProvider({ children }) {
     setCurrentUser(null);
   }
 
+  async function recoverPassword(email) {
+    try {
+      const response = await fetch(`http://localhost:3000/auth/recover-password`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email }),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.error || "Error al procesar la solicitud");
+      }
+
+      navigate("/password-reset-sent"); // Redirigir a la página de confirmación de envío de correo
+    } catch (error) {
+      console.error("Error al enviar solicitud de recuperación de contraseña:", error);
+      throw error; // Propaga el error para que el componente que llama a recoverPassword pueda manejarlo
+    }
+  }
+
   useEffect(() => {
     const token = localStorage.getItem("AUTH_TOKEN_TJ");
 
@@ -74,6 +97,7 @@ export function AuthContextProvider({ children }) {
         currentUser,
         signIn,
         signOut,
+        recoverPassword,
       }}
     >
       {children}
