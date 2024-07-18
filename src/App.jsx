@@ -4,6 +4,7 @@ import Login from "./pages/Login.jsx";
 import ValidateAccount from "./pages/ValidateAccount.jsx";
 import { Route, Routes } from "react-router-dom";
 import SignUp from "./pages/SignUp.jsx";
+import ForgotPassword from "./pages/ForgotPassword.jsx";
 
 function App() {
   return (
@@ -16,7 +17,12 @@ function App() {
         <Route path="/signup" element={<SignUp />} />
         <Route path="/calendar" element={<MyCalendar />} />
         <Route path="/login" element={<Login />} />
-        <Route path="/users/confirm" element={<ValidateAccount />} />
+
+       
+=======
+        <Route path="/confirm" element={<ValidateAccount />} />
+        <Route path="/forgot-password" element={<ForgotPassword />} />
+
       </Routes>
     </AuthContextProvider>
   );
