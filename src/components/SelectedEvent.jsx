@@ -1,0 +1,134 @@
+import dayjs from "dayjs";
+import { useEffect, useState } from "react";
+
+const SelectedEvent = ({ selectedEvent, setSelectedEvent }) => {
+  const [title, setTitle] = useState(selectedEvent.title);
+  const [description, setDescription] = useState(selectedEvent.description);
+  const [start, setStart] = useState(selectedEvent.start);
+  const [end, setEnd] = useState(selectedEvent.end);
+  const [id, setId] = useState(selectedEvent.id);
+  let formInfo = {
+    task_id: id,
+    title: title,
+    description: description,
+    start_on: start,
+    finish_on: end,
+  };
+  const fecha = dayjs();
+  const [body, setBody] = useState(formInfo);
+
+  const handleSubmit = async (e) => {
+    try {
+      e.preventDefault();
+
+      const response = await fetch(
+        `http://localhost:3000/tasks/${formInfo.task_id}`,
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: localStorage.getItem("AUTH_TOKEN_TJ"),
+          },
+          method: "PATCH",
+          body: JSON.stringify(body),
+        }
+      );
+      const { ok, error } = await response.json();
+
+      if (!ok) {
+        console.error(error);
+        return;
+      }
+      setSelectedEvent();
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  useEffect(() => {
+    setBody(formInfo);
+  }, [title, description, start, end]);
+  return (
+    <div className="fixed -inset-y-4 -inset-x-0 z-10 flex flex-col items-center justify-center  w-[100vw] h-[100vh] bg-gray-800 bg-opacity-85">
+      <h2 className="bg-fondoPopup rounded-t-2xl w-[70vw] sm:w-[60vw] text-center text-6xl">
+        Modificar tarea
+      </h2>
+      <form
+        onSubmit={(e) => {
+          handleSubmit(e);
+        }}
+        className="flex flex-col items-center justify-between sm:justify-center content-center space-y-4  bg-fondoPopup
+         p-6 rounded-b-2xl shadow-lg w-[70vw] sm:w-[60vw] h-[50vh] text-center"
+      >
+        <input
+          type="text"
+          className="text-3xl w-full text-center font-bold mb-4"
+          value={title}
+          onChange={(e) => {
+            setTitle(e.target.value);
+            setBody(formInfo);
+          }}
+        />
+        <input
+          type="text"
+          className="mb-4 w-full text-xl text-center"
+          value={description}
+          onChange={(e) => {
+            setDescription(e.target.value);
+            setBody(formInfo);
+          }}
+        />
+
+        <div className="flex flex-col  space-y-4 sm:space-y-0 sm:flex-row">
+          <div>
+            <label className="mb-2">
+              <strong>Fecha de Inicio:</strong>
+            </label>
+            <input
+              className="w-[46vw] sm:w-[23vw]"
+              type="datetime-local"
+              value={dayjs(start).format("YYYY-MM-DDTHH:mm")}
+              min={"1900-01-01T00:00:00"}
+              max={"2040-01-01T00:00:00"}
+              onChange={(e) => {
+                setStart(e.target.value);
+                setBody(formInfo);
+              }}
+            />
+          </div>
+          <div>
+            <label className="mb-2">
+              <strong>Fecha de Fin:</strong>
+            </label>
+            <input
+              className="w-[46vw] sm:w-[23vw]"
+              type="datetime-local"
+              value={dayjs(end).format("YYYY-MM-DDTHH:mm")}
+              min={"1900-01-01T00:00:00"}
+              max={"2040-01-01T00:00:00"}
+              onChange={(e) => {
+                setEnd(e.target.value);
+                setBody(formInfo);
+              }}
+            />
+          </div>
+        </div>
+
+        <button
+          className="bg-green-600  px-4 py-2 rounded-2xl hover:bg-green-900 w-[30vw] transition duration-200"
+          onClick={() => {
+            setSelectedEvent();
+          }}
+        >
+          Cerrar
+        </button>
+        <button
+          className="bg-green-600  px-4 py-2 rounded-2xl hover:bg-green-900 w-[30vw] transition duration-200"
+          onClick={() => {}}
+        >
+          actualizar
+        </button>
+      </form>
+    </div>
+  );
+};
+
+export default SelectedEvent;
