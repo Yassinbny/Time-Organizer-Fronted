@@ -13,23 +13,27 @@ const Login = () => {
   });
   const { email, password } = formValues;
   const handleSubmit = async (e) => {
-    e.preventDefault();
+    try {
+      e.preventDefault();
 
-    const response = await fetch(`http://localhost:3000/auth/sign-in`, {
-      headers: {
-        "Content-Type": "application/json",
-      },
-      method: "POST",
-      body: JSON.stringify(formValues),
-    });
-    const { ok, token, error } = await response.json();
+      const response = await fetch(`http://localhost:3000/auth/sign-in`, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+        method: "POST",
+        body: JSON.stringify(formValues),
+      });
+      const { ok, token, error } = await response.json();
 
-    if (!ok) {
-      console.error(error);
-      return;
+      if (!ok) {
+        console.error(error);
+        return;
+      }
+      signIn(token);
+      navigate("/");
+    } catch (error) {
+      console.log(error);
     }
-    signIn(token);
-    navigate("/");
   };
   useEffect(() => {
     currentUser && navigate("/");
@@ -80,7 +84,10 @@ const Login = () => {
         </form>
         <div className="flex flex-col items-center rounded-2xl content-center justify-evenly text-[4vw] sm:text-[24px] md:text-[32px] bg-black text-1xl text-white h-20 sm:h-32 md:h-44">
           <p>¿No tienes una cuenta?</p>
-          <Link to="/signup" className="text-teal-500  underline decoration-solid ">
+          <Link
+            to="/signup"
+            className="text-teal-500  underline decoration-solid "
+          >
             Registrate AQUÍ
           </Link>
         </div>

@@ -47,20 +47,27 @@ const SelectedEvent = ({ selectedEvent, setSelectedEvent }) => {
     setBody(formInfo);
   }, [title, description, start, end]);
   return (
-    <div className="fixed -inset-y-4 -inset-x-0 z-10 flex flex-col items-center justify-center  w-[100vw] h-[100vh] bg-gray-800 bg-opacity-85">
-      <h2 className="bg-fondoPopup rounded-t-2xl w-[70vw] sm:w-[60vw] text-center text-6xl">
+    <div
+      className="fixed -inset-y-0 -inset-x-0 z-30 flex flex-col items-center justify-center
+      w-[100vw] h-[100vh] bg-gray-800 bg-opacity-85"
+    >
+      <h2
+        className="bg-fondoPopup text-3xl pt-4 text-white rounded-t-2xl w-[70vw] md:w-[50vw]
+       sm:w-[60vw] text-center sm:text-6xl"
+      >
         Modificar tarea
       </h2>
       <form
         onSubmit={(e) => {
           handleSubmit(e);
         }}
-        className="flex flex-col items-center justify-between sm:justify-center content-center space-y-4  bg-fondoPopup
-         p-6 rounded-b-2xl shadow-lg w-[70vw] sm:w-[60vw] h-[50vh] text-center"
+        className="flex flex-col items-center  justify-evenly sm:justify-center space-y-12 content-center
+         sm:text-4xl  bg-fondoPopup
+         p-6 rounded-b-2xl shadow-lg  w-[70vw] sm:w-[60vw] md:w-[50vw] h-[70vh] text-center"
       >
         <input
           type="text"
-          className="text-3xl w-full text-center font-bold mb-4"
+          className="text-3xl bg-transparent text-gray-400 w-full border-b-4 text-center sm:text-6xl font-bold mb-4"
           value={title}
           onChange={(e) => {
             setTitle(e.target.value);
@@ -69,7 +76,7 @@ const SelectedEvent = ({ selectedEvent, setSelectedEvent }) => {
         />
         <input
           type="text"
-          className="mb-4 w-full text-xl text-center"
+          className="mb-4 w-full bg-transparent text-gray-400 border-b-4 sm:text-5xl  text-xl text-center"
           value={description}
           onChange={(e) => {
             setDescription(e.target.value);
@@ -77,13 +84,13 @@ const SelectedEvent = ({ selectedEvent, setSelectedEvent }) => {
           }}
         />
 
-        <div className="flex flex-col  space-y-4 sm:space-y-0 sm:flex-row">
+        <div className="flex flex-col text-gray-400 space-y-4 sm:space-y-0 sm:flex-row">
           <div>
             <label className="mb-2">
               <strong>Fecha de Inicio:</strong>
             </label>
             <input
-              className="w-[46vw] sm:w-[23vw]"
+              className="w-[46vw] bg-transparent text-gray-400 sm:w-[23vw]"
               type="datetime-local"
               value={dayjs(start).format("YYYY-MM-DDTHH:mm")}
               min={"1900-01-01T00:00:00"}
@@ -95,11 +102,11 @@ const SelectedEvent = ({ selectedEvent, setSelectedEvent }) => {
             />
           </div>
           <div>
-            <label className="mb-2">
+            <label className="mb-2 text-gray-400">
               <strong>Fecha de Fin:</strong>
             </label>
             <input
-              className="w-[46vw] sm:w-[23vw]"
+              className="w-[46vw] bg-transparent text-gray-400 sm:w-[23vw]"
               type="datetime-local"
               value={dayjs(end).format("YYYY-MM-DDTHH:mm")}
               min={"1900-01-01T00:00:00"}
