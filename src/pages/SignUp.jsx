@@ -38,7 +38,7 @@ const SignUp = () => {
             console.log(responseData)
             alert("Usuario registrado correctamente");
             reset(); 
-            navigate("/confirm-user")           
+            navigate("/confirm")           
         } catch (error) {
             console.log("Error al registrar usuario", error)
             alert("Error al registrar usuario");
