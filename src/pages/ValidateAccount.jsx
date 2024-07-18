@@ -15,7 +15,7 @@ const ValidateAccount = () => {
     }
 
     const validateUser = async () => {
-      const response = await fetch(`http://localhost:3000/auth/validate`, {
+      const response = await fetch(`http://localhost:3000/auth/confirm`, {
         headers: {
           "Content-Type": "application/json",
         },

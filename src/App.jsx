@@ -1,7 +1,6 @@
 import { AuthContextProvider } from "./context/auth.context.jsx";
 import MyCalendar from "./pages/Calendar.jsx";
 import Login from "./pages/Login.jsx";
-import Register from "./pages/Register.jsx";
 import ValidateAccount from "./pages/ValidateAccount.jsx";
 import { Route, Routes } from "react-router-dom";
 import SignUp from "./pages/SignUp.jsx";
@@ -20,8 +19,7 @@ function App() {
         <Route path ="/signup" element={<SignUp />} />
         <Route path="/calendar" element={<MyCalendar />} />
         <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<Register />} />
-        <Route path="/validate-account" element={<ValidateAccount />} />
+        <Route path="/confirm" element={<ValidateAccount />} />
       </Routes>
     </AuthContextProvider>
   );

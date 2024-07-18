@@ -58,7 +58,7 @@ const SignUp = () => {
                 <div className="flex flex-col   space-y-2">
                     <label htmlFor="username">Nombre:</label>
                     <input
-                    className="h-5 rounded-xl w-[250px] sm:w-[250px] sm:h-10 md:w-[25vw] md:h-16 p-3  bg-white  "
+                    className="h-15 rounded-xl w-[250px] sm:w-[250px] sm:h-10 md:w-[25vw] md:h-16 p-3  bg-white  "
                     type="text"
                     name="username"
                     id="username"
@@ -77,7 +77,7 @@ const SignUp = () => {
                 <div className="flex flex-col   space-y-2">
                     <label htmlFor="email">Correo Electrónico:</label>
                     <input
-                    className="h-5 rounded-xl w-[250px] sm:w-[250px] sm:h-10 md:w-[25vw] md:h-16 p-3  bg-white  "
+                    className="h-15 rounded-xl w-[250px] sm:w-[250px] sm:h-10 md:w-[25vw] md:h-16 p-3  bg-white  "
                     type="email"
                     name="email"
                     id='email'
@@ -97,7 +97,7 @@ const SignUp = () => {
                 <div className="flex flex-col   space-y-2">
                     <label htmlFor="password">Contraseña:</label>
                     <input
-                    className="h-5 rounded-xl w-[250px] sm:w-[250px] sm:h-10 md:w-[25vw] md:h-16 p-3  bg-white  "
+                    className="h-15 rounded-xl w-[250px] sm:w-[250px] sm:h-10 md:w-[25vw] md:h-16 p-3  bg-white  "
                     type="password"
                     name='password'
                     id='password'
@@ -116,7 +116,7 @@ const SignUp = () => {
                 <div className="flex flex-col   space-y-2">
                     <label htmlFor="password2">Confirmar contraseña:</label>
                     <input
-                    className="h-5 rounded-xl w-[250px] sm:w-[250px] sm:h-10 md:w-[25vw] md:h-16 p-3  bg-white  "
+                    className="h-15 rounded-xl w-[250px] sm:w-[250px] sm:h-10 md:w-[25vw] md:h-16 p-3  bg-white  "
                     type="password"
                     name='password2'
                     id='password2'
@@ -129,14 +129,14 @@ const SignUp = () => {
                     />
                 </div>
                 <button
-                className="bg-black hover:bg-teal-500 text-white font-bold py-2 px-4 rounded"
+                className="bg-black hover:bg-teal-500 text-white font-bold py-2 px-5 rounded-lg"
                 type="submit"
                 >
                     Registrarse
                 </button>
             </form>
             <div>
-                <div className="flex flex-col items-center rounded-xl content-center justify-evenly text-[2vw] sm:text-[16px] md:text-[24px] bg-black text-1xl text-white h-10 sm:h-16 md:h-22">
+                <div className="flex flex-col items-center rounded-xl content-center justify-evenly text-[2vw] sm:text-[16px] md:text-[24px] bg-black text-1xl text-white h-15 sm:h-16 md:h-22">
                     <p>¿Ya tienes una cuenta?</p>
                     <Link to="/login" className="text-teal-500  underline decoration-solid ">
                         Inicia Sesión AQUÍ
