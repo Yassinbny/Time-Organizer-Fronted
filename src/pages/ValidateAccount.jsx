@@ -1,4 +1,4 @@
-import UsersLayout from "../layouts/UsersLayout";
+import UsersLayout from "../layouts/UsersLayout.jsx";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 
