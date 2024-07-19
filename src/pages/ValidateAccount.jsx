@@ -1,41 +1,35 @@
-import UsersLayout from "../layouts/UsersLayout.jsx";
+import UsersLayout from "../layouts/UsersLayout";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 
 const ValidateAccount = () => {
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
-  const [message, setMessage] = useState("Validando tu cuenta...");
+  const [message, setMessage] = useState(null);
 
   useEffect(() => {
-    const token = searchParams.get("token");
-    if (!token) {
-      setMessage("Token de validación no encontrado.");
-      return;
-    }
-
-    const validateUser = async () => {
-      const response = await fetch(`http://localhost:3000/auth/confirm`, {
-        headers: {
-          "Content-Type": "application/json",
-        },
-        method: "POST",
-        body: JSON.stringify({ token }),
-      });
-      const { ok, error } = await response.json();
-
-      if (!ok) {
-        setMessage(`Error: ${error}`);
-        return;
+    const validateAccount = async (token) => {
+      try {
+        const response = await fetch(`http://localhost:3000/auth/confirm?token=${token}`);
+        const responseData = await response.json();
+        if (responseData.ok) {
+          navigate('/sign-in');
+        } else {
+          setMessage(responseData.error || 'Error al validar la cuenta.');
+        }
+      } catch (error) {
+        console.error(error);
+        setMessage('Error al validar la cuenta.');
       }
-
-      setMessage("Cuenta validada exitosamente. Redirigiendo...");
-      setTimeout(() => navigate("/login"), 3000);
     };
 
-    validateUser();
+    if (!searchParams.has('token')) {
+      console.log('No hay token');
+    } else {
+      const token = searchParams.get('token');
+      validateAccount(token);
+    }
   }, [searchParams, navigate]);
-
   return (
     <UsersLayout componente={"Validación de Cuenta"}>
       <div className="flex flex-col justify-center items-center w-full h-full content-center">
