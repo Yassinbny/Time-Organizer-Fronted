@@ -21,9 +21,9 @@ const SignUp = () => {
   console.log(errors);
 
   const onSubmit = handleSubmit(async (data) => {
-    console.log(data);
+   
     delete data.password2;
-    console.log(data);
+    
     try {
       const response = await fetch(`http://localhost:3000/auth/sign-up`, {
         headers: {
@@ -39,7 +39,7 @@ const SignUp = () => {
       console.log(responseData);
       alert("Usuario registrado correctamente");
       reset();
-      navigate("/");
+      navigate("/login");
     } catch (error) {
       console.log("Error al registrar usuario", error);
       alert("Error al registrar usuario");
