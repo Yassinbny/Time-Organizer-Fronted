@@ -5,6 +5,7 @@ import ValidateAccount from "./pages/ValidateAccount.jsx";
 import { Route, Routes } from "react-router-dom";
 import SignUp from "./pages/SignUp.jsx";
 import ForgotPassword from "./pages/ForgotPassword.jsx";
+import Home from "./pages/Home.jsx";
 
 function App() {
   return (
@@ -18,11 +19,9 @@ function App() {
         <Route path="/calendar" element={<MyCalendar />} />
         <Route path="/login" element={<Login />} />
 
-       
-=======
+        <Route path="/" element={<Home />} />
         <Route path="/confirm" element={<ValidateAccount />} />
         <Route path="/forgot-password" element={<ForgotPassword />} />
-
       </Routes>
     </AuthContextProvider>
   );

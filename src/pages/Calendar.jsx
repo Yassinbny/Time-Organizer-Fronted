@@ -19,7 +19,9 @@ const MyCalendar = () => {
   const [addTask, setAddTask] = useState(false);
   async function getData() {
     try {
-      const response = await fetch("http://localhost:3000/tasks");
+      const response = await fetch("http://localhost:3000/tasks", {
+        headers: { Authorization: localStorage.getItem("AUTH_TOKEN_TJ") },
+      });
       if (!response.ok) {
         throw new Error("Network response was not ok");
       }
@@ -58,7 +60,7 @@ const MyCalendar = () => {
           <img
             className="absolute w-[12vw] "
             src="images\detalles_dia-removebg-preview.png"
-            alt=""
+            alt="imagen"
           />
           <button
             className="relative z-30"
@@ -100,7 +102,7 @@ const MyCalendar = () => {
           </button>
         </div>
       </div>
-      <div className="bg-white p-1 w-[78vw] h-[60vh] md:text-3xl  sm:w-[50vw] sm:h-[80vh] ">
+      <div className="bg-white p-1 w-[78vw] h-[60vh] md:text-3xl  sm:w-[50vw] sm:h-[90vh] ">
         <Calendar
           localizer={localizer}
           events={events}
