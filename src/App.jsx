@@ -6,6 +6,7 @@ import { Route, Routes } from "react-router-dom";
 import SignUp from "./pages/SignUp.jsx";
 import ForgotPassword from "./pages/ForgotPassword.jsx";
 import Home from "./pages/Home.jsx";
+import NotFound from './components/NotFound.jsx';
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/confirm" element={<ValidateAccount />} />
         <Route path="/forgot-password" element={<ForgotPassword />} />
+        <Route path="*" element={<NotFound />} />
       </Routes>
     </AuthContextProvider>
   );
