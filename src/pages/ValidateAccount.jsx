@@ -1,39 +1,44 @@
-import UsersLayout from "../layouts/UsersLayout.jsx";
-import { useNavigate, useSearchParams } from "react-router-dom";
 import { useEffect, useState } from "react";
+import { useParams, useNavigate } from "react-router-dom";
+import UsersLayout from "../layouts/UsersLayout.jsx";
 
 const ValidateAccount = () => {
-  const [searchParams] = useSearchParams();
+  const { validationCode } = useParams();
   const navigate = useNavigate();
-  const [message, setMessage] = useState(null);
+  const [validationMessage, setValidationMessage] = useState("");
 
   useEffect(() => {
-    const validateAccount = async (token) => {
+    const validateUser = async () => {
       try {
-        const response = await fetch(`http://localhost:3000/auth/confirm?token=${token}`);
-        const responseData = await response.json();
-        if (responseData.ok) {
-          navigate('/sign-in');
-        } else {
-          setMessage(responseData.error || 'Error al validar la cuenta.');
+        const response = await fetch(`http://localhost:3000/users/confirm/${validationCode}`, {
+          method: "GET",
+        });
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
         }
+        const responseData = await response.json();
+        setValidationMessage(responseData.message);
       } catch (error) {
-        console.error(error);
-        setMessage('Error al validar la cuenta.');
+        console.log("Error al validar usuario", error);
+        setValidationMessage("Error al validar usuario");
       }
     };
+    validateUser();
+  }, [validationCode]);
 
-    if (!searchParams.has('token')) {
-      console.log('No hay token');
-    } else {
-      const token = searchParams.get('token');
-      validateAccount(token);
-    }
-  }, [searchParams, navigate]);
   return (
-    <UsersLayout componente={"Validación de Cuenta"}>
-      <div className="flex flex-col justify-center items-center w-full h-full content-center">
-        <p>{message}</p>
+    <UsersLayout componente={"Validar Cuenta"}>
+      <div className="flex flex-col justify-center items-center w-full h-full">
+        <h1 className="text-3xl font-bold mb-4">Validación de Cuenta</h1>
+        <p className="text-lg">{validationMessage}</p>
+        {validationMessage === "Registro completado con éxito." && (
+          <button
+            className="bg-black hover:bg-teal-500 text-white font-bold py-2 px-5 rounded-lg mt-4"
+            onClick={() => navigate("/login")}
+          >
+            Ir al Login
+          </button>
+        )}
       </div>
     </UsersLayout>
   );

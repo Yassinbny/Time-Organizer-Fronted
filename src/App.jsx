@@ -21,7 +21,7 @@ function App() {
         <Route path="/login" element={<Login />} />
 
         <Route path="/" element={<Home />} />
-        <Route path="/confirm" element={<ValidateAccount />} />
+        <Route path="/confirm/:validationCode" element={<ValidateAccount />} />
         <Route path="/forgot-password" element={<ForgotPassword />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
