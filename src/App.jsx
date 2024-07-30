@@ -1,7 +1,7 @@
 import { AuthContextProvider } from "./context/auth.context.jsx";
 import MyCalendar from "./pages/Calendar.jsx";
 import Login from "./pages/Login.jsx";
-import ValidateAccount from "./pages/ValidateAccount.jsx";
+import ConfirmUser from "./pages/ConfirmUser.jsx";
 import { Route, Routes } from "react-router-dom";
 import SignUp from "./pages/SignUp.jsx";
 import ForgotPassword from "./pages/ForgotPassword.jsx";
@@ -21,7 +21,7 @@ function App() {
         <Route path="/login" element={<Login />} />
 
         <Route path="/" element={<Home />} />
-        <Route path="/confirm/:validationCode" element={<ValidateAccount />} />
+        <Route path="/confirm/:validationCode" element={<ConfirmUser />} />
         <Route path="/forgot-password" element={<ForgotPassword />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
