@@ -43,6 +43,9 @@ const MyCalendar = () => {
       start: startDate,
       end: endDate,
       title: task.title,
+      done: task.done,
+      family: task.family_name,
+      color: task.color_name,
     };
   });
 
@@ -50,6 +53,23 @@ const MyCalendar = () => {
     getData();
   }, [addTask, selectedEvent]);
 
+  const components = {
+    event: (e) => {
+      return (
+        <div
+          className={`${
+            e.event.done ? "line-through" : ""
+          } decoration-black  decoration-4 bg-${
+            e.event.color ? e.event.color : "white"
+          } w-full h-full ${
+            e.event.color == "white" ? "text-black" : ""
+          } p-2 text-lg`}
+        >
+          {e.title}
+        </div>
+      );
+    },
+  };
   return (
     <MainLayout>
       <div
@@ -114,8 +134,8 @@ const MyCalendar = () => {
           selectable
           onSelectEvent={(event) => {
             setSelectedEvent(event);
-            console.log(event);
           }}
+          components={components}
           culture="es"
         />
       </div>

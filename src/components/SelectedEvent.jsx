@@ -14,7 +14,6 @@ const SelectedEvent = ({ selectedEvent, setSelectedEvent }) => {
     start_on: start,
     finish_on: end,
   };
-  const fecha = dayjs();
   const [body, setBody] = useState(formInfo);
 
   const handleSubmit = async (e) => {
@@ -30,6 +29,31 @@ const SelectedEvent = ({ selectedEvent, setSelectedEvent }) => {
           },
           method: "PATCH",
           body: JSON.stringify(body),
+        }
+      );
+      const { ok, error } = await response.json();
+
+      if (!ok) {
+        console.error(error);
+        return;
+      }
+      setSelectedEvent();
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  const HandleFinishTask = async (e) => {
+    try {
+      e.preventDefault();
+
+      const response = await fetch(
+        `http://localhost:3000/tasks/${formInfo.task_id}`,
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: localStorage.getItem("AUTH_TOKEN_TJ"),
+          },
+          method: "POST",
         }
       );
       const { ok, error } = await response.json();
@@ -131,7 +155,15 @@ const SelectedEvent = ({ selectedEvent, setSelectedEvent }) => {
           className="bg-green-600  px-4 py-2 rounded-2xl hover:bg-green-900 w-[30vw] transition duration-200"
           onClick={() => {}}
         >
-          actualizar
+          Actualizar
+        </button>
+        <button
+          className="bg-green-600  px-4 py-2 rounded-2xl hover:bg-green-900 w-[30vw] transition duration-200"
+          onClick={(e) => {
+            HandleFinishTask(e);
+          }}
+        >
+          Finalizar
         </button>
       </form>
     </div>

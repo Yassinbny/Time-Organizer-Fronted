@@ -7,11 +7,6 @@ export default {
         fondo: "#f9e0c8",
         fondoPopup: "#1a1a1a",
       },
-      backgroundImage: {
-        frase: "url(/images/palabras.png)",
-        logo: "url(/images/logo.png)",
-        dia: "url(images/detallesDia.png)",
-      },
     },
   },
   plugins: [],
