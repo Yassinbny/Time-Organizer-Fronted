@@ -35,7 +35,7 @@ const ConfirmUser = () => {
             <div className="text-red-500">
               <h2>{error}</h2>
               <button
-                onClick={() => navigate("/sign-up")}
+                onClick={() => navigate("/signup")}
                 className="bg-black hover:bg-teal-500 text-white font-bold py-2 px-5 rounded-lg mt-4"
               >
                 Volver a Registrarse
