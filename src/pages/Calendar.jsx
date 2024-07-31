@@ -8,6 +8,10 @@ import "react-big-calendar/lib/css/react-big-calendar.css";
 import SelectedEvent from "../components/SelectedEvent.jsx";
 import AddTask from "../components/AddTask.jsx";
 import "dayjs/locale/es";
+import RateTask from "../components/RateTask.jsx";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 dayjs.extend(customParseFormat);
 dayjs.extend(utc);
 
@@ -46,6 +50,7 @@ const MyCalendar = () => {
       done: task.done,
       family: task.family_name,
       color: task.color_name,
+      rating: task.rating,
     };
   });
 
@@ -70,6 +75,16 @@ const MyCalendar = () => {
       );
     },
   };
+  const notify = (message) => toast.warning(message);
+  useEffect(() => {
+    if (
+      selectedEvent &&
+      selectedEvent.done !== 0 &&
+      selectedEvent.rating !== null
+    ) {
+      notify("esta tarea ya ha sido calificada"); // Puedes personalizar el mensaje aquí
+    }
+  }, [selectedEvent]);
   return (
     <MainLayout>
       <div
@@ -150,13 +165,22 @@ const MyCalendar = () => {
         </button>
       </div>
 
-      {selectedEvent && (
-        <SelectedEvent
-          selectedEvent={selectedEvent}
-          setSelectedEvent={setSelectedEvent}
-        />
-      )}
+      {selectedEvent &&
+        (selectedEvent.done == 0 ? (
+          <SelectedEvent
+            selectedEvent={selectedEvent}
+            setSelectedEvent={setSelectedEvent}
+          />
+        ) : selectedEvent.rating == null ? (
+          <RateTask
+            selectedEvent={selectedEvent}
+            setSelectedEvent={setSelectedEvent}
+          />
+        ) : (
+          ""
+        ))}
       {addTask && <AddTask setAddTask={setAddTask} />}
+      <ToastContainer />
     </MainLayout>
   );
 };
