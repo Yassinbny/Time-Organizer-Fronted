@@ -7,6 +7,7 @@ import SignUp from "./pages/SignUp.jsx";
 import ForgotPassword from "./pages/ForgotPassword.jsx";
 import Home from "./pages/Home.jsx";
 import NotFound from './components/NotFound.jsx';
+import Help from "./pages/Help.jsx";
 
 function App() {
   return (
@@ -24,6 +25,8 @@ function App() {
         <Route path="/confirm/:validationCode" element={<ConfirmUser />} />
         <Route path="/forgot-password" element={<ForgotPassword />} />
         <Route path="*" element={<NotFound />} />
+
+        <Route path="/help" element={<Help />} />
       </Routes>
     </AuthContextProvider>
   );
