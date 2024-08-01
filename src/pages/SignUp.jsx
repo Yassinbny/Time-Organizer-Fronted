@@ -140,7 +140,7 @@ const SignUp = () => {
           </button>
         </form>
         <div>
-          <div className="flex flex-col items-center rounded-xl content-center justify-evenly text-[2vw] sm:text-[16px] md:text-[24px] bg-black text-1xl text-white h-15 sm:h-16 md:h-22">
+          <div className="flex flex-col items-center rounded-xl content-center justify-evenly text-[4vw] sm:text-[18px] md:text-[24px] bg-black text-2xl text-white h-15 sm:h-18 md:h-22">
             <p>¿Ya tienes una cuenta?</p>
             <Link
               to="/login"
