@@ -8,6 +8,9 @@ import ForgotPassword from "./pages/ForgotPassword.jsx";
 import Home from "./pages/Home.jsx";
 import NotFound from './components/NotFound.jsx';
 import Help from "./pages/Help.jsx";
+import UserProfile from "./pages/UserProfile.jsx";
+import AdminProfile from "./pages/AdminProfile.jsx";
+import Administrator from "./pages/Administrator.jsx";
 
 function App() {
   return (
@@ -27,6 +30,11 @@ function App() {
         <Route path="*" element={<NotFound />} />
 
         <Route path="/help" element={<Help />} />
+
+        <Route path="/user-profile" element={<UserProfile />} />
+        <Route path="/admin-profile" element={<AdminProfile />} />
+        <Route path="/administrator" element={<Administrator />} /> 
+
       </Routes>
     </AuthContextProvider>
   );
