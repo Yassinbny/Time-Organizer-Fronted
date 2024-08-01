@@ -9,7 +9,9 @@ const Header = () => {
   return (
     <header className="text-white flex flex-row justify-end items-center p-5 font-bold sm:h-[6vh] md:h-[7vh] lg:h-[8vh]">
       <img
-        className="absolute -top-1 md:-top-2 -left-1 md:left-0  w-[13vh] md:w-[20vh] lg:w-[26vh]"
+
+        className="absolute -top-6 -left-2 w-[15vh] sm:-top8  sm:left-1 sm:w-[18vh] md:w-[20vh] lg:w-[22vh]"
+
         src="images\superLetteringMultBlanco-removebg-preview2.png"
         alt="logo"
       />
@@ -33,16 +35,19 @@ const Header = () => {
                 <NavLink to="/listas"> LISTAS</NavLink>
               </li>
               <li>
-                <GrSearch
-                className="sm:w-6 lg:w-9 sm:h-6 lg:h-10" />
+                <GrSearch className="sm:w-6 lg:w-9 sm:h-6 lg:h-10" />
               </li>
               <li>
-                <NavLink to="/help"> <GrCircleQuestion
-                className="sm:w-8 lg:w-10 sm:h-8 lg:h-10" /> </NavLink>
+                <NavLink to="/help">
+                  {" "}
+                  <GrCircleQuestion className="sm:w-8 lg:w-10 sm:h-8 lg:h-10" />{" "}
+                </NavLink>
               </li>
               <li>
+
                 <NavLink to={currentUser.role === "admin" ? "/admin-profile" : "/user-profile"}>
                   {currentUser.role === "admin" ? (<GrUserAdmin className="w-6 md:w-7 lg:w-10 h-4 md:h-7 lg:h-10"/>) : (<LuUser2 className="w-6 md:w-8 lg:w-10 h-5 md:h-8 lg:h-10"/>)}
+
                 </NavLink>
               </li>
               <li
