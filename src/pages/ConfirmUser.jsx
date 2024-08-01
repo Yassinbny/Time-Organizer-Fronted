@@ -7,25 +7,26 @@ const ConfirmUser = () => {
   const navigate = useNavigate();
   const [message, setMessage] = useState("");
   const [error, setError] = useState("");
-
-  useEffect(() => {
-    const confirmUser = async () => {
-      try {
-        const response = await fetch(`http://localhost:3000/users/confirm/${validationCode}`, {
+  const confirmUser = async () => {
+    try {
+      const response = await fetch(
+        `http://localhost:3000/users/confirm/${validationCode}`,
+        {
           method: "GET",
-        });
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
         }
-        const responseData = await response.json();
-        setMessage(responseData.message);
-      } catch (error) {
-        setError("Error al confirmar usuario: " + error.message);
+      );
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
       }
-    };
-
+      const responseData = await response.json();
+      setMessage(responseData.message);
+    } catch (error) {
+      setError("Error al confirmar usuario: " + error.message);
+    }
+  };
+  useEffect(() => {
     confirmUser();
-  }, [validationCode]);
+  }, []);
 
   return (
     <UsersLayout componente={"Confirmar Usuario"}>

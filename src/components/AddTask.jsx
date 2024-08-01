@@ -5,90 +5,74 @@ const AddTask = ({ setAddTask }) => {
   const [description, setDescription] = useState("");
   const [start, setStart] = useState("");
   const [end, setEnd] = useState("");
-  const colors = [
-    {
-      color_id: 1,
-      name: "black",
-    },
-    {
-      color_id: 2,
-      name: "white",
-    },
-    {
-      color_id: 3,
-      name: "green",
-    },
-    {
-      color_id: 4,
-      name: "blue",
-    },
-    {
-      color_id: 5,
-      name: "red",
-    },
-    {
-      color_id: 6,
-      name: "yellow",
-    },
-    {
-      color_id: 7,
-      name: "grey",
-    },
-  ];
+  const [colores, setcolores] = useState([]);
+  const [families, setFamilies] = useState([]);
+  const [search, setsearch] = useState("");
+  const [order, setOrder] = useState("");
+  const [sort, setSort] = useState("");
   const getColorIdByName = (colorName) => {
-    const color = colors.find(
+    const color = colores.find(
       (c) => c.name.toLowerCase() === colorName.toLowerCase()
     );
     return color ? color.color_id : null;
   };
-  let families = [
-    {
-      family_id: 1,
-      name: "trabajo",
-    },
-    {
-      family_id: 2,
-      name: "deporte",
-    },
-    {
-      family_id: 3,
-      name: "estudios",
-    },
-    {
-      family_id: 4,
-      name: "casa",
-    },
-    {
-      family_id: 5,
-      name: "ocio",
-    },
-  ];
+
   const getfamilyIdByName = (familyName) => {
     const family = families.find(
       (f) => f.name.toLowerCase() === familyName.toLowerCase()
     );
     return family ? family.family_id : null;
   };
-  const [taskId, settaskId] = useState();
   const [colorId, setColorId] = useState();
   const [familyId, setFamilyId] = useState();
 
-  let FamilyColorForm = {
-    task_id: taskId,
-    color_id: colorId,
-    family_id: familyId,
-  };
-  const [taskColorFamilyBody, settaskColorFamilyBody] =
-    useState(FamilyColorForm);
   let formInfo = {
     title: title,
     description: description,
     start_on: start,
     finish_on: end,
+    color_id: colorId,
+    family_id: familyId,
   };
 
   const [body, setBody] = useState(formInfo);
 
+  const getcolors = async () => {
+    try {
+      const response = await fetch(`http://localhost:3000/colors`, {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: localStorage.getItem("AUTH_TOKEN_TJ"),
+        },
+        method: "GET",
+      });
+      const info = await response.json();
+
+      setcolores(info.colors);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  const getFamilies = async () => {
+    try {
+      const response = await fetch(`http://localhost:3000/family`, {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: localStorage.getItem("AUTH_TOKEN_TJ"),
+        },
+        method: "GET",
+      });
+      const info = await response.json();
+
+      setFamilies(info.taskFamilies);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  useEffect(() => {
+    getcolors();
+    getFamilies();
+  }, []);
   const handleSubmit = async (e) => {
     try {
       e.preventDefault();
@@ -101,9 +85,8 @@ const AddTask = ({ setAddTask }) => {
         method: "POST",
         body: JSON.stringify(body),
       });
-      const { message } = await response.json();
-      settaskId(message.insertId);
-
+      const res = await response.json();
+      console.log(res);
       setAddTask(false);
     } catch (error) {
       console.log(error);
@@ -112,8 +95,7 @@ const AddTask = ({ setAddTask }) => {
 
   useEffect(() => {
     setBody(formInfo);
-    settaskColorFamilyBody(FamilyColorForm);
-  }, [title, description, start, end, colorId, familyId, taskId]);
+  }, [title, description, start, end, colorId, familyId]);
   return (
     <div
       className="fixed -inset-y-0 z-30 -inset-x-0 z-10 flex flex-col items-center justify-center 
@@ -198,7 +180,7 @@ const AddTask = ({ setAddTask }) => {
               }}
             />
             <datalist id="color">
-              {colors.map((co, i) => {
+              {colores.map((co, i) => {
                 return <option key={i} value={co.name} />;
               })}
             </datalist>

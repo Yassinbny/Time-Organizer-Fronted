@@ -11,7 +11,7 @@ import "dayjs/locale/es";
 import RateTask from "../components/RateTask.jsx";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-
+import FilterModal from "../components/FilterModal.jsx";
 dayjs.extend(customParseFormat);
 dayjs.extend(utc);
 
@@ -21,17 +21,34 @@ const MyCalendar = () => {
   const [vista, setVista] = useState("day");
   const [selectedEvent, setSelectedEvent] = useState();
   const [addTask, setAddTask] = useState(false);
+  const [filterModal, setFilterModal] = useState(false);
+  const [search, setSearch] = useState("");
+  const [color, setColor] = useState("");
+  const [family, setFamily] = useState("");
+
   async function getData() {
     try {
-      const response = await fetch("http://localhost:3000/tasks", {
-        headers: { Authorization: localStorage.getItem("AUTH_TOKEN_TJ") },
-      });
+      let queryParams = new URLSearchParams();
+      if (search) queryParams.append("search", search);
+      if (color) queryParams.append("color", color);
+      if (family) queryParams.append("family", family);
+
+      console.log(queryParams.toString());
+
+      const response = await fetch(
+        `http://localhost:3000/tasks?${queryParams.toString()}`,
+        {
+          headers: { Authorization: localStorage.getItem("AUTH_TOKEN_TJ") },
+        }
+      );
       if (!response.ok) {
         throw new Error("Network response was not ok");
       }
       const data = await response.json();
 
       setTasks(data.tasks);
+
+      setSearch("");
     } catch (error) {
       console.log(error);
     }
@@ -56,7 +73,7 @@ const MyCalendar = () => {
 
   useEffect(() => {
     getData();
-  }, [addTask, selectedEvent]);
+  }, [addTask, selectedEvent, filterModal]);
 
   const components = {
     event: (e) => {
@@ -154,14 +171,22 @@ const MyCalendar = () => {
           culture="es"
         />
       </div>
-      <div className="flex sm:flex-col justify-center items-center sm:bg-fondo sm:text-2xl rounded-br-3xl sm:justify-end h-[20vh] sm:py-4 sm:h-full sm:w-[14vw] ">
+      <div className="flex flex-wrap space-y-6 sm:flex-col justify-center items-center sm:bg-fondo sm:text-2xl rounded-br-3xl sm:justify-end h-[20vh] sm:py-4 sm:h-full sm:w-[14vw] ">
         <button
-          className=" rounded-3xl text-2xl w-[60vw] sm:text-2xl text-center bg-black text-white sm:w-[9vw] md:text-3xl h-[7vh]  transition duration-200"
+          className=" rounded-3xl text-2xl w-[60vw] sm:text-2xl text-center bg-black text-white sm:w-[9vw] md:text-3xl h-[7vh] sm:h-[9vh]  transition duration-200"
           onClick={() => {
             setAddTask(true);
           }}
         >
           Crear evento
+        </button>
+        <button
+          className=" rounded-3xl text-2xl w-[60vw] sm:text-2xl text-center bg-black text-white sm:w-[9vw] md:text-3xl h-[7vh] sm:h-[9vh] transition duration-200"
+          onClick={() => {
+            setFilterModal(true);
+          }}
+        >
+          Filtrar
         </button>
       </div>
 
@@ -180,6 +205,14 @@ const MyCalendar = () => {
           ""
         ))}
       {addTask && <AddTask setAddTask={setAddTask} />}
+      {filterModal && (
+        <FilterModal
+          setSearch={setSearch}
+          setColor={setColor}
+          setFamily={setFamily}
+          setFilterModal={setFilterModal}
+        />
+      )}
       <ToastContainer />
     </MainLayout>
   );
