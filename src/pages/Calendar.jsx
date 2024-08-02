@@ -9,7 +9,7 @@ import SelectedEvent from "../components/SelectedEvent.jsx";
 import AddTask from "../components/AddTask.jsx";
 import "dayjs/locale/es";
 import RateTask from "../components/RateTask.jsx";
-import { ToastContainer, toast } from "react-toastify";
+import { ToastContainer, toast } from "react-toastify";  // Importa ToastContainer y toast
 import "react-toastify/dist/ReactToastify.css";
 import FilterModal from "../components/FilterModal.jsx";
 dayjs.extend(customParseFormat);
@@ -51,6 +51,7 @@ const MyCalendar = () => {
       setSearch("");
     } catch (error) {
       console.log(error);
+      toast.error("Error al obtener las tareas");  // Mostrar un mensaje de error
     }
   }
 
@@ -92,16 +93,19 @@ const MyCalendar = () => {
       );
     },
   };
-  const notify = (message) => toast.warning(message);
+
+  const notify = (message) => toast.warning(message);  // Usa toast para mostrar una notificación
+
   useEffect(() => {
     if (
       selectedEvent &&
       selectedEvent.done !== 0 &&
       selectedEvent.rating !== null
     ) {
-      notify("esta tarea ya ha sido calificada"); // Puedes personalizar el mensaje aquí
+      notify("Esta tarea ya ha sido calificada");  // Mostrar una advertencia
     }
   }, [selectedEvent]);
+
   return (
     <MainLayout>
       <div
@@ -213,7 +217,7 @@ const MyCalendar = () => {
           setFilterModal={setFilterModal}
         />
       )}
-      <ToastContainer />
+      <ToastContainer />  {/* Agrega el ToastContainer aquí */}
     </MainLayout>
   );
 };

@@ -214,7 +214,7 @@ const AddTask = ({ setAddTask }) => {
         </button>
         <button
           className="bg-green-600  px-4 py-2 rounded-2xl hover:bg-green-900 w-[30vw] transition duration-200"
-          onClick={() => {}}
+          onClick={() => { }}
         >
           Añadir
         </button>
