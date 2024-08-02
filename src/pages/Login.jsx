@@ -3,6 +3,7 @@ import useForm from "../hooks/useForm.jsx";
 import useAuth from "../hooks/useAuth.jsx";
 import { Link, useNavigate } from "react-router-dom";
 import { useEffect } from "react";
+import { toast } from 'react-toastify'; // Importa toast
 
 const Login = () => {
   const { signIn, currentUser } = useAuth();
@@ -12,10 +13,11 @@ const Login = () => {
     password: "",
   });
   const { email, password } = formValues;
-  const handleSubmit = async (e) => {
-    try {
-      e.preventDefault();
 
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    try {
       const response = await fetch(`http://localhost:3000/auth/sign-in`, {
         headers: {
           "Content-Type": "application/json",
@@ -23,21 +25,31 @@ const Login = () => {
         method: "POST",
         body: JSON.stringify(formValues),
       });
-      const { ok, token, error } = await response.json();
+
+      const { ok, token, message } = await response.json();
 
       if (!ok) {
-        console.error(error);
+        // Mostrar notificaciones basadas en el mensaje del backend
+        toast.error(message);
         return;
       }
+
       signIn(token);
+      // Mostrar notificación de éxito
+      toast.success(message); // El mensaje de bienvenida incluye el emoji
       navigate("/");
     } catch (error) {
-      console.log(error);
+      // Mostrar notificación de error general
+      toast.error("Error al iniciar sesión");
+      console.log(error); // Mantén el log para depuración si es necesario
     }
   };
+
   useEffect(() => {
-    currentUser && navigate("/");
-  }, [currentUser]); //Aquí me salta un advertencia de las reglas de hooks de React. La advertencia dice que navigate debería estar incluido en la lista de dependencias del hook useEffect.
+    if (currentUser) {
+      navigate("/");
+    }
+  }, [currentUser, navigate]); // Agregado navigate a las dependencias
 
   return (
     <UsersLayout componente={"Iniciar Sesión"}>
@@ -49,7 +61,7 @@ const Login = () => {
           text-base sm:text-lg md:text-3xl "
           onSubmit={handleSubmit}
         >
-          <div className="flex flex-col   space-y-2">
+          <div className="flex flex-col space-y-2">
             <label htmlFor="">Correo Electrónico:</label>
             <input
               className="h-10 rounded-xl w-[250px] sm:w-[350px] sm:h-16 md:w-[25vw] md:h-24 p-3  bg-white  "
@@ -60,7 +72,7 @@ const Login = () => {
               id="email"
             />
           </div>
-          <div className="flex flex-col  space-y-2">
+          <div className="flex flex-col space-y-2">
             <label>Contraseña:</label>
             <input
               className="h-10 rounded-xl w-[250px] sm:w-[350px] md:w-[25vw] md:h-24 sm:h-16 p-3   bg-white"
@@ -78,7 +90,7 @@ const Login = () => {
             </a>
           </div>
 
-          <button className=" bg-black text-white text-center font-bold w-[150px] h-10 sm:w-[300px]  sm:h-12 md:w-[300px] md:h-24 rounded-xl ">
+          <button className="bg-black text-white text-center font-bold w-[150px] h-10 sm:w-[300px]  sm:h-12 md:w-[300px] md:h-24 rounded-xl ">
             Iniciar Sesión
           </button>
         </form>
@@ -86,7 +98,7 @@ const Login = () => {
           <p>¿No tienes una cuenta?</p>
           <Link
             to="/signup"
-            className="text-teal-500  underline decoration-solid "
+            className="text-teal-500 underline decoration-solid "
           >
             Registrate AQUÍ
           </Link>

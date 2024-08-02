@@ -1,6 +1,7 @@
 import { Link, useNavigate } from "react-router-dom";
 import UsersLayout from "../layouts/UsersLayout.jsx";
 import { useForm } from "react-hook-form";
+import { toast } from 'react-toastify';
 
 const SignUp = () => {
   const navigate = useNavigate();
@@ -18,12 +19,10 @@ const SignUp = () => {
     },
   });
 
-  console.log(errors);
-
   const onSubmit = handleSubmit(async (data) => {
-   
+    // Eliminar campo de confirmación de contraseña antes de enviar.
     delete data.password2;
-    
+
     try {
       const response = await fetch(`http://localhost:3000/auth/sign-up`, {
         headers: {
@@ -32,17 +31,19 @@ const SignUp = () => {
         method: "POST",
         body: JSON.stringify(data),
       });
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
+
       const responseData = await response.json();
-      console.log(responseData);
-      alert("Usuario registrado correctamente");
+
+      if (!response.ok) {
+        throw new Error(responseData.message);
+      }
+
+      toast.success("Usuario registrado correctamente. Es necesario confirmar tu cuenta en el correo electrónico.");
       reset();
       navigate("/login");
     } catch (error) {
       console.log("Error al registrar usuario", error);
-      alert("Error al registrar usuario");
+      toast.error(error.message || "Error al registrar usuario");
     }
   });
 
@@ -55,10 +56,10 @@ const SignUp = () => {
           onSubmit={onSubmit}
           className="flex flex-col items-center w-full h-full justify-evenly content-center text-base sm:text-lg md:text-3xl "
         >
-          <div className="flex flex-col   space-y-2">
+          <div className="flex flex-col space-y-2">
             <label htmlFor="username">Nombre:</label>
             <input
-              className="h-15 rounded-xl w-[250px] sm:w-[250px] sm:h-10 md:w-[25vw] md:h-16 p-3  bg-white  "
+              className={`h-15 rounded-xl w-[250px] sm:w-[250px] sm:h-10 md:w-[25vw] md:h-16 p-3 bg-white ${errors.username ? 'border-red-500' : ''}`}
               type="text"
               name="username"
               id="username"
@@ -73,12 +74,12 @@ const SignUp = () => {
                 },
               })}
             />
-            {errors.username && <span>{errors.username.message}</span>}
+            {errors.username && <span className="text-red-500">{errors.username.message}</span>}
           </div>
-          <div className="flex flex-col   space-y-2">
+          <div className="flex flex-col space-y-2">
             <label htmlFor="email">Correo Electrónico:</label>
             <input
-              className="h-15 rounded-xl w-[250px] sm:w-[250px] sm:h-10 md:w-[25vw] md:h-16 p-3  bg-white  "
+              className={`h-15 rounded-xl w-[250px] sm:w-[250px] sm:h-10 md:w-[25vw] md:h-16 p-3 bg-white ${errors.email ? 'border-red-500' : ''}`}
               type="email"
               name="email"
               id="email"
@@ -93,12 +94,12 @@ const SignUp = () => {
                 },
               })}
             />
-            {errors.email && <span>{errors.email.message}</span>}
+            {errors.email && <span className="text-red-500">{errors.email.message}</span>}
           </div>
-          <div className="flex flex-col   space-y-2">
+          <div className="flex flex-col space-y-2">
             <label htmlFor="password">Contraseña:</label>
             <input
-              className="h-15 rounded-xl w-[250px] sm:w-[250px] sm:h-10 md:w-[25vw] md:h-16 p-3  bg-white  "
+              className={`h-15 rounded-xl w-[250px] sm:w-[250px] sm:h-10 md:w-[25vw] md:h-16 p-3 bg-white ${errors.password ? 'border-red-500' : ''}`}
               type="password"
               name="password"
               id="password"
@@ -113,12 +114,12 @@ const SignUp = () => {
                 },
               })}
             />
-            {errors.password && <span>{errors.password.message}</span>}
+            {errors.password && <span className="text-red-500">{errors.password.message}</span>}
           </div>
-          <div className="flex flex-col   space-y-2">
+          <div className="flex flex-col space-y-2">
             <label htmlFor="password2">Confirmar contraseña:</label>
             <input
-              className="h-15 rounded-xl w-[250px] sm:w-[250px] sm:h-10 md:w-[25vw] md:h-16 p-3  bg-white  "
+              className={`h-15 rounded-xl w-[250px] sm:w-[250px] sm:h-10 md:w-[25vw] md:h-16 p-3 bg-white ${errors.password2 ? 'border-red-500' : ''}`}
               type="password"
               name="password2"
               id="password2"
@@ -131,6 +132,7 @@ const SignUp = () => {
                   value === watch("password") || "Las contraseñas no coinciden",
               })}
             />
+            {errors.password2 && <span className="text-red-500">{errors.password2.message}</span>}
           </div>
           <button
             className="bg-black hover:bg-teal-500 text-white font-bold py-2 px-5 rounded-lg"
@@ -144,7 +146,7 @@ const SignUp = () => {
             <p>¿Ya tienes una cuenta?</p>
             <Link
               to="/login"
-              className="text-teal-500  underline decoration-solid "
+              className="text-teal-500 underline decoration-solid"
             >
               Inicia Sesión AQUÍ
             </Link>

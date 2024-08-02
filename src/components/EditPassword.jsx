@@ -3,18 +3,18 @@ import { useState } from "react";
 const EditPassword = ({ setEditPassword }) => {
   const [password, setPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
-  
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-   
+
     let body = {
       password,
       newPassword,
     };
 
-    
+
     try {
-        const response = await fetch(`http://localhost:3000/users/password/reset`, {
+      const response = await fetch(`http://localhost:3000/users/password/reset`, {
         headers: {
           "Content-Type": "application/json",
           Authorization: localStorage.getItem("AUTH_TOKEN_TJ"),
@@ -34,7 +34,7 @@ const EditPassword = ({ setEditPassword }) => {
       alert("Error al cambiar tu contraseña.")
     }
   };
-  
+
   return (
     <div
       className="fixed -inset-y-0 z-30 -inset-x-0 flex flex-col items-center justify-center 
@@ -58,7 +58,7 @@ const EditPassword = ({ setEditPassword }) => {
           placeholder="Introduce tu contraseña"
           className="w-full text-2xl  bg-transparent border-b-4 text-center sm:text-xl md:text-2xl lg:text-3xl text-gray-400 font-bold mb-4"
           onChange={(e) => {
-            setPassword("password", e.target.value);            
+            setPassword("password", e.target.value);
           }}
         />
         <input
@@ -67,10 +67,10 @@ const EditPassword = ({ setEditPassword }) => {
           className="mb-4 w-full bg-transparent border-b-4 text-gray-400 sm:text-xl md:text-2xl lg:text-3xl text-center"
           onChange={(e) => {
             setNewPassword(e.target.value);
-            
+
           }}
         />
-        
+
         <button
           type="button"
           className="bg-green-600 px-4 py-2 rounded-2xl hover:bg-green-900 w-[30vw]  text-center transition duration-200"
