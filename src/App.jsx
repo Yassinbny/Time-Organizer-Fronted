@@ -1,4 +1,4 @@
-import React from "react";
+
 import { AuthContextProvider } from "./context/auth.context.jsx";
 import { Route, Routes } from "react-router-dom";
 import { ToastContainer } from 'react-toastify';
@@ -15,6 +15,7 @@ import Help from "./pages/Help.jsx";
 import UserProfile from "./pages/UserProfile.jsx";
 import AdminProfile from "./pages/AdminProfile.jsx";
 import Administrator from "./pages/Administrator.jsx";
+import Listas from "./pages/Listas.jsx";
 
 function App() {
   return (
@@ -28,6 +29,7 @@ function App() {
         <Route path="/forgot-password" element={<ForgotPassword />} />
         <Route path="*" element={<NotFound />} />
         <Route path="/help" element={<Help />} />
+        <Route path="/listas" element={<Listas />} />
         <Route path="/user-profile" element={<UserProfile />} />
         <Route path="/admin-profile" element={<AdminProfile />} />
         <Route path="/administrator" element={<Administrator />} />
