@@ -10,6 +10,7 @@ export const AuthContext = createContext({
     console.log(token);
   },
   signOut: () => {},
+  recoverPassword: async (email) => {}
 });
 
 // crear el proveedor (provider) y luego implementarlo para envuelva a toda la aplicación (rutas)
@@ -33,26 +34,25 @@ export function AuthContextProvider({ children }) {
 
   async function recoverPassword(email) {
     try {
-      const response = await fetch(`http://localhost:3000/auth/recover-password`, {
-        method: "POST",
+      const response = await fetch('http://localhost:3000/users/password/recover', { 
+        method: 'POST',
         headers: {
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json',
         },
         body: JSON.stringify({ email }),
       });
 
-      const data = await response.json();
-
       if (!response.ok) {
-        throw new Error(data.error || "Error al procesar la solicitud");
+        throw new Error(`HTTP error! status: ${response.status}`);
       }
 
-      navigate("/password-reset-sent"); // Redirigir a la página de confirmación de envío de correo
+      const data = await response.json();
+      console.log('Solicitud de recuperación de contraseña enviada:', data);
     } catch (error) {
-      console.error("Error al enviar solicitud de recuperación de contraseña:", error);
-      throw error; // Propaga el error para que el componente que llama a recoverPassword pueda manejarlo
+      console.error('Error al enviar solicitud de recuperación de contraseña:', error);
     }
   }
+  
 
   useEffect(() => {
     const token = localStorage.getItem("AUTH_TOKEN_TJ");
