@@ -8,7 +8,7 @@ import MyCalendar from "./pages/Calendar.jsx";
 import Login from "./pages/Login.jsx";
 import ConfirmUser from "./pages/ConfirmUser.jsx";
 import SignUp from "./pages/SignUp.jsx";
-import ForgotPassword from "./pages/ForgotPassword.jsx";
+import RecoverPassword from "./pages/RecoverPassword.jsx";
 import Home from "./pages/Home.jsx";
 import NotFound from './components/NotFound.jsx';
 import Help from "./pages/Help.jsx";
@@ -25,7 +25,7 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/" element={<Home />} />
         <Route path="/confirm/:validationCode" element={<ConfirmUser />} />
-        <Route path="/forgot-password" element={<ForgotPassword />} />
+        <Route path="/recover-password" element={<RecoverPassword />} />
         <Route path="*" element={<NotFound />} />
         <Route path="/help" element={<Help />} />
         <Route path="/user-profile" element={<UserProfile />} />
