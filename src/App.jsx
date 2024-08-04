@@ -15,7 +15,6 @@ import Help from "./pages/Help.jsx";
 import UserProfile from "./pages/UserProfile.jsx";
 import AdminProfile from "./pages/AdminProfile.jsx";
 import Administrator from "./pages/Administrator.jsx";
-import useAuth from "./hooks/useAuth.jsx";
 
 function App() {
   return (
