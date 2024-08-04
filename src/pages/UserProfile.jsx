@@ -1,10 +1,10 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import ProfileLayout from "../layouts/ProfileLayout.jsx";
 import useAuth from "../hooks/useAuth.jsx";
 import EditPassword from "../components/EditPassword.jsx";
 import { SlPencil, SlCamera } from "react-icons/sl";
-import { toast, ToastContainer } from "react-toastify";  // Importa ToastContainer y toast
+import { toast, ToastContainer } from "react-toastify"; // Importa ToastContainer y toast
 import "react-toastify/dist/ReactToastify.css";
 
 const UserProfile = () => {
@@ -17,26 +17,29 @@ const UserProfile = () => {
     if (name === "newUsername") setNewUsername(value);
 
     try {
-      const response = await fetch(`http://localhost:3000/users/profile/username`, {
-        method: "PUT",
-        headers: {
-          Authorization: localStorage.getItem("AUTH_TOKEN_TJ"),
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ newUsername }),
-      });
+      const response = await fetch(
+        `http://localhost:3000/users/profile/username`,
+        {
+          method: "PUT",
+          headers: {
+            Authorization: localStorage.getItem("AUTH_TOKEN_TJ"),
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ newUsername }),
+        }
+      );
       const { ok, error } = await response.json();
 
       if (!ok) {
         console.error(error);
-        toast.error("Error al actualizar el nombre de usuario");  // Notificación de error
+        toast.error("Error al actualizar el nombre de usuario"); // Notificación de error
         return;
       }
-      toast.success("Nombre de usuario actualizado con éxito");  // Notificación de éxito
+      toast.success("Nombre de usuario actualizado con éxito"); // Notificación de éxito
       navigate("/user-profile");
     } catch (error) {
       console.log("Error al actualizar los datos:", error);
-      toast.error("Error al actualizar los datos");  // Notificación de error
+      toast.error("Error al actualizar los datos"); // Notificación de error
     }
   };
 
@@ -47,22 +50,25 @@ const UserProfile = () => {
       formData.append("avatar", file);
 
       try {
-        const response = await fetch(`http://localhost:3000/users/profile/avatar`, {
-          method: "POST",
-          headers: {
-            Authorization: localStorage.getItem("AUTH_TOKEN_TJ"),
-          },
-          body: formData,
-        });
+        const response = await fetch(
+          `http://localhost:3000/users/profile/avatar`,
+          {
+            method: "POST",
+            headers: {
+              Authorization: localStorage.getItem("AUTH_TOKEN_TJ"),
+            },
+            body: formData,
+          }
+        );
         const result = await response.json();
         if (!response.ok) {
-          toast.error("Error al actualizar el avatar");  // Notificación de error
+          toast.error("Error al actualizar el avatar"); // Notificación de error
           return;
         }
-        toast.success("Avatar actualizado con éxito");  // Notificación de éxito
+        toast.success("Avatar actualizado con éxito"); // Notificación de éxito
       } catch (error) {
         console.log("Error al actualizar tu avatar:", error);
-        toast.error("Error al actualizar tu avatar");  // Notificación de error
+        toast.error("Error al actualizar tu avatar"); // Notificación de error
       }
     }
   };
@@ -70,7 +76,9 @@ const UserProfile = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
   };
-
+  useEffect(() => {
+    !currentUser && navigate("/login");
+  }, [currentUser]);
   return (
     <ProfileLayout>
       <div className="flex justify-evenly w-full h-full content-center">
@@ -98,7 +106,7 @@ const UserProfile = () => {
               className="rounded-xl w-[250px] sm:w-[280px] md:w-[25vw] h-10 sm:h-12 md:h-20 p-3 bg-white border-2 border-black text-neutral-500"
               type="text"
               placeholder={currentUser?.username}
-              onChange={e => fetchUserData("newUsername", e.target.value)}
+              onChange={(e) => fetchUserData("newUsername", e.target.value)}
               name="newUsername"
               id="newUsername"
               required
@@ -107,7 +115,8 @@ const UserProfile = () => {
               onChange={(e) => {
                 fetchUserData(e.target.value);
               }}
-              className="absolute top-9 md:top-14 right-5 cursor-pointer">
+              className="absolute top-9 md:top-14 right-5 cursor-pointer"
+            >
               <SlPencil />
             </div>
           </div>
@@ -129,7 +138,8 @@ const UserProfile = () => {
               onClick={() => {
                 setEditPassword(true);
               }}
-              className="absolute top-9 md:top-14 lg:top-12 right-5  cursor-pointer">
+              className="absolute top-9 md:top-14 lg:top-12 right-5  cursor-pointer"
+            >
               <SlPencil />
             </div>
           </div>
@@ -144,16 +154,15 @@ const UserProfile = () => {
               id="avatar"
             />
             <div className="absolute -bottom-2 -right-2 cursor-pointer">
-              <SlCamera onClick={() => document.getElementById('avatar').click()} />
+              <SlCamera
+                onClick={() => document.getElementById("avatar").click()}
+              />
             </div>
           </div>
-
         </form>
       </div>
-
       {editPassword && <EditPassword setEditPassword={setEditPassword} />}
-
-      <ToastContainer />  {/* Agrega el ToastContainer aquí */}
+      <ToastContainer /> {/* Agrega el ToastContainer aquí */}
     </ProfileLayout>
   );
 };

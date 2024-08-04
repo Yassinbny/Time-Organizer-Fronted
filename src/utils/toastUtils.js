@@ -1,17 +1,18 @@
-import { toast } from 'react-toastify';
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 // Función para mostrar notificaciones de error
 export const showErrorToast = (message) => {
-    toast.error(message, {
-        position: toast.POSITION.TOP_RIGHT,
-        autoClose: 5000,
-    });
+  toast.error(message, {
+    position: "top-right",
+    autoClose: 5000,
+  });
 };
 
 // Función para mostrar notificaciones de éxito (opcional)
 export const showSuccessToast = (message) => {
-    toast.success(message, {
-        position: toast.POSITION.TOP_RIGHT,
-        autoClose: 5000,
-    });
+  toast.success(message, {
+    position: "top-right",
+    autoClose: 5000,
+  });
 };

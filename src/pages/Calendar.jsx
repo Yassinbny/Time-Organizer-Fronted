@@ -9,9 +9,11 @@ import SelectedEvent from "../components/SelectedEvent.jsx";
 import AddTask from "../components/AddTask.jsx";
 import "dayjs/locale/es";
 import RateTask from "../components/RateTask.jsx";
-import { ToastContainer, toast } from "react-toastify";  // Importa ToastContainer y toast
+import { ToastContainer, toast } from "react-toastify"; // Importa ToastContainer y toast
 import "react-toastify/dist/ReactToastify.css";
 import FilterModal from "../components/FilterModal.jsx";
+import useAuth from "../hooks/useAuth.jsx";
+import { useNavigate } from "react-router-dom";
 dayjs.extend(customParseFormat);
 dayjs.extend(utc);
 
@@ -25,7 +27,8 @@ const MyCalendar = () => {
   const [search, setSearch] = useState("");
   const [color, setColor] = useState("");
   const [family, setFamily] = useState("");
-
+  const { currentUser } = useAuth();
+  const navigate = useNavigate();
   async function getData() {
     try {
       let queryParams = new URLSearchParams();
@@ -45,13 +48,12 @@ const MyCalendar = () => {
         throw new Error("Network response was not ok");
       }
       const data = await response.json();
-      console.log(data.tasks);
       setTasks(data.tasks);
 
       setSearch("");
     } catch (error) {
       console.log(error);
-      toast.error("Error al obtener las tareas");  // Mostrar un mensaje de error
+      toast.error("Error al obtener las tareas"); // Mostrar un mensaje de error
     }
   }
 
@@ -75,6 +77,9 @@ const MyCalendar = () => {
   useEffect(() => {
     getData();
   }, [addTask, selectedEvent, filterModal]);
+  useEffect(() => {
+    !currentUser && navigate("/login");
+  }, [currentUser]);
 
   const components = {
     event: (e) => {
@@ -94,7 +99,7 @@ const MyCalendar = () => {
     },
   };
 
-  const notify = (message) => toast.warning(message);  // Usa toast para mostrar una notificación
+  const notify = (message) => toast.warning(message); // Usa toast para mostrar una notificación
 
   useEffect(() => {
     if (
@@ -102,7 +107,7 @@ const MyCalendar = () => {
       selectedEvent.done !== 0 &&
       selectedEvent.rating !== null
     ) {
-      notify("Esta tarea ya ha sido calificada");  // Mostrar una advertencia
+      notify("Esta tarea ya ha sido calificada"); // Mostrar una advertencia
     }
   }, [selectedEvent]);
 
@@ -193,7 +198,6 @@ const MyCalendar = () => {
           Filtrar
         </button>
       </div>
-
       {selectedEvent &&
         (selectedEvent.done == 0 ? (
           <SelectedEvent
@@ -217,7 +221,7 @@ const MyCalendar = () => {
           setFilterModal={setFilterModal}
         />
       )}
-      <ToastContainer />  {/* Agrega el ToastContainer aquí */}
+      <ToastContainer /> {/* Agrega el ToastContainer aquí */}
     </MainLayout>
   );
 };

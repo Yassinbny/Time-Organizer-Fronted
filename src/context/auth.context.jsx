@@ -5,12 +5,12 @@ import { useNavigate } from "react-router-dom";
 
 // crear el contexto y darle un valor inicial
 export const AuthContext = createContext({
-  currentUser: null,
+  currentUser: "",
   signIn: (token = "") => {
     console.log(token);
   },
   signOut: () => {},
-  recoverPassword: async (email) => {}
+  recoverPassword: async (email) => {},
 });
 
 // crear el proveedor (provider) y luego implementarlo para envuelva a toda la aplicación (rutas)
@@ -34,25 +34,30 @@ export function AuthContextProvider({ children }) {
 
   async function recoverPassword(email) {
     try {
-      const response = await fetch('http://localhost:3000/users/password/recover', { 
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ email }),
-      });
+      const response = await fetch(
+        "http://localhost:3000/users/password/recover",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ email }),
+        }
+      );
 
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
 
       const data = await response.json();
-      console.log('Solicitud de recuperación de contraseña enviada:', data);
+      console.log("Solicitud de recuperación de contraseña enviada:", data);
     } catch (error) {
-      console.error('Error al enviar solicitud de recuperación de contraseña:', error);
+      console.error(
+        "Error al enviar solicitud de recuperación de contraseña:",
+        error
+      );
     }
   }
-  
 
   useEffect(() => {
     const token = localStorage.getItem("AUTH_TOKEN_TJ");
