@@ -7,6 +7,7 @@ import {
   GrUserAdmin,
 } from "react-icons/gr";
 import { LuUser2 } from "react-icons/lu";
+import DropDownMenu from "./DropDownMenu.jsx";
 
 const Header = () => {
   const { currentUser, signOut } = useAuth();
@@ -23,7 +24,7 @@ const Header = () => {
         alt="logo"
       />
       <nav>
-        <ul className="flex flex-row justify-evenly  md:justify-items-center sm:w-[50vw] md:w-[49vw] sm:h-6 md:h-8 lg:h-10 sm:text-base md:text-xl lg:text-3xl">
+        <ul className=" hidden sm:flex flex-row justify-evenly  md:justify-items-center sm:w-[50vw] md:w-[49vw] sm:h-6 md:h-8 lg:h-10 sm:text-base md:text-xl lg:text-3xl">
           {!currentUser ? (
             <>
               <li>
@@ -72,6 +73,7 @@ const Header = () => {
           )}
         </ul>
       </nav>
+      <DropDownMenu />
     </header>
   );
 };
