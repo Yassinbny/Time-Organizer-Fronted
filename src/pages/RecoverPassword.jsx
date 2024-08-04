@@ -1,36 +1,47 @@
-
 import UsersLayout from "../layouts/UsersLayout.jsx";
 import useForm from "../hooks/useForm.jsx";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { AuthContext } from "../context/auth.context.jsx";
+import { useNavigate } from "react-router-dom";
 
 const ForgotPassword = () => {
-  const { recoverPassword } = useContext(AuthContext);
+  const { recoverPassword, currentUser } = useContext(AuthContext);
   const [formValues, handleInputChange] = useForm({
-    email: ""
+    email: "",
   });
   const { email } = formValues;
-
+  const navigate = useNavigate();
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     try {
       await recoverPassword(email);
     } catch (error) {
-      console.error("Error al enviar solicitud de recuperación de contraseña:", error);
+      console.error(
+        "Error al enviar solicitud de recuperación de contraseña:",
+        error
+      );
       // Manejar el error, por ejemplo, mostrar un mensaje al usuario
     }
   };
 
+  useEffect(() => {
+    !currentUser && navigate("/login");
+  }, [currentUser]);
   return (
     <UsersLayout componente={"¿OLVIDASTE TU CONTRASEÑA?"}>
       <div className="bg-teal-100 flex flex-col justify-evenly w-full h-full content-center p-6 rounded-xl">
         <form
           noValidate
-          className="flex flex-col items-center w-full h-full justify-evenly text-base sm:text-lg md:text-3xl " 
+          className="flex flex-col items-center w-full h-full justify-evenly text-base sm:text-lg md:text-3xl "
           onSubmit={handleSubmit}
         >
-          <p className="text-center justyify-center font-extrabold leading-[1.3]">¡No hay problema!<br/>Sólo necesitas tu dirección de email, ¡y solucionado!<br/></p>
+          <p className="text-center justyify-center font-extrabold leading-[1.3]">
+            ¡No hay problema!
+            <br />
+            Sólo necesitas tu dirección de email, ¡y solucionado!
+            <br />
+          </p>
           <div className="flex flex-col space-y-2 text-[4vw] sm:text-[20px] md:text-[30px] leading-[2] font-extrabold ">
             <label htmlFor="email">Correo Electrónico:</label>
             <input
@@ -49,8 +60,11 @@ const ForgotPassword = () => {
         </form>
         <div className="flex flex-col items-center rounded-2xl content-center justify-evenly text-[4vw] sm:text-[24px] md:text-[32px] bg-black text-1xl text-white h-20 sm:h-32 md:h-34">
           <p>¿No tienes una cuenta?</p>
-          <a href="/signup" className="text-orange-400
-#fb923c underline decoration-solid">
+          <a
+            href="/signup"
+            className="text-orange-400
+#fb923c underline decoration-solid"
+          >
             Regístrate AQUÍ
           </a>
         </div>
