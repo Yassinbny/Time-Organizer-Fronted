@@ -18,8 +18,6 @@ import Administrator from "./pages/Administrator.jsx";
 import useAuth from "./hooks/useAuth.jsx";
 
 function App() {
-  const { currentUser } = useContext(AuthContext);
-
   return (
     <AuthContextProvider>
       <>
