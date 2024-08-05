@@ -16,8 +16,8 @@ const EditPassword = (setEditPassword) => {
 
     let body = {
       //userId,
-      password:"",
-      newPassword:"",
+      password:password,
+      newPassword:newPassword,
     };
 
     try {

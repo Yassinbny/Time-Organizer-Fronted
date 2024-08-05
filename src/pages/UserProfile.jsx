@@ -10,7 +10,7 @@ import "react-toastify/dist/ReactToastify.css";
 const UserProfile = () => {
   const { currentUser } = useAuth();
   //const navigate = useNavigate();
-  const [userData, setUserData] = useState({});
+  const [userData, setUserData] = useState();
   const [newUsername, setNewUsername] = useState("");
   const [editPassword, setEditPassword] = useState(false);
   //const userId = localStorage.getItem("user_id");
@@ -18,32 +18,33 @@ const UserProfile = () => {
   const [avatarUrl, setAvatarUrl] = useState("/avatarDefault.jpg");
   //const avatarUrl= userData.avatar ? `${apiUrl}/${userData.avatar}` : "/avatarDefault.jpg";
 
-  const fetchUserData = async () => {
-    try {
-      const response = await fetch(`http://localhost:3000/users/profile`, {
-        method: "GET",
-        headers: {
-          Authorization: localStorage.getItem("AUTH_TOKEN_TJ"),
-        },
-      });
-      //await response.json();
-      const result = await response.json();
-      const avatarFromApi = result.data.users.avatar;
-      console.log(avatarFromApi);
-      
-      setAvatarUrl(`${apiUrl}/${avatarFromApi}`);
-      setUserData(result.data.users);
-    } catch (error) {
-      console.log("error al obtener datos:", error);
-    }
-  };
+ 
   
   useEffect(() => {
+    const fetchUserData = async () => {
+      try {
+        const response = await fetch(`http://localhost:3000/users/profile`, {
+          method: "GET",
+          headers: {
+            Authorization: localStorage.getItem("AUTH_TOKEN_TJ"),
+          },
+        });
+        //await response.json();
+        const result = await response.json();
+        const avatarFromApi = result.users.avatar;
+        console.log(avatarFromApi);
+        setAvatarUrl(`${apiUrl}/${avatarFromApi}`);
+        console.log(">>>>>", result.users.username )
+        setUserData(result.users);
+      } catch (error) {
+        console.log("error al obtener datos:", error);
+      }
+    };
     fetchUserData();
-  }, []);
+  }, [apiUrl]);
 
-  const updateUsername = async (value) => {
-    setNewUsername(value);
+  const updateUsername = async () => {
+    
 
     try {
       const response = await fetch(`http://localhost:3000/users/profile/username`, {
@@ -52,7 +53,7 @@ const UserProfile = () => {
           Authorization: localStorage.getItem("AUTH_TOKEN_TJ"),
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ newUsername: value }),
+        body: JSON.stringify({ newUsername }),
       });
       const { ok, error } = await response.json();
 
@@ -60,9 +61,10 @@ const UserProfile = () => {
         console.error(error);
         toast.error("Error al actualizar el nombre de usuario"); // Notificación de error
         return;
+      }else{
+        toast.success("Nombre de usuario actualizado con éxito"); // Notificación de éxito
       }
-      toast.success("Nombre de usuario actualizado con éxito"); // Notificación de éxito
-      await fetchUserData();
+      
     } catch (error) {
       console.log("Error al actualizar los datos:", error);
       toast.error("Error al actualizar los datos"); // Notificación de error
@@ -111,7 +113,8 @@ const UserProfile = () => {
   
   return (
     <ProfileLayout>
-      <div className="flex justify-evenly w-full h-full content-center">        
+      {userData && (
+        <div className="flex justify-evenly w-full h-full content-center">        
         <form
           noValidate
           className="flex flex-col items-center w-full h-full justify-evenly content-center
@@ -158,16 +161,16 @@ const UserProfile = () => {
             <input
               className="rounded-xl w-[250px] sm:w-[280px] md:w-[25vw] h-10 md:h-12 lg:h-15 p-3 bg-white border-2 border-black text-neutral-500 "
               type="text"
-              placeholder={currentUser?.username}
+              placeholder={userData?.username}
               onChange={e => 
-                updateUsername( e.target.value)}
+                setNewUsername( e.target.value)}
               name="newUsername"
               id="newUsername"
               required
             />
             <div
-              onChange={() => {
-                updateUsername({newUsername});
+              onClick={() => {
+                updateUsername();
               }}
               className="absolute top-12 md:top-14 right-5 cursor-pointer">
               <SlPencil />  
@@ -197,6 +200,8 @@ const UserProfile = () => {
           
         </form>
       </div>
+      )}
+      
       {editPassword && <EditPassword setEditPassword={setEditPassword} />}
     </ProfileLayout>
   );
