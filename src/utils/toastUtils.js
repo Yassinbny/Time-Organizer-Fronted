@@ -9,7 +9,7 @@ export const showErrorToast = (message) => {
   });
 };
 
-// Función para mostrar notificaciones de éxito (opcional)
+// Función para mostrar notificaciones de éxito
 export const showSuccessToast = (message) => {
   toast.success(message, {
     position: "top-right",

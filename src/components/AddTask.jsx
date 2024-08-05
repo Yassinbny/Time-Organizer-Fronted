@@ -1,15 +1,16 @@
-import { useEffect, useState } from "react";
+import { useState, useEffect } from 'react';
+import { showErrorToast, showSuccessToast } from '../utils/toastUtils'; // Importa tus funciones de toastUtils
 
 const AddTask = ({ setAddTask }) => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [start, setStart] = useState("");
   const [end, setEnd] = useState("");
-  const [colores, setcolores] = useState([]);
+  const [colores, setColores] = useState([]);
   const [families, setFamilies] = useState([]);
-  const [search, setsearch] = useState("");
-  const [order, setOrder] = useState("");
-  const [sort, setSort] = useState("");
+  const [colorId, setColorId] = useState(null); // Asegúrate de que el valor inicial sea null
+  const [familyId, setFamilyId] = useState(null); // Asegúrate de que el valor inicial sea null
+
   const getColorIdByName = (colorName) => {
     const color = colores.find(
       (c) => c.name.toLowerCase() === colorName.toLowerCase()
@@ -17,27 +18,69 @@ const AddTask = ({ setAddTask }) => {
     return color ? color.color_id : null;
   };
 
-  const getfamilyIdByName = (familyName) => {
+  const getFamilyIdByName = (familyName) => {
     const family = families.find(
       (f) => f.name.toLowerCase() === familyName.toLowerCase()
     );
     return family ? family.family_id : null;
   };
-  const [colorId, setColorId] = useState();
-  const [familyId, setFamilyId] = useState();
 
   let formInfo = {
     title: title,
     description: description,
     start_on: start,
     finish_on: end,
-    color_id: colorId,
-    family_id: familyId,
+    color_id: colorId, // Usa color_id
+    family_id: familyId, // Usa family_id
   };
 
   const [body, setBody] = useState(formInfo);
 
-  const getcolors = async () => {
+  const validateForm = () => {
+    const now = new Date();
+
+    if (!title) {
+      showErrorToast("Error: El título es requerido");
+      return false;
+    }
+
+    if (!description) {
+      showErrorToast("Error: La descripción es requerida");
+      return false;
+    }
+
+    if (!start || !end) {
+      showErrorToast("Error: Las fechas y horas son requeridas");
+      return false;
+    }
+
+    const startDate = new Date(start);
+    const endDate = new Date(end);
+
+    if (startDate < now) {
+      showErrorToast("Error: La fecha y hora no puede ser anterior al día de hoy");
+      return false;
+    }
+
+    if (endDate < startDate) {
+      showErrorToast("Error: La fecha de fin no puede ser anterior a la fecha de inicio");
+      return false;
+    }
+
+    if (!colorId) {
+      showErrorToast("Error: El color es requerido");
+      return false;
+    }
+
+    if (!familyId) {
+      showErrorToast("Error: La familia es requerida");
+      return false;
+    }
+
+    return true;
+  };
+
+  const getColors = async () => {
     try {
       const response = await fetch(`http://localhost:3000/colors`, {
         headers: {
@@ -47,12 +90,13 @@ const AddTask = ({ setAddTask }) => {
         method: "GET",
       });
       const info = await response.json();
-
-      setcolores(info.colors);
+      setColores(info.colors);
     } catch (error) {
       console.log(error);
+      showErrorToast("Error al obtener los colores");
     }
   };
+
   const getFamilies = async () => {
     try {
       const response = await fetch(`http://localhost:3000/family`, {
@@ -63,20 +107,24 @@ const AddTask = ({ setAddTask }) => {
         method: "GET",
       });
       const info = await response.json();
-
       setFamilies(info.taskFamilies);
     } catch (error) {
       console.log(error);
+      showErrorToast("Error al obtener las familias");
     }
   };
+
   useEffect(() => {
-    getcolors();
+    getColors();
     getFamilies();
   }, []);
-  const handleSubmit = async (e) => {
-    try {
-      e.preventDefault();
 
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    if (!validateForm()) return; // Valida el formulario antes de enviar
+
+    try {
       const response = await fetch(`http://localhost:3000/tasks`, {
         headers: {
           "Content-Type": "application/json",
@@ -86,16 +134,22 @@ const AddTask = ({ setAddTask }) => {
         body: JSON.stringify(body),
       });
       const res = await response.json();
-      console.log(res);
-      setAddTask(false);
+      if (response.ok) {
+        showSuccessToast("Tarea añadida exitosamente");
+        setAddTask(false);
+      } else {
+        showErrorToast("Error al añadir la tarea");
+      }
     } catch (error) {
       console.log(error);
+      showErrorToast("Error al añadir la tarea");
     }
   };
 
   useEffect(() => {
     setBody(formInfo);
   }, [title, description, start, end, colorId, familyId]);
+
   return (
     <div
       className="fixed -inset-y-0 z-30 -inset-x-0 z-10 flex flex-col items-center justify-center 
@@ -108,9 +162,7 @@ const AddTask = ({ setAddTask }) => {
         Añadir Evento
       </h2>
       <form
-        onSubmit={(e) => {
-          handleSubmit(e);
-        }}
+        onSubmit={handleSubmit}
         className="flex flex-col items-center justify-evenly sm:justify-center content-center 
         space-y-10  bg-fondoPopup p-6 
         rounded-b-2xl shadow-lg w-[70vw] sm:w-[60vw] md:w-[50vw] h-[75vh] sm:text-2xl text-center"
@@ -133,7 +185,6 @@ const AddTask = ({ setAddTask }) => {
             setBody(formInfo);
           }}
         />
-
         <div className="flex flex-col sm:flex-col sm:space-y-8 text-gray-400  space-y-4 ">
           <div>
             <label className="mb-2">
@@ -146,7 +197,6 @@ const AddTask = ({ setAddTask }) => {
               max={"2040-01-01T00:00:00"}
               onChange={(e) => {
                 setStart(e.target.value);
-
                 setBody(formInfo);
               }}
             />
@@ -162,48 +212,45 @@ const AddTask = ({ setAddTask }) => {
               max={"2040-01-01T00:00:00"}
               onChange={(e) => {
                 setEnd(e.target.value);
-
                 setBody(formInfo);
               }}
             />
           </div>
-
           <div>
-            <label htmlFor="color">Elige una opción:</label>
+            <label htmlFor="color">Elige un color:</label>
             <input
               list="color"
               id="exampleListInput"
               onChange={(e) => {
                 e.preventDefault();
-
-                setColorId(getColorIdByName(e.target.value));
+                const id = getColorIdByName(e.target.value);
+                setColorId(id);
               }}
             />
             <datalist id="color">
-              {colores.map((co, i) => {
-                return <option key={i} value={co.name} />;
-              })}
+              {colores.map((co, i) => (
+                <option key={i} value={co.name} />
+              ))}
             </datalist>
           </div>
           <div>
-            <label htmlFor="family">Elige una opción:</label>
+            <label htmlFor="family">Elige una familia:</label>
             <input
               list="family"
               id="exampleListInput2"
               onChange={(e) => {
                 e.preventDefault();
-
-                setFamilyId(getfamilyIdByName(e.target.value));
+                const id = getFamilyIdByName(e.target.value);
+                setFamilyId(id);
               }}
             />
             <datalist id="family">
-              {families.map((fa, i) => {
-                return <option key={i} value={fa.name} />;
-              })}
+              {families.map((fa, i) => (
+                <option key={i} value={fa.name} />
+              ))}
             </datalist>
           </div>
         </div>
-
         <button
           className="bg-green-600  px-4 py-2 rounded-2xl hover:bg-green-900 w-[30vw] transition duration-200"
           onClick={() => {
@@ -213,8 +260,8 @@ const AddTask = ({ setAddTask }) => {
           Cerrar
         </button>
         <button
+          type="submit"
           className="bg-green-600  px-4 py-2 rounded-2xl hover:bg-green-900 w-[30vw] transition duration-200"
-          onClick={() => { }}
         >
           Añadir
         </button>
