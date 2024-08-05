@@ -35,7 +35,7 @@ export function AuthContextProvider({ children }) {
   async function recoverPassword(email) {
     try {
       const response = await fetch(
-        "http://localhost:3000/users/password/recover",
+        `${import.meta.env.VITE_BACKEND_URL}users/password/recover`,
         {
           method: "POST",
           headers: {

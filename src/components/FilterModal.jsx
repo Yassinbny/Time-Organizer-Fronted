@@ -5,7 +5,7 @@ const FilterModal = ({ setSearch, setColor, setFamily, setFilterModal }) => {
   const [families, setFamilies] = useState([]);
   const getcolors = async () => {
     try {
-      const response = await fetch(`http://localhost:3000/colors`, {
+      const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}colors`, {
         headers: {
           "Content-Type": "application/json",
           Authorization: localStorage.getItem("AUTH_TOKEN_TJ"),
@@ -21,7 +21,7 @@ const FilterModal = ({ setSearch, setColor, setFamily, setFilterModal }) => {
   };
   const getFamilies = async () => {
     try {
-      const response = await fetch(`http://localhost:3000/family`, {
+      const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}family`, {
         headers: {
           "Content-Type": "application/json",
           Authorization: localStorage.getItem("AUTH_TOKEN_TJ"),

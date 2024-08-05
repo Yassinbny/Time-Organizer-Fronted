@@ -21,7 +21,7 @@ const EditPassword = (setEditPassword) => {
     };
 
     try {
-      const response = await fetch(`http://localhost:3000/users/password/reset`, {
+      const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}users/password/reset`, {
         headers: {
           "Content-Type": "application/json",
           Authorization: localStorage.getItem("AUTH_TOKEN_TJ"),

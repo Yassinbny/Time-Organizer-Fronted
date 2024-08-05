@@ -24,7 +24,7 @@ const SignUp = () => {
     delete data.password2;
 
     try {
-      const response = await fetch(`http://localhost:3000/auth/sign-up`, {
+      const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}auth/sign-up`, {
         headers: {
           "Content-Type": "application/json",
         },

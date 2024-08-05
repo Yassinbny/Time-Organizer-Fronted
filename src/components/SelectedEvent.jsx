@@ -49,7 +49,7 @@ const SelectedEvent = ({ selectedEvent, setSelectedEvent }) => {
 
     try {
       const response = await fetch(
-        `http://localhost:3000/tasks/${formInfo.task_id}`,
+        `${import.meta.env.VITE_BACKEND_URL}tasks/${formInfo.task_id}`,
         {
           headers: {
             "Content-Type": "application/json",
@@ -78,7 +78,7 @@ const SelectedEvent = ({ selectedEvent, setSelectedEvent }) => {
 
     try {
       const response = await fetch(
-        `http://localhost:3000/tasks/${formInfo.task_id}`,
+        `${import.meta.env.VITE_BACKEND_URL}tasks/${formInfo.task_id}`,
         {
           headers: {
             "Content-Type": "application/json",
