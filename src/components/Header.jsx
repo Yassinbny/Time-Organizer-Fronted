@@ -14,12 +14,12 @@ const Header = () => {
   //const [isOpen, setIsOpen] = useState(false);
   const navigate = useNavigate();
   return (
-    <header className="text-white flex flex-row justify-end items-center p-5 font-bold sm:h-[6vh] md:h-[7vh] lg:h-[8vh]">
+    <header className="text-white flex flex-row justify-end items-center h-[7vh] p-5 font-bold sm:h-[6vh] md:h-[7vh] lg:h-[8vh]">
       <img
         onClick={() => {
           navigate("/");
         }}
-        className="absolute -top-6 -left-2 w-[15vh] sm:-top8  sm:left-1 sm:w-[18vh] md:w-[20vh] lg:w-[22vh]"
+        className="absolute -top-3 -left-2 w-[15vh] sm:-top8  sm:left-1 sm:w-[18vh] md:w-[20vh] lg:w-[22vh]"
         src="images\superLetteringMultBlanco-removebg-preview2.png"
         alt="logo"
       />
