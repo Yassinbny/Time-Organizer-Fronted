@@ -54,7 +54,7 @@ const Administrator = () => {
   useEffect(() => {
     const fetchUsers = async () => {
       try {
-        const response = await fetch(`http://localhost:3000/users/`, {
+        const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}users/`, {
           method: "GET",
           headers: {
             Authorization: localStorage.getItem("AUTH_TOKEN_TJ"),
@@ -80,7 +80,7 @@ const Administrator = () => {
 
   const toggleUserStatus = async (username, enable) => {
     try {
-      await fetch(`http://localhost:3000/users/admin/status`, {
+      await fetch(`${import.meta.env.VITE_BACKEND_URL}users/admin/status`, {
         method: "PUT",
         headers: {
           Authorization: localStorage.getItem("AUTH_TOKEN_TJ"),
@@ -96,7 +96,7 @@ const Administrator = () => {
 
   const deleteUser = async (user_id) => {
     try {
-      await fetch(`http://localhost:3000/users/${user_id}`, {
+      await fetch(`${import.meta.env.VITE_BACKEND_URL}users/${user_id}`, {
         method: "DELETE",
         headers: {
           Authorization: localStorage.getItem("AUTH_TOKEN_TJ"),

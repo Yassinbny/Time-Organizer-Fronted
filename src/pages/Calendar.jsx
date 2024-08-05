@@ -39,7 +39,7 @@ const MyCalendar = () => {
       console.log(queryParams.toString());
 
       const response = await fetch(
-        `http://localhost:3000/tasks?${queryParams.toString()}`,
+        `${import.meta.env.VITE_BACKEND_URL}tasks?${queryParams.toString()}`,
         {
           headers: { Authorization: localStorage.getItem("AUTH_TOKEN_TJ") },
         }
@@ -242,7 +242,7 @@ const MyCalendar = () => {
           setFilterModal={setFilterModal}
         />
       )}
-      <ToastContainer /> {/* Agrega el ToastContainer aquí */}
+      <ToastContainer />
     </MainLayout>
   );
 };

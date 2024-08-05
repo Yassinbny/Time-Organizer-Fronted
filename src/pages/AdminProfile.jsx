@@ -23,7 +23,7 @@ const AdminProfile = () => {
 
   const fetchUserData = async () => {
     try {
-      const response = await fetch(`http://localhost:3000/users/profile/admin`, {
+      const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}users/profile/admin`, {
         method: "GET",
         headers: {
           Authorization: localStorage.getItem("AUTH_TOKEN_TJ"),
@@ -49,7 +49,7 @@ const AdminProfile = () => {
     setNewUsername(value);
 
     try {
-      const response = await fetch(`http://localhost:3000/users/profile/username`, {
+      const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}users/profile/username`, {
         method: "PUT",
         headers: {
           Authorization: localStorage.getItem("AUTH_TOKEN_TJ"),
@@ -85,7 +85,7 @@ const AdminProfile = () => {
       
 
       try {
-        const response = await fetch(`http://localhost:3000/users/profile/avatar`, {
+        const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}users/profile/avatar`, {
           method: "POST",
           headers: {
             Authorization: localStorage.getItem("AUTH_TOKEN_TJ"),

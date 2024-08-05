@@ -11,7 +11,7 @@ const ConfirmUser = () => {
   const confirmUser = async () => {
     try {
       const response = await fetch(
-        `http://localhost:3000/users/confirm/${validationCode}`,
+        `${import.meta.env.VITE_BACKEND_URL}users/confirm/${validationCode}`,
         {
           method: "GET",
         }

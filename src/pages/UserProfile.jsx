@@ -23,7 +23,7 @@ const UserProfile = () => {
   useEffect(() => {
     const fetchUserData = async () => {
       try {
-        const response = await fetch(`http://localhost:3000/users/profile`, {
+        const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}users/profile`, {
           method: "GET",
           headers: {
             Authorization: localStorage.getItem("AUTH_TOKEN_TJ"),
@@ -47,7 +47,7 @@ const UserProfile = () => {
     
 
     try {
-      const response = await fetch(`http://localhost:3000/users/profile/username`, {
+      const response = await fetch(`${process.env.BACKEND_URL}users/profile/username`, {
         method: "PUT",
         headers: {
           Authorization: localStorage.getItem("AUTH_TOKEN_TJ"),
@@ -84,7 +84,7 @@ const UserProfile = () => {
       
 
       try {
-        const response = await fetch(`http://localhost:3000/users/profile/avatar`, {
+        const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}users/profile/avatar`, {
           method: "POST",
           headers: {
             Authorization: localStorage.getItem("AUTH_TOKEN_TJ"),

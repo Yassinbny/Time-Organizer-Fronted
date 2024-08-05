@@ -18,7 +18,7 @@ const Login = () => {
     e.preventDefault();
 
     try {
-      const response = await fetch(`http://localhost:3000/auth/sign-in`, {
+      const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}auth/sign-in`, {
         headers: {
           "Content-Type": "application/json",
         },

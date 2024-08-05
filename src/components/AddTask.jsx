@@ -82,7 +82,7 @@ const AddTask = ({ setAddTask }) => {
 
   const getColors = async () => {
     try {
-      const response = await fetch(`http://localhost:3000/colors`, {
+      const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}colors`, {
         headers: {
           "Content-Type": "application/json",
           Authorization: localStorage.getItem("AUTH_TOKEN_TJ"),
@@ -99,7 +99,7 @@ const AddTask = ({ setAddTask }) => {
 
   const getFamilies = async () => {
     try {
-      const response = await fetch(`http://localhost:3000/family`, {
+      const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}family`, {
         headers: {
           "Content-Type": "application/json",
           Authorization: localStorage.getItem("AUTH_TOKEN_TJ"),
@@ -125,7 +125,7 @@ const AddTask = ({ setAddTask }) => {
     if (!validateForm()) return; // Valida el formulario antes de enviar
 
     try {
-      const response = await fetch(`http://localhost:3000/tasks`, {
+      const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}tasks`, {
         headers: {
           "Content-Type": "application/json",
           Authorization: localStorage.getItem("AUTH_TOKEN_TJ"),
