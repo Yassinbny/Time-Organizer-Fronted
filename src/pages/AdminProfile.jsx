@@ -1,4 +1,4 @@
-iimport ProfileLayout from "../layouts/ProfileLayout.jsx";
+import ProfileLayout from "../layouts/ProfileLayout.jsx";
 import useAuth from "../hooks/useAuth.jsx";
 import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
