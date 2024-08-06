@@ -65,16 +65,17 @@ const Listas = () => {
     }, [subtasks]);
   return (
     <MainLayout>
-        
-      <SubtaskList handleDeleteSubtask={handleDeleteSubtask} handleToggleSubtask={handleToggleSubtask} subtasks={subtasks} />
-      <Sidebar 
-        handleAddSubtask={handleAddSubtask} 
-        handleRemoveAllSubtasks={handleRemoveAllSubtasks} 
-        handleMarkAllAsFinished={handleMarkAllAsFinished} 
-        handleMarkAllAsUnfinished={handleMarkAllAsUnfinished} 
-        subtasks={subtasks} 
-      />
-    
+        <div className="flex flex-row min-w-full">
+            <SubtaskList className="flex-1 min-w-full" handleDeleteSubtask={handleDeleteSubtask} handleToggleSubtask={handleToggleSubtask} subtasks={subtasks} />
+            <Sidebar 
+                className="flex-1 min-w-full"
+                handleAddSubtask={handleAddSubtask} 
+                handleRemoveAllSubtasks={handleRemoveAllSubtasks} 
+                handleMarkAllAsFinished={handleMarkAllAsFinished} 
+                handleMarkAllAsUnfinished={handleMarkAllAsUnfinished} 
+                subtasks={subtasks} 
+            />
+        </div>
       
     </MainLayout>
   )

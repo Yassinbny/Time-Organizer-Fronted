@@ -16,7 +16,7 @@ const ButtonGroup = ({handleRemoveAllSubtasks, handleMarkAllAsFinished, handleMa
     }]
 
   return (
-    <section className="mt-auto flex flex-col gap-[8px]">
+    <section className="mt-auto p-8 flex flex-col gap-[8px]">
       {
         buttonGroup.map(button => (
           <Button onClick={button.onClick} className="opacity-[0.85] text-[14px]" key={button.text + button.onClick.toString()}>

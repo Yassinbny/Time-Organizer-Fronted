@@ -1,14 +1,13 @@
 /* eslint-disable react/prop-types */
 import { useRef, useState } from "react"
 import Button from "./Button.jsx"
-import { useForm } from "react-hook-form"
 import Counter from "./Counter.jsx"
 
 const AddSubtaskForm = ({onAddSubtask, subtasks}) => {
 
   const [subtaskText, setSubtaskText] = useState("")
   const inputRef = useRef()
-  const { register,formState:{errors} } = useForm()
+ 
   const handleSubmit = (e)=>{
     e.preventDefault();
 
@@ -17,41 +16,32 @@ const AddSubtaskForm = ({onAddSubtask, subtasks}) => {
       inputRef.current.focus()
       return;
     }
-
-   
-    
     onAddSubtask(subtaskText);
     setSubtaskText("");
   }
 
   return (
-    <>
-      <form onSubmit={handleSubmit}>
-        <h2>Añade un elemento</h2>
+    <div className="p-8">
+      <form className="flex flex-col" onSubmit={handleSubmit}>
+        <label htmlFor="subtask" className="text-center ">Subtarea:</label>
           <input
+          className="items-center"
           ref={inputRef}  
-          type="text"  
+          type="text"   
           value= {subtaskText}
           name="subtask"
           id="subtask"
-          {...register("subtask", {
-            required: {
-              value: true,
-              message: "El campo no puede estar vacio ",
-            }
-          })}
-
           onChange={(e) => {
             setSubtaskText(e.target.value)
           }
         } 
-        autoFocus
+        autoFocus={true}
           />
-          {errors.subtask && <span>{errors.subtask.message}</span>}
+          
           <Button>Añadir a la lista</Button>
       </form>
       <Counter subtasks={subtasks} />
-    </>
+    </div>
   )
 }
 
