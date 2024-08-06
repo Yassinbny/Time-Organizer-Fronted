@@ -9,9 +9,11 @@ import SelectedEvent from "../components/SelectedEvent.jsx";
 import AddTask from "../components/AddTask.jsx";
 import "dayjs/locale/es";
 import RateTask from "../components/RateTask.jsx";
-import { ToastContainer, toast } from "react-toastify";  // Importa ToastContainer y toast
+import { ToastContainer, toast } from "react-toastify"; // Importa ToastContainer y toast
 import "react-toastify/dist/ReactToastify.css";
 import FilterModal from "../components/FilterModal.jsx";
+import useAuth from "../hooks/useAuth.jsx";
+import { useNavigate } from "react-router-dom";
 dayjs.extend(customParseFormat);
 dayjs.extend(utc);
 
@@ -25,7 +27,8 @@ const MyCalendar = () => {
   const [search, setSearch] = useState("");
   const [color, setColor] = useState("");
   const [family, setFamily] = useState("");
-
+  const { currentUser } = useAuth();
+  const navigate = useNavigate();
   async function getData() {
     try {
       let queryParams = new URLSearchParams();
@@ -36,7 +39,7 @@ const MyCalendar = () => {
       console.log(queryParams.toString());
 
       const response = await fetch(
-        `http://localhost:3000/tasks?${queryParams.toString()}`,
+        `${import.meta.env.VITE_BACKEND_URL}tasks?${queryParams.toString()}`,
         {
           headers: { Authorization: localStorage.getItem("AUTH_TOKEN_TJ") },
         }
@@ -45,13 +48,12 @@ const MyCalendar = () => {
         throw new Error("Network response was not ok");
       }
       const data = await response.json();
-      console.log(data.tasks);
       setTasks(data.tasks);
 
       setSearch("");
     } catch (error) {
       console.log(error);
-      toast.error("Error al obtener las tareas");  // Mostrar un mensaje de error
+      toast.error("Error al obtener las tareas"); // Mostrar un mensaje de error
     }
   }
 
@@ -75,26 +77,30 @@ const MyCalendar = () => {
   useEffect(() => {
     getData();
   }, [addTask, selectedEvent, filterModal]);
+  useEffect(() => {
+    !currentUser && navigate("/login");
+  }, [currentUser]);
 
   const components = {
     event: (e) => {
+      console.log(e);
+
       return (
-        <div
-          className={`${
-            e.event.done ? "line-through" : ""
-          } decoration-black  decoration-4 bg-${
-            e.event.color ? e.event.color : "white"
-          } w-full h-full ${
-            e.event.color == "white" ? "text-black" : ""
-          } p-2 text-lg`}
-        >
-          {e.title}
+        <div className="flex flex-row justify-between">
+          <h4>{e.title}</h4>
+          <p
+            className={`${
+              e.event.color == "black" ? "text-white" : "text-black"
+            }`}
+          >
+            {e.event.family}
+          </p>
         </div>
       );
     },
   };
 
-  const notify = (message) => toast.warning(message);  // Usa toast para mostrar una notificación
+  const notify = (message) => toast.warning(message); // Usa toast para mostrar una notificación
 
   useEffect(() => {
     if (
@@ -102,7 +108,7 @@ const MyCalendar = () => {
       selectedEvent.done !== 0 &&
       selectedEvent.rating !== null
     ) {
-      notify("Esta tarea ya ha sido calificada");  // Mostrar una advertencia
+      notify("Esta tarea ya ha sido calificada"); // Mostrar una advertencia
     }
   }, [selectedEvent]);
 
@@ -136,7 +142,7 @@ const MyCalendar = () => {
           <button
             className="relative z-30"
             onClick={() => {
-              setVista("week");
+              setVista("work_week");
             }}
           >
             Semana
@@ -158,8 +164,9 @@ const MyCalendar = () => {
           </button>
         </div>
       </div>
-      <div className="bg-white p-1 w-[78vw] h-[60vh] md:text-3xl  sm:w-[50vw] sm:h-[90vh] ">
+      <div className="bg-white p-1 w-full h-[60vh] flex flex-col items-center content-center md:text-lg  sm:w-[50vw] sm:h-[90vh] ">
         <Calendar
+          className="w-full h-full text-center flex "
           localizer={localizer}
           events={events}
           startAccessor="start"
@@ -173,6 +180,25 @@ const MyCalendar = () => {
           }}
           components={components}
           culture="es"
+          eventPropGetter={(event) => {
+            const backgroundColor = event.color ? event.color : "white";
+            const textDecoration = event.done ? "line-through" : "none";
+            const textDecorationStyle = event.done ? "solid" : "";
+            const textDecorationColor = event.done ? "black" : "";
+            const textDecorationThickness = event.done ? "4px" : ""; // Ajusta el grosor aquí
+            const color = event.color === "white" ? "black" : "white"; // Opcional, para mejor contraste
+
+            return {
+              style: {
+                backgroundColor,
+                textDecoration,
+                textDecorationStyle,
+                textDecorationColor,
+                textDecorationThickness,
+                color,
+              },
+            };
+          }}
         />
       </div>
       <div className="flex flex-wrap space-y-6 sm:flex-col justify-center items-center sm:bg-fondo sm:text-2xl rounded-br-3xl sm:justify-end h-[20vh] sm:py-4 sm:h-full sm:w-[14vw] ">
@@ -193,7 +219,6 @@ const MyCalendar = () => {
           Filtrar
         </button>
       </div>
-
       {selectedEvent &&
         (selectedEvent.done == 0 ? (
           <SelectedEvent
@@ -217,7 +242,7 @@ const MyCalendar = () => {
           setFilterModal={setFilterModal}
         />
       )}
-      <ToastContainer />  {/* Agrega el ToastContainer aquí */}
+      <ToastContainer />
     </MainLayout>
   );
 };

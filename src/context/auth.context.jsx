@@ -5,11 +5,12 @@ import { useNavigate } from "react-router-dom";
 
 // crear el contexto y darle un valor inicial
 export const AuthContext = createContext({
-  currentUser: null,
+  currentUser: "",
   signIn: (token = "") => {
     console.log(token);
   },
   signOut: () => {},
+  recoverPassword: async (email) => {},
 });
 
 // crear el proveedor (provider) y luego implementarlo para envuelva a toda la aplicación (rutas)
@@ -33,24 +34,31 @@ export function AuthContextProvider({ children }) {
 
   async function recoverPassword(email) {
     try {
-      const response = await fetch(`http://localhost:3000/auth/recover-password`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ email }),
-      });
-
-      const data = await response.json();
-
+      const response = await fetch(
+        `${import.meta.env.VITE_BACKEND_URL}users/password/recover`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ email }),
+        }
+      );
+  
       if (!response.ok) {
-        throw new Error(data.error || "Error al procesar la solicitud");
+        if (response.status === 500) {
+          throw new Error("El correo electrónico es incorrecto. En unos segundos te redirigiremos a la página de registro de usuario.");
+        } else {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
       }
-
-      navigate("/password-reset-sent"); // Redirigir a la página de confirmación de envío de correo
+  
+      const data = await response.json();
+      console.log("Solicitud de recuperación de contraseña enviada:", data);
+      return { ok: true, message: data.message || "Revisa tu correo para las instrucciones de recuperación." };
     } catch (error) {
       console.error("Error al enviar solicitud de recuperación de contraseña:", error);
-      throw error; // Propaga el error para que el componente que llama a recoverPassword pueda manejarlo
+      return { ok: false, message: error.message || "Error desconocido al enviar la solicitud." };
     }
   }
 

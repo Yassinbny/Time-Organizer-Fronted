@@ -8,7 +8,7 @@ const RateTask = ({ selectedEvent, setSelectedEvent }) => {
       e.preventDefault();
 
       const response = await fetch(
-        `http://localhost:3000/tasks/${selectedEvent.id}/rating`,
+        `${import.meta.env.VITE_BACKEND_URL}tasks/${selectedEvent.id}/rating`,
         {
           headers: {
             "Content-Type": "application/json",

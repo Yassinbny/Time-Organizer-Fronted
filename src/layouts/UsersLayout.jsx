@@ -1,11 +1,16 @@
 import PropTypes from "prop-types";
+import { useNavigate } from "react-router-dom";
 
 const UsersLayout = ({ children, componente }) => {
+  const navigate = useNavigate();
   return (
     <div className="  relative  bg-black border-solid border-2 border-black rounded-3xl place-content-center ">
       <header className="text-white  flex flex-row justify-end  items-center p-5 font-bold h-15">
         <img
-          className="absolute -top-8 -left-2 sm:-top-17  sm:left-0 w-[22vh] 
+          onClick={() => {
+            navigate("/");
+          }}
+          className="absolute -top-3 -left-2 w-[15vh] sm:-top8  sm:left-1 sm:w-[18vh] md:w-[20vh] lg:w-[22vh] 
          "
           src="images\superLetteringMultBlanco-removebg-preview (1).png"
           alt="logo"

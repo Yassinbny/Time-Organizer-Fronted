@@ -1,5 +1,6 @@
 import dayjs from "dayjs";
-import { useEffect, useState } from "react";
+import { useState, useEffect } from "react";
+import { showErrorToast, showSuccessToast } from '../utils/toastUtils'; // Importa tus funciones de toastUtils
 
 const SelectedEvent = ({ selectedEvent, setSelectedEvent }) => {
   const [title, setTitle] = useState(selectedEvent.title);
@@ -7,6 +8,7 @@ const SelectedEvent = ({ selectedEvent, setSelectedEvent }) => {
   const [start, setStart] = useState(selectedEvent.start);
   const [end, setEnd] = useState(selectedEvent.end);
   const [id, setId] = useState(selectedEvent.id);
+
   let formInfo = {
     task_id: id,
     title: title,
@@ -16,12 +18,38 @@ const SelectedEvent = ({ selectedEvent, setSelectedEvent }) => {
   };
   const [body, setBody] = useState(formInfo);
 
-  const handleSubmit = async (e) => {
-    try {
-      e.preventDefault();
+  const validateForm = () => {
+    if (!title.trim()) {
+      showErrorToast("El título no puede estar vacío");
+      return false;
+    }
 
+    if (!description.trim()) {
+      showErrorToast("La descripción no puede estar vacía");
+      return false;
+    }
+
+    if (!start || !end) {
+      showErrorToast("Las fechas y horas son requeridas");
+      return false;
+    }
+
+    if (new Date(end) < new Date(start)) {
+      showErrorToast("La fecha de fin no puede ser anterior a la fecha de inicio");
+      return false;
+    }
+
+    return true;
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    if (!validateForm()) return;
+
+    try {
       const response = await fetch(
-        `http://localhost:3000/tasks/${formInfo.task_id}`,
+        `${import.meta.env.VITE_BACKEND_URL}tasks/${formInfo.task_id}`,
         {
           headers: {
             "Content-Type": "application/json",
@@ -34,20 +62,23 @@ const SelectedEvent = ({ selectedEvent, setSelectedEvent }) => {
       const { ok, error } = await response.json();
 
       if (!ok) {
-        console.error(error);
+        showErrorToast(error);
         return;
       }
+      showSuccessToast("Tarea actualizada con éxito");
       setSelectedEvent();
     } catch (error) {
       console.log(error);
+      showErrorToast("Error al actualizar la tarea");
     }
   };
-  const HandleFinishTask = async (e) => {
-    try {
-      e.preventDefault();
 
+  const HandleFinishTask = async (e) => {
+    e.preventDefault();
+
+    try {
       const response = await fetch(
-        `http://localhost:3000/tasks/${formInfo.task_id}`,
+        `${import.meta.env.VITE_BACKEND_URL}tasks/${formInfo.task_id}`,
         {
           headers: {
             "Content-Type": "application/json",
@@ -59,17 +90,21 @@ const SelectedEvent = ({ selectedEvent, setSelectedEvent }) => {
       const { ok, error } = await response.json();
 
       if (!ok) {
-        console.error(error);
+        showErrorToast(error);
         return;
       }
+      showSuccessToast("Tarea finalizada con éxito");
       setSelectedEvent();
     } catch (error) {
       console.log(error);
+      showErrorToast("Error al finalizar la tarea");
     }
   };
+
   useEffect(() => {
     setBody(formInfo);
   }, [title, description, start, end]);
+
   return (
     <div
       className="fixed -inset-y-0 -inset-x-0 z-30 flex flex-col items-center justify-center
@@ -77,14 +112,12 @@ const SelectedEvent = ({ selectedEvent, setSelectedEvent }) => {
     >
       <h2
         className="bg-fondoPopup text-3xl pt-4 text-white rounded-t-2xl w-[70vw] md:w-[50vw]
-       sm:w-[60vw] text-center sm:text-6xl"
+      sm:w-[60vw] text-center sm:text-6xl"
       >
         Modificar tarea
       </h2>
       <form
-        onSubmit={(e) => {
-          handleSubmit(e);
-        }}
+        onSubmit={handleSubmit}
         className="flex flex-col items-center  justify-evenly sm:justify-center space-y-12 content-center
          sm:text-4xl  bg-fondoPopup
          p-6 rounded-b-2xl shadow-lg  w-[70vw] sm:w-[60vw] md:w-[50vw] h-[70vh] text-center"
@@ -123,6 +156,7 @@ const SelectedEvent = ({ selectedEvent, setSelectedEvent }) => {
                 setStart(e.target.value);
                 setBody(formInfo);
               }}
+              disabled
             />
           </div>
           <div>
@@ -133,7 +167,7 @@ const SelectedEvent = ({ selectedEvent, setSelectedEvent }) => {
               className="w-[46vw] bg-transparent text-gray-400 sm:w-[23vw]"
               type="datetime-local"
               value={dayjs(end).format("YYYY-MM-DDTHH:mm")}
-              min={"1900-01-01T00:00:00"}
+              min={dayjs(start).format("YYYY-MM-DDTHH:mm")}
               max={"2040-01-01T00:00:00"}
               onChange={(e) => {
                 setEnd(e.target.value);
@@ -152,8 +186,8 @@ const SelectedEvent = ({ selectedEvent, setSelectedEvent }) => {
           Cerrar
         </button>
         <button
+          type="submit"
           className="bg-green-600  px-4 py-2 rounded-2xl hover:bg-green-900 w-[30vw] transition duration-200"
-          onClick={() => {}}
         >
           Actualizar
         </button>
