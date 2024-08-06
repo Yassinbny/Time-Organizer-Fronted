@@ -15,6 +15,7 @@ import Help from "./pages/Help.jsx";
 import UserProfile from "./pages/UserProfile.jsx";
 import AdminProfile from "./pages/AdminProfile.jsx";
 import Administrator from "./pages/Administrator.jsx";
+import ConfirmRecoverPassword from "./pages/ConfirmRecoverPassword.jsx";
 
 function App() {
   return (
@@ -32,6 +33,7 @@ function App() {
           <Route path="/user-profile" element={<UserProfile />} />
           <Route path="/admin-profile" element={<AdminProfile />} />
           <Route path="/administrator" element={<Administrator />} />
+          <Route path="/confirmation-recover-password" element={<ConfirmRecoverPassword />} />
         </Routes>
         <ToastContainer />
       </>

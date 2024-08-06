@@ -44,18 +44,21 @@ export function AuthContextProvider({ children }) {
           body: JSON.stringify({ email }),
         }
       );
-
+  
       if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
+        if (response.status === 500) {
+          throw new Error("El correo electrónico es incorrecto. En unos segundos te redirigiremos a la página de registro de usuario.");
+        } else {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
       }
-
+  
       const data = await response.json();
       console.log("Solicitud de recuperación de contraseña enviada:", data);
+      return { ok: true, message: data.message || "Revisa tu correo para las instrucciones de recuperación." };
     } catch (error) {
-      console.error(
-        "Error al enviar solicitud de recuperación de contraseña:",
-        error
-      );
+      console.error("Error al enviar solicitud de recuperación de contraseña:", error);
+      return { ok: false, message: error.message || "Error desconocido al enviar la solicitud." };
     }
   }
 
