@@ -8,7 +8,7 @@ import { showErrorToast, showSuccessToast } from "../utils/toastUtils"; // Impor
 const Administrator = () => {
   const { currentUser } = useAuth();
   const navigate = useNavigate();
-  const [users, setUsers] = useState([]);
+  const [users, setUsers] = useState();
 
   console.log(users);
     const columns = [
@@ -60,11 +60,10 @@ const Administrator = () => {
             Authorization: localStorage.getItem("AUTH_TOKEN_TJ"),
           },
         });
-        await response.json();
-
-        //setUsers(response.data);
+        const result = await response.json();
+        setUsers(result.users);
         /*
-        setUsers(users.map(users => ({
+        const mapeo = (users.map(users => ({
           username: users.username,
           email: users.email,
           role: users.role,

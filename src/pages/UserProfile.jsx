@@ -1,49 +1,42 @@
 import ProfileLayout from "../layouts/ProfileLayout.jsx";
 import useAuth from "../hooks/useAuth.jsx";
-//import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import EditPassword from "../components/EditPassword.jsx";
-import { SlPencil, SlCamera } from "react-icons/sl";
+import { FaCamera, FaPen, FaSave } from "react-icons/fa";
 import { toast } from "react-toastify"; // Importa ToastContainer y toast
 import "react-toastify/dist/ReactToastify.css";
 
 const UserProfile = () => {
   const { currentUser } = useAuth();
-  //const navigate = useNavigate();
   const [userData, setUserData] = useState();
   const [newUsername, setNewUsername] = useState("");
   const [editPassword, setEditPassword] = useState(false);
-  //const userId = localStorage.getItem("user_id");
   const apiUrl = import.meta.env.VITE_API_URL;
   const [avatarUrl, setAvatarUrl] = useState("/avatarDefault.jpg");
   //const avatarUrl= userData.avatar ? `${apiUrl}/${userData.avatar}` : "/avatarDefault.jpg";
 
-  const fetchUserData = async () => {
-    try {
-      const response = await fetch(
-        `${import.meta.env.VITE_BACKEND_URL}users/profile`,
-        {
-          method: "GET",
-          headers: {
-            Authorization: localStorage.getItem("AUTH_TOKEN_TJ"),
-          },
-        }
-      );
-      //await response.json();
-      const result = await response.json();
-      const avatarFromApi = result.users.avatar;
-      console.log(avatarFromApi);
-      setAvatarUrl(`${apiUrl}/${avatarFromApi}`);
-      console.log(">>>>>", result.users.username);
-      setUserData(result.users);
-    } catch (error) {
-      console.log("error al obtener datos:", error);
-    }
-  };
   useEffect(() => {
-    fetchUserData();
+    const fetchUserData = async () => {
+      try {
+        const response = await fetch(
+          `${import.meta.env.VITE_BACKEND_URL}users/profile`,
+          {
+            method: "GET",
+            headers: {
+              Authorization: localStorage.getItem("AUTH_TOKEN_TJ"),
+            },
+          }
+        );
+        const result = await response.json();      
+        console.log(">>>>>>",result.users.username);
+        setUserData(result.users);
+      } catch (error) {
+        console.log("error al obtener datos:", error);
+      }
+    };
+    fetchUserData();    
   }, [apiUrl]);
-
+  
   const updateUsername = async () => {
     try {
       const response = await fetch(
@@ -65,6 +58,7 @@ const UserProfile = () => {
         return;
       } else {
         toast.success("Nombre de usuario actualizado con éxito"); // Notificación de éxito
+        //await fecthUserData
       }
     } catch (error) {
       console.log("Error al actualizar los datos:", error);
@@ -92,15 +86,20 @@ const UserProfile = () => {
             body: formData,
           }
         );
-        if (response.ok) {
-          toast.error("Error al actualizar el avatar"); // Notificación de error
-          await fetchUserData();
-        } else {
+        if (!response.ok) {
           console.log("Error al actualizar el avatar:");
           toast.error("Error al actualizar el avatar"); // Notificación de error
+          const avatarFromApi = userData.avatar;      
+          setAvatarUrl(avatarFromApi ? `${apiUrl}/${avatarFromApi}` : "/avatarDefault.jpg");
+          
+        } else {
+          await fetchUserData();
+          toast.success("Avatar actualizado con éxito"); // Notificación de éxito
         }
       } catch (error) {
         console.log("Error al actualizar tu avatar:", error);
+        const avatarFromApi = userData.avatar;      
+        setAvatarUrl(avatarFromApi ? `${apiUrl}/${avatarFromApi}` : "/avatarDefault.jpg");
         toast.error("Error al actualizar tu avatar"); // Notificación de error
       }
       // Actualizar el estado del avatar
@@ -135,7 +134,7 @@ const UserProfile = () => {
                   htmlFor="avatar"
                   className="absolute bottom-3 -right-2 cursor-pointer"
                 >
-                  <SlCamera />
+                  <FaCamera />
                 </label>
                 <input
                   id="avatar"
@@ -174,7 +173,7 @@ const UserProfile = () => {
                 }}
                 className="absolute top-12 md:top-14 right-5 cursor-pointer"
               >
-                <SlPencil />
+                <FaSave />
               </div>
             </div>
             <div className="flex flex-col py-4 relative ">
@@ -194,9 +193,9 @@ const UserProfile = () => {
                 onClick={() => {
                   setEditPassword(true);
                 }}
-                className="absolute top-12 md:top-14 lg:top-12 right-5  cursor-pointer"
+                className="absolute top-12 md:top-14 lg:top-14 right-5  cursor-pointer"
               >
-                <SlPencil />
+                <FaPen />
               </div>
             </div>
           </form>

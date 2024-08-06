@@ -9,13 +9,10 @@ const EditPassword = (setEditPassword) => {
   const [password, setPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
 
-  //const userId = currentUser.user_id;
-
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     let body = {
-      //userId,
       password:password,
       newPassword:newPassword,
     };
@@ -29,6 +26,7 @@ const EditPassword = (setEditPassword) => {
         method: "PUT",
         body: JSON.stringify( body ),
       });
+      //await response.json();
 
       if (!response.ok) {
         const errorResponse = await response.json();
@@ -45,6 +43,10 @@ const EditPassword = (setEditPassword) => {
       }
       //setEditPassword(false);
       navigate("/user-profile");
+      /*(userData.role === "admin"
+          ? "/admin-profile"
+          : "/user-profile"
+        ) */
 
     } catch (error) {
       console.error("Error al cambiar tu contraseña:", error);
