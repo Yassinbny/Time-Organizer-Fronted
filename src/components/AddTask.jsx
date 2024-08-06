@@ -1,5 +1,5 @@
-import { useState, useEffect } from 'react';
-import { showErrorToast, showSuccessToast } from '../utils/toastUtils'; // Importa tus funciones de toastUtils
+import { useState, useEffect } from "react";
+import { showErrorToast, showSuccessToast } from "../utils/toastUtils"; // Importa tus funciones de toastUtils
 
 const AddTask = ({ setAddTask }) => {
   const [title, setTitle] = useState("");
@@ -58,12 +58,16 @@ const AddTask = ({ setAddTask }) => {
     const endDate = new Date(end);
 
     if (startDate < now) {
-      showErrorToast("Error: La fecha y hora no puede ser anterior al día de hoy");
+      showErrorToast(
+        "Error: La fecha y hora no puede ser anterior al día de hoy"
+      );
       return false;
     }
 
     if (endDate < startDate) {
-      showErrorToast("Error: La fecha de fin no puede ser anterior a la fecha de inicio");
+      showErrorToast(
+        "Error: La fecha de fin no puede ser anterior a la fecha de inicio"
+      );
       return false;
     }
 
@@ -82,13 +86,16 @@ const AddTask = ({ setAddTask }) => {
 
   const getColors = async () => {
     try {
-      const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}colors`, {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: localStorage.getItem("AUTH_TOKEN_TJ"),
-        },
-        method: "GET",
-      });
+      const response = await fetch(
+        `${import.meta.env.VITE_BACKEND_URL}colors`,
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: localStorage.getItem("AUTH_TOKEN_TJ"),
+          },
+          method: "GET",
+        }
+      );
       const info = await response.json();
       setColores(info.colors);
     } catch (error) {
@@ -99,13 +106,16 @@ const AddTask = ({ setAddTask }) => {
 
   const getFamilies = async () => {
     try {
-      const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}family`, {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: localStorage.getItem("AUTH_TOKEN_TJ"),
-        },
-        method: "GET",
-      });
+      const response = await fetch(
+        `${import.meta.env.VITE_BACKEND_URL}family`,
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: localStorage.getItem("AUTH_TOKEN_TJ"),
+          },
+          method: "GET",
+        }
+      );
       const info = await response.json();
       setFamilies(info.taskFamilies);
     } catch (error) {
@@ -134,7 +144,7 @@ const AddTask = ({ setAddTask }) => {
         body: JSON.stringify(body),
       });
       const res = await response.json();
-      if (response.ok) {
+      if (res.ok) {
         showSuccessToast("Tarea añadida exitosamente");
         setAddTask(false);
       } else {

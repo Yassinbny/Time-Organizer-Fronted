@@ -1,48 +1,67 @@
 /* eslint-disable react/prop-types */
-import { useRef, useState } from "react"
-import Button from "./Button.jsx"
-import Counter from "./Counter.jsx"
+import { useRef, useState } from "react";
+import Button from "./Button.jsx";
+import Counter from "./Counter.jsx";
+import useAuth from "../../hooks/useAuth.jsx";
 
-const AddSubtaskForm = ({onAddSubtask, subtasks}) => {
+const AddSubtaskForm = ({ onAddSubtask, subtasks }) => {
+  const [subtaskText, setSubtaskText] = useState("");
+  const inputRef = useRef();
+  const { selectedEvent } = useAuth();
+  const { id } = selectedEvent;
+  const handleSubmit = async (e) => {
+    try {
+      e.preventDefault();
 
-  const [subtaskText, setSubtaskText] = useState("")
-  const inputRef = useRef()
- 
-  const handleSubmit = (e)=>{
-    e.preventDefault();
+      if (!subtaskText) {
+        alert("El campo no puede estar vacio");
+        inputRef.current.focus();
+        return;
+      }
+      const response = await fetch(
+        `${import.meta.env.VITE_BACKEND_URL}tasks/${id}/subtask`,
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: localStorage.getItem("AUTH_TOKEN_TJ"),
+          },
+          method: "POST",
+          body: JSON.stringify({ title: subtaskText }),
+        }
+      );
+      const res = await response.json();
 
-    if(!subtaskText) {
-      alert("El campo no puede estar vacio")
-      inputRef.current.focus()
-      return;
+      onAddSubtask(subtaskText);
+      setSubtaskText("");
+    } catch (error) {
+      console.log(error);
     }
-    onAddSubtask(subtaskText);
-    setSubtaskText("");
-  }
+  };
 
   return (
     <div className="p-8">
       <form className="flex flex-col" onSubmit={handleSubmit}>
-        <label htmlFor="subtask" className="text-center ">Subtarea:</label>
-          <input
+        <label htmlFor="subtask" className="text-center ">
+          Subtarea:
+        </label>
+        <input
           className="items-center"
-          ref={inputRef}  
-          type="text"   
-          value= {subtaskText}
+          ref={inputRef}
+          type="text"
+          value={subtaskText}
           name="subtask"
           id="subtask"
           onChange={(e) => {
-            setSubtaskText(e.target.value)
-          }
-        } 
-        autoFocus={true}
-          />
-          
-          <Button>Añadir a la lista</Button>
-      </form>
-      <Counter subtasks={subtasks} />
-    </div>
-  )
-}
+            setSubtaskText(e.target.value);
+          }}
+          autoFocus={true}
+        />
 
-export default AddSubtaskForm
+        <Button>Añadir a la lista</Button>
+      </form>
+      {/* <Counter subtasks={subtasks} /> */}
+    </div>
+  );
+};
+
+export default AddSubtaskForm;

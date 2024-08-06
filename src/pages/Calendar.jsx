@@ -21,7 +21,7 @@ const MyCalendar = () => {
   const [tasks, setTasks] = useState([]);
   const localizer = dayjsLocalizer(dayjs);
   const [vista, setVista] = useState("day");
-  const [selectedEvent, setSelectedEvent] = useState();
+  const { selectedEvent, setSelectedEvent } = useAuth();
   const [addTask, setAddTask] = useState(false);
   const [filterModal, setFilterModal] = useState(false);
   const [search, setSearch] = useState("");
@@ -35,8 +35,6 @@ const MyCalendar = () => {
       if (search) queryParams.append("search", search);
       if (color) queryParams.append("color", color);
       if (family) queryParams.append("family", family);
-
-      console.log(queryParams.toString());
 
       const response = await fetch(
         `${import.meta.env.VITE_BACKEND_URL}tasks?${queryParams.toString()}`,
@@ -83,8 +81,6 @@ const MyCalendar = () => {
 
   const components = {
     event: (e) => {
-      console.log(e);
-
       return (
         <div className="flex flex-row justify-between">
           <h4>{e.title}</h4>

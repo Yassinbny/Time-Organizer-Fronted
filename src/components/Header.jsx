@@ -40,7 +40,7 @@ const Header = () => {
                 <NavLink to="/calendar">CALENDARIOS</NavLink>
               </li>
               <li>
-                <NavLink to="/listas"> LISTAS</NavLink>
+                <NavLink to="/list"> LISTAS</NavLink>
               </li>
               <li>
                 <GrSearch className="sm:w-6 lg:w-9 sm:h-6 lg:h-10" />
