@@ -1,6 +1,7 @@
 import dayjs from "dayjs";
 import { useState, useEffect } from "react";
-import { showErrorToast, showSuccessToast } from '../utils/toastUtils'; // Importa tus funciones de toastUtils
+import { showErrorToast, showSuccessToast } from "../utils/toastUtils"; // Importa tus funciones de toastUtils
+import { useNavigate } from "react-router-dom";
 
 const SelectedEvent = ({ selectedEvent, setSelectedEvent }) => {
   const [title, setTitle] = useState(selectedEvent.title);
@@ -17,6 +18,8 @@ const SelectedEvent = ({ selectedEvent, setSelectedEvent }) => {
     finish_on: end,
   };
   const [body, setBody] = useState(formInfo);
+
+  const navigate = useNavigate();
 
   const validateForm = () => {
     if (!title.trim()) {
@@ -35,7 +38,9 @@ const SelectedEvent = ({ selectedEvent, setSelectedEvent }) => {
     }
 
     if (new Date(end) < new Date(start)) {
-      showErrorToast("La fecha de fin no puede ser anterior a la fecha de inicio");
+      showErrorToast(
+        "La fecha de fin no puede ser anterior a la fecha de inicio"
+      );
       return false;
     }
 
@@ -120,7 +125,7 @@ const SelectedEvent = ({ selectedEvent, setSelectedEvent }) => {
         onSubmit={handleSubmit}
         className="flex flex-col items-center  justify-evenly sm:justify-center space-y-12 content-center
          sm:text-4xl  bg-fondoPopup
-         p-6 rounded-b-2xl shadow-lg  w-[70vw] sm:w-[60vw] md:w-[50vw] h-[70vh] text-center"
+         p-6 rounded-b-2xl shadow-lg  w-[70vw] sm:w-[60vw] md:w-[50vw] h-[70vh] md:h-[80vh] text-center"
       >
         <input
           type="text"
@@ -176,29 +181,39 @@ const SelectedEvent = ({ selectedEvent, setSelectedEvent }) => {
             />
           </div>
         </div>
+        <div className="grid grid-flow-col grid-rows-2 gap-4 sm  ">
+          <button
+            className="bg-green-600  py-2 rounded-2xl hover:bg-green-900 w-[25vw] sm:w-[20vw] sm:text-2xl md:h-[10vh] md:text-4xl   transition duration-200"
+            onClick={() => {
+              setSelectedEvent();
+            }}
+          >
+            Cerrar
+          </button>
 
-        <button
-          className="bg-green-600  px-4 py-2 rounded-2xl hover:bg-green-900 w-[30vw] transition duration-200"
-          onClick={() => {
-            setSelectedEvent();
-          }}
-        >
-          Cerrar
-        </button>
-        <button
-          type="submit"
-          className="bg-green-600  px-4 py-2 rounded-2xl hover:bg-green-900 w-[30vw] transition duration-200"
-        >
-          Actualizar
-        </button>
-        <button
-          className="bg-green-600  px-4 py-2 rounded-2xl hover:bg-green-900 w-[30vw] transition duration-200"
-          onClick={(e) => {
-            HandleFinishTask(e);
-          }}
-        >
-          Finalizar
-        </button>
+          <button
+            type="submit"
+            className="bg-green-600  px-4 py-2 rounded-2xl hover:bg-green-900 w-[25vw]  sm:w-[20vw] sm:text-2xl md:h-[10vh] md:text-4xl transition duration-200"
+          >
+            Actualizar
+          </button>
+          <button
+            className="bg-green-600  px-4 py-2 rounded-2xl hover:bg-green-900 w-[25vw]  sm:w-[20vw] sm:text-2xl md:h-[10vh] md:text-4xl transition duration-200"
+            onClick={(e) => {
+              HandleFinishTask(e);
+            }}
+          >
+            Finalizar
+          </button>
+          <button
+            className="bg-green-600  px-4 py-2 rounded-2xl hover:bg-green-900 w-[25vw]  sm:w-[20vw] sm:text-2xl md:h-[10vh] md:text-4xl transition duration-200"
+            onClick={(e) => {
+              navigate("/list");
+            }}
+          >
+            Detalle
+          </button>
+        </div>
       </form>
     </div>
   );

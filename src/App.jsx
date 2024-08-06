@@ -1,7 +1,3 @@
-
-
-
-
 import { useContext } from "react";
 import { AuthContext, AuthContextProvider } from "./context/auth.context.jsx";
 
@@ -25,18 +21,15 @@ import Listas from "./pages/Listas.jsx";
 
 import ConfirmRecoverPassword from "./pages/ConfirmRecoverPassword.jsx";
 
-
 function App() {
   return (
     <AuthContextProvider>
-
-
       <>
         <Routes>
           <Route path="/signup" element={<SignUp />} />
           <Route path="/calendar" element={<MyCalendar />} />
           <Route path="/login" element={<Login />} />
-          <Route path="/listas" element={<Listas />} />
+          <Route path="/list" element={<Listas />} />
           <Route path="/" element={<Home />} />
           <Route path="/confirm/:validationCode" element={<ConfirmUser />} />
           <Route path="/recover-password" element={<RecoverPassword />} />
@@ -45,11 +38,13 @@ function App() {
           <Route path="/user-profile" element={<UserProfile />} />
           <Route path="/admin-profile" element={<AdminProfile />} />
           <Route path="/administrator" element={<Administrator />} />
-          <Route path="/confirmation-recover-password" element={<ConfirmRecoverPassword />} />
+          <Route
+            path="/confirmation-recover-password"
+            element={<ConfirmRecoverPassword />}
+          />
         </Routes>
         <ToastContainer />
       </>
-
     </AuthContextProvider>
   );
 }

@@ -46,7 +46,7 @@ export default function DropDownMenu() {
                 </NavLink>
               </MenuItem>
               <MenuItem>
-                <NavLink to="/listas" className={`block px-4 py-2 text-sm `}>
+                <NavLink to="/list" className={`block px-4 py-2 text-sm `}>
                   LISTAS
                 </NavLink>
               </MenuItem>
