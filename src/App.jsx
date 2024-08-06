@@ -1,5 +1,10 @@
-import React, { useContext } from "react";
+
+
+
+
+import { useContext } from "react";
 import { AuthContext, AuthContextProvider } from "./context/auth.context.jsx";
+
 import { Route, Routes } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css"; // Importa los estilos de react-toastify
@@ -15,16 +20,23 @@ import Help from "./pages/Help.jsx";
 import UserProfile from "./pages/UserProfile.jsx";
 import AdminProfile from "./pages/AdminProfile.jsx";
 import Administrator from "./pages/Administrator.jsx";
+
+import Listas from "./pages/Listas.jsx";
+
 import ConfirmRecoverPassword from "./pages/ConfirmRecoverPassword.jsx";
+
 
 function App() {
   return (
     <AuthContextProvider>
+
+
       <>
         <Routes>
           <Route path="/signup" element={<SignUp />} />
           <Route path="/calendar" element={<MyCalendar />} />
           <Route path="/login" element={<Login />} />
+          <Route path="/listas" element={<Listas />} />
           <Route path="/" element={<Home />} />
           <Route path="/confirm/:validationCode" element={<ConfirmUser />} />
           <Route path="/recover-password" element={<RecoverPassword />} />
@@ -37,6 +49,7 @@ function App() {
         </Routes>
         <ToastContainer />
       </>
+
     </AuthContextProvider>
   );
 }
