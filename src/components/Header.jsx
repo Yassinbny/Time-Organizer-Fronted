@@ -67,7 +67,10 @@ const Header = () => {
                 </NavLink>
               </li>
               <li onClick={signOut}>
-                <GrLogout className="sm:w-7 lg:w-10 sm:h-7 lg:h-10" />
+                <NavLink
+                  to="/login">
+                    <GrLogout className="sm:w-7 lg:w-10 sm:h-7 lg:h-10" />
+                </NavLink>  
               </li>
             </>
           )}
