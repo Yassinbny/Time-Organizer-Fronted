@@ -61,13 +61,13 @@ const Login = () => {
           action=""
           noValidate
           className="flex flex-col items-center w-full h-full justify-evenly content-center
-          text-base sm:text-lg md:text-3xl "
+          text-base sm:text-lg md:text-2xl"
           onSubmit={handleSubmit}
         >
-          <div className="flex flex-col space-y-2">
+          <div className="flex flex-col space-y-2 font-bold">
             <label htmlFor="">Correo Electrónico:</label>
             <input
-              className="h-10 rounded-xl w-[250px] sm:w-[350px] sm:h-16 md:w-[25vw] md:h-24 p-3  bg-white  "
+              className="h-15 rounded-xl w-[250px] sm:w-[250px] sm:h-10 md:w-[25vw] md:h-16 p-3 bg-white"
               type="email"
               value={email}
               onChange={handleInputChange}
@@ -75,10 +75,10 @@ const Login = () => {
               id="email"
             />
           </div>
-          <div className="flex flex-col space-y-2">
+          <div className="flex flex-col space-y-2 font-bold">
             <label>Contraseña:</label>
             <input
-              className="h-10 rounded-xl w-[250px] sm:w-[350px] md:w-[25vw] md:h-24 sm:h-16 p-3   bg-white"
+              className="h-15 rounded-xl w-[250px] sm:w-[250px] sm:h-10 md:w-[25vw] md:h-16 p-3 bg-white "
               type="password"
               value={password}
               onChange={handleInputChange}
@@ -93,11 +93,11 @@ const Login = () => {
             </a>
           </div>
 
-          <button className="bg-black text-white text-center font-bold w-[150px] h-10 sm:w-[300px]  sm:h-12 md:w-[300px] md:h-24 rounded-xl ">
+          <button className="bg-black text-white font-bold py-3.5 px-7 rounded-lg">
             Iniciar Sesión
           </button>
         </form>
-        <div className="flex flex-col items-center rounded-2xl content-center justify-evenly text-[4vw] sm:text-[24px] md:text-[32px] bg-black text-1xl text-white h-20 sm:h-32 md:h-44">
+        <div className="flex flex-col items-center rounded-2xl content-center justify-evenly text-[4vw] sm:text-[18px] md:text-[24px] bg-black text-1xl text-white h-15 sm:h-18 md:h-22">
           <p>¿No tienes una cuenta?</p>
           <Link
             to="/signup"

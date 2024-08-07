@@ -50,19 +50,19 @@ const ChangeForgotPassword = () => {
 
   return (
     <UsersLayout componente={"RECUPERA TU CUENTA"}>
-      <div className="bg-green-100 flex flex-col justify-evenly w-full h-full content-center p-6 rounded-xl">
+      <div className="bg-rose-100 flex flex-col justify-evenly w-full h-full content-center rounded-xl">
         <form
           noValidate
-          className="flex flex-col items-center w-full h-full justify-evenly text-base sm:text-lg md:text-3xl"
+          className="flex flex-col items-center w-full h-full justify-evenly text-base sm:text-lg md:text-2xl"
           onSubmit={handleSubmit}
         >
-          <p className="text-center justify-center font-extrabold leading-[1.5]">
+          <p className="text-center justify-center font-extrabold leading-[1.8]">
             ¡Ahora puedes cambiar tu contraseña olvidada!
           </p>
-          <div className="flex flex-col space-y-2 text-[4vw] sm:text-[20px] md:text-[30px] leading-[1.3] font-extrabold">
+          <div className="flex flex-col space-y-2">
             <label htmlFor="email">Correo Electrónico:</label>
             <input
-              className="h-10 rounded-xl w-[250px] sm:w-[350px] sm:h-14 md:w-[25vw] md:h-16 p-3 bg-white"
+              className="h-15 rounded-xl w-[250px] sm:w-[250px] sm:h-10 md:w-[25vw] md:h-16 p-3 bg-white"
               type="email"
               value={email}
               onChange={handleInputChange}
@@ -71,10 +71,10 @@ const ChangeForgotPassword = () => {
               required
             />
           </div>
-          <div className="flex flex-col space-y-2 text-[4vw] sm:text-[20px] md:text-[30px] leading-[1.3] font-extrabold">
-            <label htmlFor="code">Código de Recuperación:</label>
+          <div className="flex flex-col space-y-2">
+            <label htmlFor="code"> Tu Código:</label>
             <input
-              className="h-10 rounded-xl w-[250px] sm:w-[350px] sm:h-14 md:w-[25vw] md:h-16 p-3 bg-white"
+              className="h-15 rounded-xl w-[250px] sm:w-[250px] sm:h-10 md:w-[25vw] md:h-16 p-3 bg-white"
               type="text"
               value={code}
               onChange={handleInputChange}
@@ -83,10 +83,10 @@ const ChangeForgotPassword = () => {
               required
             />
           </div>
-          <div className="flex flex-col space-y-2 text-[4vw] sm:text-[20px] md:text-[30px] leading-[1.3] font-extrabold">
+          <div className="flex flex-col space-y-2">
             <label htmlFor="newPassword">Nueva Contraseña:</label>
             <input
-              className="h-10 rounded-xl w-[250px] sm:w-[350px] sm:h-14 md:w-[25vw] md:h-16 p-3 bg-white"
+              className="h-15 rounded-xl w-[250px] sm:w-[250px] sm:h-10 md:w-[25vw] md:h-16 p-3 bg-white"
               type="password"
               value={newPassword}
               onChange={handleInputChange}
@@ -95,10 +95,10 @@ const ChangeForgotPassword = () => {
               required
             />
           </div>
-          <div className="flex flex-col space-y-2 text-[4vw] sm:text-[20px] md:text-[30px] leading-[1.3] font-extrabold">
+          <div className="flex flex-col space-y-2">
             <label htmlFor="confirmPassword">Confirmar Contraseña:</label>
             <input
-              className="h-10 rounded-xl w/[250px] sm:w/[350px] sm:h-14 md:w/[25vw] md:h-16 p-3 bg-white"
+              className="h-15 rounded-xl w-[250px] sm:w-[250px] sm:h-10 md:w-[25vw] md:h-16 p-3 bg-white"
               type="password"
               value={confirmPassword}
               onChange={handleInputChange}
@@ -108,8 +108,9 @@ const ChangeForgotPassword = () => {
             />
           </div>
           {error && <p className="text-red-500">{error}</p>}
-          <button className="bg-black text-white text-center font-bold w-[180px] sm:w-[320px] md:w-[220px] h-10 sm:h-12 md:h-20 rounded-xl">
-            CAMBIAR CONTRASEÑA
+          <button className="bg-black text-white text-center font-bold w-[180px] sm:w-[320px] md:w-[240px] h-10 sm:h-12 md:h-20 rounded-xl"
+          onClick={() => navigate("/login")}>
+            CÁMBIALA Y LOGUÉATE
           </button>
         </form>
         
