@@ -14,8 +14,6 @@ const SubtaskList = ({
   subtasks,
   handleDeleteSubtask,
   handleToggleSubtask,
-  onDeleteSubtask,
-  onToggleSubtask,
 }) => {
   const navigate = useNavigate();
   const { selectedEvent, setSelectedEvent } = useAuth();
@@ -81,7 +79,9 @@ const SubtaskList = ({
                     className="flex justify-between items-center bg-white shadow-md rounded-lg p-4 mb-4 border-b border-dotted border-gray-300"
                   >
                     <span className="text-gray-800 text-sm md:text-base">
-                      <label>
+                      <label
+                        className={`${subtask.done ? "line-through" : ""}`}
+                      >
                         <input
                           onChange={() =>
                             handleToggleSubtask(subtask.subtask_id)

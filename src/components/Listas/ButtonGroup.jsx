@@ -1,31 +1,21 @@
-import Button from "./Button.jsx"
+import useAuth from "../../hooks/useAuth.jsx";
 
-const ButtonGroup = ({handleRemoveAllSubtasks, handleMarkAllAsFinished, handleMarkAllAsUnfinished }) => {
-
-  const buttonGroup = [{
-    text:"Marca todas como completadas",
-    onClick: handleMarkAllAsFinished
-    },
-   {
-    text:"Marca todas como no completadas",
-    onClick: handleMarkAllAsUnfinished
-    },
-    {
-      text:"Borra todas",
-      onClick: handleRemoveAllSubtasks
-    }]
-
+const ButtonGroup = ({ handleRemoveAllSubtasks }) => {
+  const { selectedEvent } = useAuth();
+  const { id } = selectedEvent;
   return (
     <section className="mt-auto p-8 flex flex-col gap-[8px]">
-      {
-        buttonGroup.map(button => (
-          <Button onClick={button.onClick} className="opacity-[0.85] text-[14px]" key={button.text + button.onClick.toString()}>
-            {button.text}
-          </Button>
-        ))
-      }
+      <button
+        className="h-[45px] w-full px-1 border-solid border-2 border-black rounded-lg bg-[#473a2b] text-white text-[16px] 
+      cursor-pointer flex justify-center items-center [transition:all_0.2s]"
+        onClick={() => {
+          handleRemoveAllSubtasks(id);
+        }}
+      >
+        Borrar Todas
+      </button>
     </section>
-  )
-}
+  );
+};
 
-export default ButtonGroup
+export default ButtonGroup;

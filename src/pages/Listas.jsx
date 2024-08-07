@@ -12,26 +12,41 @@ const Listas = () => {
 
   const [subtasks, setSubtasks] = useState();
   const [reload, setreload] = useState(true);
-  const handleAddSubtask = (newSubtaskText) => {
-    const newSubtask = {
-      id: subtasks.length + 1,
-      name: newSubtaskText,
-      checked: false,
-    };
-    const newSubtasks = [...subtasks, newSubtask];
-    setSubtasks(newSubtasks);
-    setreload(!reload);
-  };
+  // const handleAddSubtask = (newSubtaskText) => {
+  //   const newSubtask = {
+  //     id: subtasks.length + 1,
+  //     name: newSubtaskText,
+  //     checked: false,
+  //   };
+  //   const newSubtasks = [...subtasks, newSubtask];
+  //   setSubtasks(newSubtasks);
+  //   setreload(!reload);
+  // };
 
-  const handleDeleteSubtask = (subtaskId) => {
-    const newSubtasks = subtasks.filter((subtask) => subtask.id !== subtaskId);
-    setSubtasks(newSubtasks);
+  const handleDeleteSubtask = async (subtaskId) => {
+    try {
+      console.log(subtaskId);
+
+      const response = await fetch(
+        `${import.meta.env.VITE_BACKEND_URL}tasks/subtask/${subtaskId}`,
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: localStorage.getItem("AUTH_TOKEN_TJ"),
+          },
+          method: "DELETE",
+        }
+      );
+      const info = await response.json();
+
+      setreload(!reload);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const handleToggleSubtask = async (subtaskId) => {
     try {
-      console.log(subtaskId);
-
       const response = await fetch(
         `${import.meta.env.VITE_BACKEND_URL}tasks/subtask/${subtaskId}`,
         {
@@ -43,7 +58,6 @@ const Listas = () => {
         }
       );
       const info = await response.json();
-      console.log(info);
 
       setreload(!reload);
     } catch (error) {
@@ -51,8 +65,26 @@ const Listas = () => {
     }
   };
 
-  const handleRemoveAllSubtasks = () => {
-    setSubtasks([]);
+  const handleRemoveAllSubtasks = async (task_id) => {
+    try {
+      console.log(task_id);
+
+      const response = await fetch(
+        `${import.meta.env.VITE_BACKEND_URL}tasks/${task_id}/subtask`,
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: localStorage.getItem("AUTH_TOKEN_TJ"),
+          },
+          method: "DELETE",
+        }
+      );
+      const info = await response.json();
+
+      setreload(!reload);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const handleMarkAllAsFinished = () => {
@@ -94,12 +126,13 @@ const Listas = () => {
     }
   };
   useEffect(() => {
+    !selectedEvent && navigate("/calendar");
+  }, [reload]);
+  useEffect(() => {
     getTasks();
-  }, [selectedEvent, reload]);
-  // useEffect(() => {
-  //   localStorage.setItem("subtasks", JSON.stringify(subtasks));
-  // }, [subtasks]);
-  return (
+  }, [reload]);
+
+  return selectedEvent ? (
     <MainLayout>
       <div className="flex flex-row min-w-full">
         <SubtaskList
@@ -110,14 +143,18 @@ const Listas = () => {
         />
         <Sidebar
           className="flex-1 min-w-full"
-          handleAddSubtask={handleAddSubtask}
           handleRemoveAllSubtasks={handleRemoveAllSubtasks}
           handleMarkAllAsFinished={handleMarkAllAsFinished}
           handleMarkAllAsUnfinished={handleMarkAllAsUnfinished}
           subtasks={subtasks}
+          setSubtasks={setSubtasks}
+          reload={reload}
+          setreload={setreload}
         />
       </div>
     </MainLayout>
+  ) : (
+    navigate("/calendar")
   );
 };
 

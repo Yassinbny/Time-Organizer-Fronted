@@ -4,7 +4,13 @@ import Button from "./Button.jsx";
 import Counter from "./Counter.jsx";
 import useAuth from "../../hooks/useAuth.jsx";
 
-const AddSubtaskForm = ({ onAddSubtask, subtasks }) => {
+const AddSubtaskForm = ({
+  onAddSubtask,
+  subtasks,
+  setSubtasks,
+  reload,
+  setreload,
+}) => {
   const [subtaskText, setSubtaskText] = useState("");
   const inputRef = useRef();
   const { selectedEvent } = useAuth();
@@ -30,9 +36,8 @@ const AddSubtaskForm = ({ onAddSubtask, subtasks }) => {
         }
       );
       const res = await response.json();
-
-      onAddSubtask(subtaskText);
       setSubtaskText("");
+      setreload(!reload);
     } catch (error) {
       console.log(error);
     }

@@ -7,10 +7,17 @@ const Sidebar = ({
   handleMarkAllAsFinished,
   handleMarkAllAsUnfinished,
   subtasks,
+  reload,
+  setreload,
 }) => {
   return (
     <div className="flex flex-col bg-amber-100 p-4 w-2/5 rounded-br-lg ">
-      <AddSubtaskForm onAddSubtask={handleAddSubtask} subtasks={subtasks} />
+      <AddSubtaskForm
+        onAddSubtask={handleAddSubtask}
+        subtasks={subtasks}
+        reload={reload}
+        setreload={setreload}
+      />
 
       <ButtonGroup
         handleRemoveAllSubtasks={handleRemoveAllSubtasks}
