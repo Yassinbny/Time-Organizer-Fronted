@@ -11,8 +11,6 @@ export const AuthContext = createContext({
   },
   signOut: () => {},
   recoverPassword: async (email) => {},
-  selectedEvent: {},
-  setSelectedEvent: () => {},
 });
 
 // crear el proveedor (provider) y luego implementarlo para envuelva a toda la aplicación (rutas)
@@ -21,7 +19,7 @@ export function AuthContextProvider({ children }) {
 
   const navigate = useNavigate();
   const [currentUser, setCurrentUser] = useState(null);
-  const [selectedEvent, setSelectedEvent] = useState();
+
   function signIn(token) {
     localStorage.setItem("AUTH_TOKEN_TJ", token);
 
@@ -46,34 +44,21 @@ export function AuthContextProvider({ children }) {
           body: JSON.stringify({ email }),
         }
       );
-
+  
       if (!response.ok) {
         if (response.status === 500) {
-          throw new Error(
-            "El correo electrónico es incorrecto. En unos segundos te redirigiremos a la página de registro de usuario."
-          );
+          throw new Error("El correo electrónico es incorrecto. En unos segundos te redirigiremos a la página de registro de usuario.");
         } else {
           throw new Error(`HTTP error! status: ${response.status}`);
         }
       }
-
+  
       const data = await response.json();
       console.log("Solicitud de recuperación de contraseña enviada:", data);
-      return {
-        ok: true,
-        message:
-          data.message ||
-          "Revisa tu correo para las instrucciones de recuperación.",
-      };
+      return { ok: true, message: data.message || "Revisa tu correo para las instrucciones de recuperación." };
     } catch (error) {
-      console.error(
-        "Error al enviar solicitud de recuperación de contraseña:",
-        error
-      );
-      return {
-        ok: false,
-        message: error.message || "Error desconocido al enviar la solicitud.",
-      };
+      console.error("Error al enviar solicitud de recuperación de contraseña:", error);
+      return { ok: false, message: error.message || "Error desconocido al enviar la solicitud." };
     }
   }
 
@@ -121,8 +106,6 @@ export function AuthContextProvider({ children }) {
         signIn,
         signOut,
         recoverPassword,
-        selectedEvent,
-        setSelectedEvent,
       }}
     >
       {children}

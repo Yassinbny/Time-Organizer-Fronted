@@ -43,15 +43,9 @@ useEffect(() => {
   }
 }, [currentUser, navigate]);
 
-  useEffect(() => {
-    if (currentUser) {
-      navigate("/recover-password");
-    }
-  }, [currentUser, navigate]);
-
   return (
     <UsersLayout componente={"¿OLVIDASTE TU CONTRASEÑA?"}>
-      <div className="bg-teal-100 flex flex-col justify-evenly w-full h-full content-center p-6 rounded-xl">
+      <div className="bg-teal-100 flex flex-col justify-evenly w-full h-full content-center">
         <form
           noValidate
           className="flex flex-col items-center w-full h-full justify-evenly text-base sm:text-lg md:text-3xl "
@@ -66,7 +60,7 @@ useEffect(() => {
           <div className="flex flex-col space-y-2 text-[4vw] sm:text-[20px] md:text-[30px] leading-[2] font-extrabold ">
             <label htmlFor="email">Correo Electrónico:</label>
             <input
-              className="h-10 rounded-xl w-[250px] sm:w-[350px] sm:h-14 md:w-[25vw] md:h-18 p-3 bg-white"
+              className="h-10 rounded-xl w-[250px] sm:w-[350px] sm:h-14 md:w-[25vw] md:h-16 p-3 bg-white"
               type="email"
               value={email}
               onChange={handleInputChange}
@@ -76,17 +70,17 @@ useEffect(() => {
             />
           </div>
           {error && <p className="text-red-500">{error}</p>}
-          <button className="bg-black text-white text-center font-bold w-[150px] h-10 sm:w-[300px] sm:h-12 md:w-[200px] md:h-20 rounded-xl">
+          <button className="bg-black text-white text-center font-bold w-[150px] h-10 sm:w-[300px] sm:h-12 md:w-[240px] md:h-20 rounded-xl">
             RECUPERAR
           </button>
         </form>
-        <div className="flex flex-col items-center justify-center rounded-2xl bg-black text-white p-6 max-w-3xl mx-auto">
-  <p className="text-lg sm:text-xl md:text-2xl lg:text-3xl font-semibold text-center mb-4">
+        <div className="flex flex-col items-center rounded-xl content-center justify-evenly text-[4vw] sm:text-[18px] md:text-[24px] bg-black text-2xl text-white h-15 sm:h-18 md:h-22">
+  <p className="text-lg sm:text-xl md:text-2xl lg:text-3xl font-semibold text-center mb-">
     ¿No tienes una cuenta?
   </p>
           <Link
             to="/signup"
-            className="text-orange-400 underline decoration-solid"
+            className="text-orange-400 underline decoration-solid mb-4"
           >
             Regístrate AQUÍ
             </Link>
