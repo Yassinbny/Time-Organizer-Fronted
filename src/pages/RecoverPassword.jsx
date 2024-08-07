@@ -48,7 +48,8 @@ useEffect(() => {
       <div className="bg-teal-100 flex flex-col justify-evenly w-full h-full content-center">
         <form
           noValidate
-          className="flex flex-col items-center w-full h-full justify-evenly text-base sm:text-lg md:text-3xl "
+          className="flex flex-col items-center w-full h-full justify-evenly content-center
+          text-base sm:text-lg md:text-2xl"
           onSubmit={handleSubmit}
         >
           <p className="text-center justyify-center font-extrabold leading-[1.3]">
@@ -57,10 +58,10 @@ useEffect(() => {
             Sólo necesitas tu dirección de email, ¡y solucionado!
             <br />
           </p>
-          <div className="flex flex-col space-y-2 text-[4vw] sm:text-[20px] md:text-[30px] leading-[2] font-extrabold ">
+          <div className="flex flex-col space-y-2 font-bold">
             <label htmlFor="email">Correo Electrónico:</label>
             <input
-              className="h-10 rounded-xl w-[250px] sm:w-[350px] sm:h-14 md:w-[25vw] md:h-16 p-3 bg-white"
+              className="h-15 rounded-xl w-[250px] sm:w-[250px] sm:h-10 md:w-[25vw] md:h-16 p-3 bg-white"
               type="email"
               value={email}
               onChange={handleInputChange}
@@ -70,7 +71,7 @@ useEffect(() => {
             />
           </div>
           {error && <p className="text-red-500">{error}</p>}
-          <button className="bg-black text-white text-center font-bold w-[150px] h-10 sm:w-[300px] sm:h-12 md:w-[240px] md:h-20 rounded-xl">
+          <button className="bg-black text-white font-bold py-3.5 px-7 rounded-lg">
             RECUPERAR
           </button>
         </form>

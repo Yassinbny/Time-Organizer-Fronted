@@ -55,6 +55,8 @@ usarla.
 
     ● /confirmation-recover-password → Confirmación para recuperar la contraseña.
 
+    ● /change-password → Cambiar contraseña con código de recuperación.
+
     ● /calendar → Calendarios y listas.
 
     ● /help → Página de ayuda.
