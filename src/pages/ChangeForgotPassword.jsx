@@ -10,8 +10,9 @@ const ChangeForgotPassword = () => {
     email: "",
     code: "",
     newPassword: "",
+    confirmPassword: "",
   });
-  const { email, code, newPassword } = formValues;
+  const { email, code, newPassword, confirmPassword } = formValues;
   const navigate = useNavigate();
   const [error, setError] = useState(null);
 
@@ -27,7 +28,12 @@ const ChangeForgotPassword = () => {
       return;
     }
 
-    const result = await changePassword(email, code, newPassword);
+    if (newPassword !== confirmPassword) {
+      setError("Las contraseñas no coinciden.");
+      return;
+    }
+
+    const result = await changePassword(email, code, newPassword, confirmPassword);
 
     if (result.ok) {
       navigate("/login");
@@ -51,7 +57,7 @@ const ChangeForgotPassword = () => {
           onSubmit={handleSubmit}
         >
           <p className="text-center justify-center font-extrabold leading-[1.5]">
-            Ahora puedes cambiar tu contraseña.
+            ¡Ahora puedes cambiar tu contraseña olvidada!
           </p>
           <div className="flex flex-col space-y-2 text-[4vw] sm:text-[20px] md:text-[30px] leading-[1.3] font-extrabold">
             <label htmlFor="email">Correo Electrónico:</label>
@@ -86,6 +92,18 @@ const ChangeForgotPassword = () => {
               onChange={handleInputChange}
               name="newPassword"
               id="newPassword"
+              required
+            />
+          </div>
+          <div className="flex flex-col space-y-2 text-[4vw] sm:text-[20px] md:text-[30px] leading-[1.3] font-extrabold">
+            <label htmlFor="confirmPassword">Confirmar Contraseña:</label>
+            <input
+              className="h-10 rounded-xl w/[250px] sm:w/[350px] sm:h-14 md:w/[25vw] md:h-16 p-3 bg-white"
+              type="password"
+              value={confirmPassword}
+              onChange={handleInputChange}
+              name="confirmPassword"
+              id="confirmPassword"
               required
             />
           </div>
