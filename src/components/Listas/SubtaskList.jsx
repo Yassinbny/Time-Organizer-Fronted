@@ -40,8 +40,9 @@ const SubtaskList = ({
   // );
 
   return (
-    <div className="flex flex-col col-span-4 items-center sm:bg-amber-100 rounded-bl-3xl p-4 md:col-span-8 w-3/5 sm:w-3/5 md:w-2/3 ">
-      <div className="pt-8 pb-6 flex flex-col mt-10 items-center sm:bg-amber-950 border-solid border-2 sm:w-[25vw] border-black border-b-0 rounded-t-3xl space-y-4">
+
+    <div className="flex flex-col col-span-4 items-center bg-white rounded-bl-lg p-4 md:col-span-8 w-3/5">
+      <div className="pt-8 pb-6 flex flex-col mt-10 items-center bg-amber-950 border-solid border-2 w-[25vw] border-black border-b-0 rounded-t-3xl space-y-4">
         <h2 className="flex flex-col text-center text-3xl mx-14  font-bold text-white ">
           {title}
         </h2>
@@ -57,7 +58,7 @@ const SubtaskList = ({
           /> */}
         </section>
 
-        <ul className=" items-center m-5 bg-amber-50 shadow-lg rounded-lg p-6 border-2 border-amber-300 min-h-[50vh] max-h-[70vh] overflow-y-auto">
+        <ul className=" items-center m-5 bg-fondo shadow-lg rounded-lg p-6 border-2 border-amber-300 min-h-[50vh] max-h-[70vh] overflow-y-auto">
           {/* {subtasks.map((subtask) => {
             console.log(subtask);
 
