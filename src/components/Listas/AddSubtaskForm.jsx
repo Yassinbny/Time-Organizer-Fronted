@@ -1,5 +1,6 @@
 /* eslint-disable react/prop-types */
 import { useRef, useState } from "react";
+import { toast } from "react-toastify";
 import Button from "./Button.jsx";
 import Counter from "./Counter.jsx";
 import useAuth from "../../hooks/useAuth.jsx";
@@ -20,7 +21,7 @@ const AddSubtaskForm = ({
       e.preventDefault();
 
       if (!subtaskText) {
-        alert("El campo no puede estar vacio");
+        toast.error("El campo no puede estar vacio");
         inputRef.current.focus();
         return;
       }
@@ -64,7 +65,7 @@ const AddSubtaskForm = ({
 
         <Button>Añadir a la lista</Button>
       </form>
-      {/* <Counter subtasks={subtasks} /> */}
+      <Counter subtasks={subtasks} />
     </div>
   );
 };
