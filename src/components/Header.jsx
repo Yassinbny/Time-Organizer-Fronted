@@ -3,7 +3,6 @@ import useAuth from "../hooks/useAuth.jsx";
 import {
   GrCircleQuestion,
   GrLogout,
-  GrSearch,
   GrUserAdmin,
 } from "react-icons/gr";
 import { LuUser2 } from "react-icons/lu";
@@ -38,13 +37,7 @@ const Header = () => {
             <>
               <li>
                 <NavLink to="/calendar">CALENDARIOS</NavLink>
-              </li>
-              <li>
-                <NavLink to="/list"> LISTAS</NavLink>
-              </li>
-              <li>
-                <GrSearch className="sm:w-6 lg:w-9 sm:h-6 lg:h-10" />
-              </li>
+              </li>              
               <li>
                 <NavLink to="/help">
                   {" "}

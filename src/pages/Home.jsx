@@ -7,7 +7,7 @@ const Home = () => {
       <div className="flex flex-col justify-center items-center m-auto">
         {" "}
         <img
-          className="w-[80vw] md:w-[65vw] lg:w-[45vw]"
+          className="w-[80vw] md:w-[65vw] lg:w-[40vw]"
           src="images\textoInicio.png"
           alt="inicio"
         />        
