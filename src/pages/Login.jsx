@@ -3,7 +3,7 @@ import useForm from "../hooks/useForm.jsx";
 import useAuth from "../hooks/useAuth.jsx";
 import { Link, useNavigate } from "react-router-dom";
 import { useEffect } from "react";
-import { toast } from 'react-toastify'; // Importa toast
+import { toast } from "react-toastify"; // Importa toast
 
 const Login = () => {
   const { signIn, currentUser } = useAuth();
@@ -18,13 +18,16 @@ const Login = () => {
     e.preventDefault();
 
     try {
-      const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}auth/sign-in`, {
-        headers: {
-          "Content-Type": "application/json",
-        },
-        method: "POST",
-        body: JSON.stringify(formValues),
-      });
+      const response = await fetch(
+        `${import.meta.env.VITE_BACKEND_URL}auth/sign-in`,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+          method: "POST",
+          body: JSON.stringify(formValues),
+        }
+      );
 
       const { ok, token, message } = await response.json();
 
