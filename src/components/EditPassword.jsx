@@ -1,11 +1,8 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify"; // Importa ToastContainer y toast
 import "react-toastify/dist/ReactToastify.css";
 
-const EditPassword = (setEditPassword) => {
-  const navigate = useNavigate();
-  //const { currentUser } = useAuth();
+const EditPassword = ({setEditPassword}) => {
   const [password, setPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
 
@@ -18,36 +15,27 @@ const EditPassword = (setEditPassword) => {
     };
 
     try {
-      const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}users/password/reset`, {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: localStorage.getItem("AUTH_TOKEN_TJ"),
-        },
-        method: "PUT",
-        body: JSON.stringify( body ),
-      });
-      //await response.json();
+      const response = await fetch(
+        `${import.meta.env.VITE_BACKEND_URL}users/password/reset`, 
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: localStorage.getItem("AUTH_TOKEN_TJ"),
+          },
+          method: "PUT",
+          body: JSON.stringify( body ),
+        }
+      );
 
       if (!response.ok) {
         const errorResponse = await response.json();
         console.error("Error en la respuesta de la API:", errorResponse);
         toast.error("Error al actualizar la contraseña"); // Notificación de error
         return;
+      } else {
+        toast.success("Contraseña actualizada con éxito"); // Notificación de éxito
+        setEditPassword();
       }
-
-      const { ok, error } = await response.json();
-
-      if(!ok) {
-        console.error("Error en la API:", error);
-        toast.error("Error al actualizar tu contraseña"); // Notificación de error
-      }
-      //setEditPassword(false);
-      navigate("/user-profile");
-      /*(userData.role === "admin"
-          ? "/admin-profile"
-          : "/user-profile"
-        ) */
-
     } catch (error) {
       console.error("Error al cambiar tu contraseña:", error);
       toast.error("No se pudo actualizar la contraseña"); // Notificación de error
@@ -98,6 +86,7 @@ const EditPassword = (setEditPassword) => {
         <button
           type="submit"
           className="bg-green-600  px-4 py-2 rounded-2xl hover:bg-green-900 w-[30vw] transition duration-200"
+          
         >
           Cambiar
         </button>
