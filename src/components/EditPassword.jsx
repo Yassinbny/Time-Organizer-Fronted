@@ -47,7 +47,7 @@ const EditPassword = ({setEditPassword}) => {
      w-[100vw] h-[100vh] bg-gray-800 bg-opacity-85"
     >
       <h2
-        className="bg-fondoPopup pt-14 text-white rounded-t-2xl w-[70vw] sm:w-[60vw] md:w-[50vw] text-center sm:text-5xl md:text-5xl lg:text-6xl"
+        className="bg-fondoPopup pt-14 text-white rounded-t-2xl w-[90vw] md:w-[50vw] lg:w-[70vw] text-center sm:text-5xl md:text-5xl lg:text-6xl"
       >
         Cambia tu contraseña
       </h2>
@@ -55,7 +55,7 @@ const EditPassword = ({setEditPassword}) => {
         onSubmit={handleSubmit}
         className="flex flex-col items-center justify-evenly sm:justify-center content-center 
         space-y-12  bg-fondoPopup p-6 
-        rounded-b-2xl shadow-lg sm:w-[60vw] md:w-[50vw] h-[70vh] sm:text-4xl text-center"
+        rounded-b-2xl shadow-lg w-[90vw] md:w-[50vw] lg:w-[70vw] h-[70vh] sm:text-4xl text-center"
       >
         <input
           type="password"
@@ -76,7 +76,7 @@ const EditPassword = ({setEditPassword}) => {
 
         <button
           type="button"
-          className="bg-green-600 px-4 py-2 rounded-2xl hover:bg-green-900 w-[30vw]  text-center transition duration-200"
+          className="bg-[url('/avatarDefault.jpg')] bg-cover bg-top px-4 py-2 rounded-2xl hover:bg-green-900 w-[30vw]  text-center transition duration-200"
           onClick={() => {
             setEditPassword(false);
           }}
@@ -85,7 +85,7 @@ const EditPassword = ({setEditPassword}) => {
         </button>
         <button
           type="submit"
-          className="bg-green-600  px-4 py-2 rounded-2xl hover:bg-green-900 w-[30vw] transition duration-200"
+          className="bg-[url('/avatarDefault.jpg')] bg-cover bg-left px-4 py-2 rounded-2xl hover:bg-green-900 w-[30vw] transition duration-200"
           
         >
           Cambiar

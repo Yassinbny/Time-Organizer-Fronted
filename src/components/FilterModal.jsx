@@ -100,7 +100,7 @@ const FilterModal = ({ setSearch, setColor, setFamily, setFilterModal }) => {
             })}
           </datalist>
         </div>
-        <button className="bg-green-600  px-4 py-2 rounded-2xl hover:bg-green-900 w-[30vw] transition duration-200">
+        <button className="bg-[url('/avatarDefault.jpg')] bg-cover bg-center  px-4 py-2 rounded-2xl hover:bg-green-900 w-[30vw] transition duration-200">
           Filtrar
         </button>
       </form>

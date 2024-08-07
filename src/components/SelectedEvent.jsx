@@ -183,7 +183,7 @@ const SelectedEvent = ({ selectedEvent, setSelectedEvent }) => {
         </div>
         <div className="grid grid-flow-col grid-rows-2 gap-4 sm  ">
           <button
-            className="bg-green-600  py-2 rounded-2xl hover:bg-green-900 w-[25vw] sm:w-[20vw] sm:text-2xl md:h-[10vh] md:text-4xl   transition duration-200"
+            className="bg-[url('/avatarDefault.jpg')] bg-cover bg-top  py-2 rounded-2xl hover:bg-green-900 w-[25vw] sm:w-[20vw] sm:text-2xl md:h-[10vh] md:text-4xl   transition duration-200"
             onClick={() => {
               setSelectedEvent();
             }}
@@ -193,12 +193,12 @@ const SelectedEvent = ({ selectedEvent, setSelectedEvent }) => {
 
           <button
             type="submit"
-            className="bg-green-600  px-4 py-2 rounded-2xl hover:bg-green-900 w-[25vw]  sm:w-[20vw] sm:text-2xl md:h-[10vh] md:text-4xl transition duration-200"
+            className="bg-[url('/avatarDefault.jpg')] bg-cover bg-top px-4 py-2 rounded-2xl hover:bg-green-900 w-[25vw]  sm:w-[20vw] sm:text-2xl md:h-[10vh] md:text-4xl transition duration-200"
           >
             Actualizar
           </button>
           <button
-            className="bg-green-600  px-4 py-2 rounded-2xl hover:bg-green-900 w-[25vw]  sm:w-[20vw] sm:text-2xl md:h-[10vh] md:text-4xl transition duration-200"
+            className="bg-[url('/avatarDefault.jpg')] bg-cover bg-right  px-4 py-2 rounded-2xl hover:bg-green-900 w-[25vw]  sm:w-[20vw] sm:text-2xl md:h-[10vh] md:text-4xl transition duration-200"
             onClick={(e) => {
               HandleFinishTask(e);
             }}
@@ -206,7 +206,7 @@ const SelectedEvent = ({ selectedEvent, setSelectedEvent }) => {
             Finalizar
           </button>
           <button
-            className="bg-green-600  px-4 py-2 rounded-2xl hover:bg-green-900 w-[25vw]  sm:w-[20vw] sm:text-2xl md:h-[10vh] md:text-4xl transition duration-200"
+            className="bg-[url('/avatarDefault.jpg')] bg-cover bg-right  px-4 py-2 rounded-2xl hover:bg-green-900 w-[25vw]  sm:w-[20vw] sm:text-2xl md:h-[10vh] md:text-4xl transition duration-200"
             onClick={(e) => {
               navigate("/list");
             }}

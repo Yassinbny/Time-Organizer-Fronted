@@ -11,7 +11,7 @@ const Sidebar = ({
   setreload,
 }) => {
   return (
-    <div className="flex flex-col bg-amber-100 p-4 w-2/5 rounded-br-lg ">
+    <div className="flex flex-col bg-fondo p-4 w-2/5 rounded-br-lg ">
       <AddSubtaskForm
         onAddSubtask={handleAddSubtask}
         subtasks={subtasks}
