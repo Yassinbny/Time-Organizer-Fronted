@@ -40,8 +40,8 @@ const SubtaskList = ({
   // );
 
   return (
-    <div className="flex flex-col col-span-4 items-center bg-amber-100 rounded-bl-lg p-4 md:col-span-8 w-3/5">
-      <div className="pt-8 pb-6 flex flex-col mt-10 items-center bg-amber-950 border-solid border-2 w-[25vw] border-black border-b-0 rounded-t-3xl space-y-4">
+    <div className="flex flex-col col-span-4 items-center sm:bg-amber-100 rounded-bl-3xl p-4 md:col-span-8 w-3/5 sm:w-3/5 md:w-2/3 ">
+      <div className="pt-8 pb-6 flex flex-col mt-10 items-center sm:bg-amber-950 border-solid border-2 sm:w-[25vw] border-black border-b-0 rounded-t-3xl space-y-4">
         <h2 className="flex flex-col text-center text-3xl mx-14  font-bold text-white ">
           {title}
         </h2>
@@ -49,12 +49,12 @@ const SubtaskList = ({
       </div>
       <div className=" items-center bg-amber-950 w-[25vw] border-solid border-2 border-black rounded-lg">
         <section className="mb-4">
-          <Select
+          {/* <Select
             className=" m-10 items-center"
             onChange={(option) => setSortBy(option.value)}
             defaultValue={sortingOptions[0]}
             options={sortingOptions}
-          />
+          /> */}
         </section>
 
         <ul className=" items-center m-5 bg-amber-50 shadow-lg rounded-lg p-6 border-2 border-amber-300 min-h-[50vh] max-h-[70vh] overflow-y-auto">
@@ -75,7 +75,7 @@ const SubtaskList = ({
               {subtasks.map((subtask) => {
                 return (
                   <li
-                    key={subtask.suibtask_id}
+                    key={subtask.subtask_id}
                     className="flex justify-between items-center bg-white shadow-md rounded-lg p-4 mb-4 border-b border-dotted border-gray-300"
                   >
                     <span className="text-gray-800 text-sm md:text-base">

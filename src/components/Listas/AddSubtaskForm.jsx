@@ -64,7 +64,7 @@ const AddSubtaskForm = ({
 
         <Button>Añadir a la lista</Button>
       </form>
-      {/* <Counter subtasks={subtasks} /> */}
+      <Counter subtasks={subtasks} />
     </div>
   );
 };
