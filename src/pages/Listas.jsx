@@ -134,15 +134,15 @@ const Listas = () => {
 
   return selectedEvent ? (
     <MainLayout>
-      <div className="flex flex-row min-w-full">
+      <div className="flex flex-col md:flex-row justify-between w-[80vw] h-full rounded-b-3xl bg-fondo ">
         <SubtaskList
-          className="flex-1 min-w-full"
+          className=" "
           handleDeleteSubtask={handleDeleteSubtask}
           handleToggleSubtask={handleToggleSubtask}
           subtasks={subtasks}
         />
         <Sidebar
-          className="flex-1 min-w-full"
+          className=""
           handleRemoveAllSubtasks={handleRemoveAllSubtasks}
           handleMarkAllAsFinished={handleMarkAllAsFinished}
           handleMarkAllAsUnfinished={handleMarkAllAsUnfinished}
@@ -154,7 +154,7 @@ const Listas = () => {
       </div>
     </MainLayout>
   ) : (
-   navigate("/calendar")
+    navigate("/calendar")
   );
 };
 

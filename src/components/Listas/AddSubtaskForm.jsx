@@ -47,7 +47,7 @@ const AddSubtaskForm = ({
   return (
     <div className="p-8">
       <form className="flex flex-col" onSubmit={handleSubmit}>
-        <label htmlFor="subtask" className="text-center ">
+        <label htmlFor="subtask" className="text-center text-2xl ">
           Subtarea:
         </label>
         <input

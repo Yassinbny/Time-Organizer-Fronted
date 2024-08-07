@@ -45,16 +45,7 @@ export default function DropDownMenu() {
                   CALENDARIOS
                 </NavLink>
               </MenuItem>
-              <MenuItem>
-                <NavLink to="/list" className={`block px-4 py-2 text-sm `}>
-                  LISTAS
-                </NavLink>
-              </MenuItem>
-              <MenuItem>
-                <div className="px-4 flex flex-col  items-center py-2">
-                  <GrSearch className="sm:w-6  lg:w-9 sm:h-6 lg:h-10" />
-                </div>
-              </MenuItem>
+
               <MenuItem>
                 <NavLink
                   to="/help"
