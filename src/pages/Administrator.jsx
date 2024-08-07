@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import Header from "../components/Header";
 import DataTable from "react-data-table-component";
 import { showErrorToast, showSuccessToast } from "../utils/toastUtils"; // Importa las funciones de notificación
+import { toast } from "react-toastify";
 
 const Administrator = () => {
   const { currentUser } = useAuth();
@@ -70,11 +71,11 @@ const Administrator = () => {
           body: JSON.stringify({status:enabled})
         }
       );
-      showSuccessToast(
+      toast.success(
         `Usuario ${enabled ? "habilitado" : "deshabilitado"} correctamente.`
       );
     } catch (error) {
-      showErrorToast("Error al cambiar el estado del usuario.");
+      toast.error("Error al cambiar el estado del usuario.");
     }
   };
 
@@ -90,9 +91,9 @@ const Administrator = () => {
         }
       );
       setUsers(users.filter((user) => user.id !== user_id));
-      showSuccessToast("Usuario eliminado correctamente.");
+      toast.success("Usuario eliminado correctamente.");
     } catch (error) {
-      showErrorToast("Error al eliminar el usuario.");
+      toast.error("Error al eliminar el usuario.");
     }
   };
   useEffect(() => {
