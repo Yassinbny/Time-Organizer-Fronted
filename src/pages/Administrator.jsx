@@ -9,68 +9,62 @@ import { toast } from "react-toastify";
 const Administrator = () => {
   const { currentUser } = useAuth();
   const navigate = useNavigate();
-  const [users, setUsers] = useState();
+  const [users, setUsers] = useState([]);
   const [usersSelected, setUsersSelected] = useState([]);
-
-  console.log(users);
-    const columns = [
-      {
-        name: "Última conexión",
-        selector: row => row.updatedAt,
-        sortable: true
-      },
-      {
-        name: "Nombre",
-        selector: row => row.username,
-        sortable: true
-      },
-      {
-        name: "Email",
-        selector: row => row.email,
-        sortable: true
-      },
-      
-    ]
+  const [reload, setreload] = useState(true);
+  const columns = [
+    {
+      name: "Última conexión",
+      selector: (row) => row.updatedAt,
+      sortable: true,
+    },
+    {
+      name: "Nombre",
+      selector: (row) => row.username,
+      sortable: true,
+    },
+    {
+      name: "Email",
+      selector: (row) => row.email,
+      sortable: true,
+    },
+  ];
 
   useEffect(() => {
     const fetchUsers = async () => {
       try {
-        const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}users/`, {
-          method: "GET",
-          headers: {
-            Authorization: localStorage.getItem("AUTH_TOKEN_TJ"),
-          },
-        });
+        const response = await fetch(
+          `${import.meta.env.VITE_BACKEND_URL}users/`,
+          {
+            method: "GET",
+            headers: {
+              Authorization: localStorage.getItem("AUTH_TOKEN_TJ"),
+            },
+          }
+        );
         const result = await response.json();
         setUsers(result.users);
-        /*
-        const mapeo = (users.map(users => ({
-          username: users.username,
-          email: users.email,
-          role: users.role,
-          updatedAt: users.updatedAt,
-        })));
-        */
       } catch (error) {
         showErrorToast("Error al cargar los usuarios.");
       }
     };
     fetchUsers();
-  }, []);
+  }, [reload]);
 
   const toggleUserStatus = async (username, enabled) => {
     try {
       await fetch(
-        `${import.meta.env.VITE_BACKEND_URL}users/${username}/status`, 
+        `${import.meta.env.VITE_BACKEND_URL}users/${username}/status`,
         {
           method: "PUT",
           headers: {
             "Content-Type": "application/json",
             Authorization: localStorage.getItem("AUTH_TOKEN_TJ"),
           },
-          body: JSON.stringify({status:enabled})
+          body: JSON.stringify({ status: enabled }),
         }
       );
+      setreload(!reload);
       toast.success(
         `Usuario ${enabled ? "habilitado" : "deshabilitado"} correctamente.`
       );
@@ -81,27 +75,38 @@ const Administrator = () => {
 
   const deleteUser = async (user_id) => {
     try {
-      await fetch(
-        `${import.meta.env.VITE_BACKEND_URL}users/${user_id}`, 
-        {
-          method: "DELETE",
-          headers: {
-            Authorization: localStorage.getItem("AUTH_TOKEN_TJ"),
-          },
-        }
-      );
+      await fetch(`${import.meta.env.VITE_BACKEND_URL}users/${user_id}`, {
+        method: "DELETE",
+        headers: {
+          Authorization: localStorage.getItem("AUTH_TOKEN_TJ"),
+        },
+      });
       setUsers(users.filter((user) => user.id !== user_id));
+      setreload(!reload);
       toast.success("Usuario eliminado correctamente.");
     } catch (error) {
       toast.error("Error al eliminar el usuario.");
     }
   };
+
   useEffect(() => {
     !currentUser && navigate("/login");
   }, [currentUser, navigate]);
 
-  const handleSelected = ({selectedRows}) => {setUsersSelected(selectedRows[0])}  
-  
+  const handleSelected = ({ selectedRows }) => {
+    setUsersSelected(selectedRows[0]);
+  };
+
+  const conditionalRowStyles = [
+    {
+      when: (row) => row.enabled === 0,
+      style: {
+        backgroundColor: "rgba(255, 0, 0, 0.1)",
+        color: "#f56565",
+      },
+    },
+  ];
+
   return (
     <div className="relative sm:w-[70vw] bg-black border-solid border-2 border-black rounded-3xl place-content-center">
       <Header />
@@ -114,25 +119,25 @@ const Administrator = () => {
             >
               Volver
             </button>
-          </div> 
-        <div className="flex  flex-col h-full w-full md:w-[30vw] justify-evenly content-center">
-          
-          <div>
-            <DataTable  
-              title= "VISUALIZAR USUARIOS"                 
-              columns={columns}
-              data={users}
-              selectableRows
-              pagination
-              paginationPerPage={8}
-              fixedHeader
-              responsive
-              clearSelectedRows
-              selectableRowsSingle={true}
-              onSelectedRowsChange={handleSelected}              
-            />
-          </div> 
-        </div>
+          </div>
+          <div className="flex  flex-col h-full w-full md:w-[30vw] justify-evenly content-center">
+            <div>
+              <DataTable
+                title="VISUALIZAR USUARIOS"
+                columns={columns}
+                data={users}
+                selectableRows
+                pagination
+                paginationPerPage={8}
+                fixedHeader
+                responsive
+                clearSelectedRows
+                selectableRowsSingle={true}
+                onSelectedRowsChange={handleSelected}
+                conditionalRowStyles={conditionalRowStyles}
+              />
+            </div>
+          </div>
         </div>
         <div className="flex flex-col items-center md:justify-end md:bg-fondo rounded-br-3xl h-[8vh] md:h-full py-4 md:w-[22vw] lg:w-[20vw] md:space-y-20">
           <button
@@ -155,10 +160,8 @@ const Administrator = () => {
             className="rounded-3xl text-xl lg:text-2xl text-white bg-black md:h-[7vh] md:w-[14vw] lg:w-[16vw] transition duration-200"
           >
             Eliminar
-
           </button>
         </div>
-      
       </section>
     </div>
   );

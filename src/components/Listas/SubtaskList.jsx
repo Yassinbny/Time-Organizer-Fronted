@@ -40,25 +40,15 @@ const SubtaskList = ({
   // );
 
   return (
-
-    <div className="flex flex-col col-span-4 items-center bg-white rounded-bl-lg p-4 md:col-span-8 w-3/5">
-      <div className="pt-8 pb-6 flex flex-col mt-10 items-center bg-amber-950 border-solid border-2 w-[25vw] border-black border-b-0 rounded-t-3xl space-y-4">
+    <div className="flex flex-col col-span-4 items-center md:ml-20 rounded-bl-lg p-4 md:col-span-8 ">
+      <div className="pt-8 pb-6 flex flex-col mt-5 items-center bg-amber-950 md:h-[20vh] md:w-[30vw] border-solid border-2 border-black border-b-0 rounded-t-3xl space-y-4">
         <h2 className="flex flex-col text-center text-3xl mx-14  font-bold text-white ">
           {title}
         </h2>
         <p className="text-white">{description}</p>
       </div>
-      <div className=" items-center bg-amber-950 w-[25vw] border-solid border-2 border-black rounded-lg">
-        <section className="mb-4">
-          {/* <Select
-            className=" m-10 items-center"
-            onChange={(option) => setSortBy(option.value)}
-            defaultValue={sortingOptions[0]}
-            options={sortingOptions}
-          /> */}
-        </section>
-
-        <ul className=" items-center m-5 bg-fondo shadow-lg rounded-lg p-6 border-2 border-amber-300 min-h-[50vh] max-h-[70vh] overflow-y-auto">
+      <div className=" items-center bg-amber-950 h-[30vh] md:h-[70vh] md:w-[30vw] border-solid border-2 border-black rounded-lg">
+        <ul className=" items-center m-5 bg-fondo shadow-lg rounded-lg p-6 border-2 h-[25vh] md:h-[60vh] border-amber-300  max-h-[70vh] overflow-y-auto">
           {/* {subtasks.map((subtask) => {
             console.log(subtask);
 
