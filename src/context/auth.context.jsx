@@ -13,6 +13,7 @@ export const AuthContext = createContext({
   recoverPassword: async (email) => {},
   selectedEvent: {},
   setSelectedEvent: () => {},
+  navigate: () => {},
 });
 
 // crear el proveedor (provider) y luego implementarlo para envuelva a toda la aplicación (rutas)
@@ -123,6 +124,7 @@ export function AuthContextProvider({ children }) {
         recoverPassword,
         selectedEvent,
         setSelectedEvent,
+        navigate,
       }}
     >
       {children}
