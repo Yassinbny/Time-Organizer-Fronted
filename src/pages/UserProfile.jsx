@@ -11,32 +11,31 @@ const UserProfile = () => {
   const [userData, setUserData] = useState();
   const [newUsername, setNewUsername] = useState("");
   const [editPassword, setEditPassword] = useState(false);
-  const apiUrl = import.meta.env.VITE_API_URL;
+  const apiUrl = import.meta.env.VITE_BACKEND_URL;
   const [avatarUrl, setAvatarUrl] = useState("/avatarDefault.jpg");
-  //const avatarUrl= userData.avatar ? `${apiUrl}/${userData.avatar}` : "/avatarDefault.jpg";
+
+  const fetchUserData = async () => {
+    try {
+      const response = await fetch(
+        `${import.meta.env.VITE_BACKEND_URL}users/profile`, {
+          method: "GET",
+          headers: {
+            Authorization: localStorage.getItem("AUTH_TOKEN_TJ"),
+          },
+        }
+      );
+      
+      const result = await response.json();
+      setUserData(result.users);
+    } catch (error) {
+      console.log("error al obtener datos:", error);
+    }
+  };
 
   useEffect(() => {
-    const fetchUserData = async () => {
-      try {
-        const response = await fetch(
-          `${import.meta.env.VITE_BACKEND_URL}users/profile`,
-          {
-            method: "GET",
-            headers: {
-              Authorization: localStorage.getItem("AUTH_TOKEN_TJ"),
-            },
-          }
-        );
-        const result = await response.json();      
-        console.log(">>>>>>",result.users.username);
-        setUserData(result.users);
-      } catch (error) {
-        console.log("error al obtener datos:", error);
-      }
-    };
-    fetchUserData();    
+    fetchUserData();
   }, [apiUrl]);
-  
+
   const updateUsername = async () => {
     try {
       const response = await fetch(
@@ -50,15 +49,14 @@ const UserProfile = () => {
           body: JSON.stringify({ newUsername }),
         }
       );
-      const { ok, error } = await response.json();
 
-      if (!ok) {
-        console.error(error);
+      if (!response.ok) {
+        console.error("Error al actualizar el nombre de usuario");
         toast.error("Error al actualizar el nombre de usuario"); // Notificación de error
         return;
       } else {
         toast.success("Nombre de usuario actualizado con éxito"); // Notificación de éxito
-        //await fecthUserData
+        await fetchUserData()
       }
     } catch (error) {
       console.log("Error al actualizar los datos:", error);
@@ -88,10 +86,7 @@ const UserProfile = () => {
         );
         if (!response.ok) {
           console.log("Error al actualizar el avatar:");
-          toast.error("Error al actualizar el avatar"); // Notificación de error
-          const avatarFromApi = userData.avatar;      
-          setAvatarUrl(avatarFromApi ? `${apiUrl}/${avatarFromApi}` : "/avatarDefault.jpg");
-          
+          toast.error("Error al actualizar el avatar"); // Notificación de error          
         } else {
           await fetchUserData();
           toast.success("Avatar actualizado con éxito"); // Notificación de éxito
@@ -125,7 +120,7 @@ const UserProfile = () => {
 
             <div className="flex justify-center pb-4 relative">
               <img
-                src={avatarUrl}
+                src={(userData.avatar ? `${apiUrl}/${userData.avatar}` : "/avatarDefault.jpg")}
                 alt="Avatar"
                 className="rounded-full object-cover  h-[120px] lg:h-[150px] w-[120px] lg:w-[150px] p-3  bg-white border-2 border-black top-10 md:top-12 left-0"
               />

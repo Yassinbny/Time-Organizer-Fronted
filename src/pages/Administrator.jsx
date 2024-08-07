@@ -9,9 +9,15 @@ const Administrator = () => {
   const { currentUser } = useAuth();
   const navigate = useNavigate();
   const [users, setUsers] = useState();
+  const [usersSelected, setUsersSelected] = useState([]);
 
   console.log(users);
     const columns = [
+      {
+        name: "Última conexión",
+        selector: row => row.updatedAt,
+        sortable: true
+      },
       {
         name: "Nombre",
         selector: row => row.username,
@@ -22,34 +28,8 @@ const Administrator = () => {
         selector: row => row.email,
         sortable: true
       },
-      {
-        name: "Última conexión",
-        selector: row => row.updatedAt,
-        sortable: true
-      },
+      
     ]
-  const data = [
-    {
-      username: "beatriz",
-      email: "beatriztejerocruz@gmail.com",
-      updatedAt: "2024-08-05 14:40:50",
-    },
-    {
-      username: "pepito",
-      email: "ejemplo1@gmail.com",
-      updatedAt: "2024-08-05 14:40:50",
-    },
-    {
-      username: "juanito",
-      email: "ejemplo2@gmail.com",
-      updatedAt: "2024-08-05 14:40:50",
-    },
-    {
-      username: "lolito",
-      email: "ejemplo3@gmail.com",
-      updatedAt: "2024-08-05 14:40:50",
-    }
-  ]
 
   useEffect(() => {
     const fetchUsers = async () => {
@@ -77,16 +57,21 @@ const Administrator = () => {
     fetchUsers();
   }, []);
 
-  const toggleUserStatus = async (username, enable) => {
+  const toggleUserStatus = async (username, enabled) => {
     try {
-      await fetch(`${import.meta.env.VITE_BACKEND_URL}users/admin/status`, {
-        method: "PUT",
-        headers: {
-          Authorization: localStorage.getItem("AUTH_TOKEN_TJ"),
-        },
-      });
+      await fetch(
+        `${import.meta.env.VITE_BACKEND_URL}users/${username}/status`, 
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: localStorage.getItem("AUTH_TOKEN_TJ"),
+          },
+          body: JSON.stringify({status:enabled})
+        }
+      );
       showSuccessToast(
-        `Usuario ${enable ? "habilitado" : "deshabilitado"} correctamente.`
+        `Usuario ${enabled ? "habilitado" : "deshabilitado"} correctamente.`
       );
     } catch (error) {
       showErrorToast("Error al cambiar el estado del usuario.");
@@ -95,12 +80,15 @@ const Administrator = () => {
 
   const deleteUser = async (user_id) => {
     try {
-      await fetch(`${import.meta.env.VITE_BACKEND_URL}users/${user_id}`, {
-        method: "DELETE",
-        headers: {
-          Authorization: localStorage.getItem("AUTH_TOKEN_TJ"),
-        },
-      });
+      await fetch(
+        `${import.meta.env.VITE_BACKEND_URL}users/${user_id}`, 
+        {
+          method: "DELETE",
+          headers: {
+            Authorization: localStorage.getItem("AUTH_TOKEN_TJ"),
+          },
+        }
+      );
       setUsers(users.filter((user) => user.id !== user_id));
       showSuccessToast("Usuario eliminado correctamente.");
     } catch (error) {
@@ -109,7 +97,9 @@ const Administrator = () => {
   };
   useEffect(() => {
     !currentUser && navigate("/login");
-  }, [currentUser]);
+  }, [currentUser, navigate]);
+
+  const handleSelected = ({selectedRows}) => {setUsersSelected(selectedRows[0])}  
   
   return (
     <div className="relative sm:w-[70vw] bg-black border-solid border-2 border-black rounded-3xl place-content-center">
@@ -130,11 +120,15 @@ const Administrator = () => {
             <DataTable  
               title= "VISUALIZAR USUARIOS"                 
               columns={columns}
-              data={data}
+              data={users}
               selectableRows
               pagination
               paginationPerPage={8}
               fixedHeader
+              responsive
+              clearSelectedRows
+              selectableRowsSingle={true}
+              onSelectedRowsChange={handleSelected}              
             />
           </div> 
         </div>
@@ -142,24 +136,25 @@ const Administrator = () => {
         <div className="flex flex-col items-center md:justify-end md:bg-fondo rounded-br-3xl h-[8vh] md:h-full py-4 md:w-[22vw] lg:w-[20vw] md:space-y-20">
           <button
             type="button"
-            onClick={() => toggleUserStatus(currentUser.username, false)}
+            onClick={() => toggleUserStatus(usersSelected.username, false)}
             className="rounded-3xl text-xl lg:text-2xl text-white bg-black md:h-[7vh] md:w-[14vw] lg:w-[16vw] transition duration-200"
           >
             Deshabilitar
           </button>
           <button
             type="button"
-            onClick={() => toggleUserStatus(currentUser.username, true)}
+            onClick={() => toggleUserStatus(usersSelected.username, true)}
             className="rounded-3xl text-xl lg:text-2xl text-white bg-black md:h-[7vh] md:w-[14vw] lg:w-[16vw] transition duration-200"
           >
             Habilitar
           </button>
           <button
             type="button"
-            onClick={() => deleteUser(currentUser.user_id)}
+            onClick={() => deleteUser(usersSelected.user_id)}
             className="rounded-3xl text-xl lg:text-2xl text-white bg-black md:h-[7vh] md:w-[14vw] lg:w-[16vw] transition duration-200"
           >
             Eliminar
+
           </button>
         </div>
       

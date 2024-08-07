@@ -13,52 +13,55 @@ const AdminProfile = () => {
   const [userData, setUserData] = useState();
   const [newUsername, setNewUsername] = useState("");
   const [editPassword, setEditPassword] = useState(false);
-  const apiUrl = import.meta.env.VITE_API_URL;
+  const apiUrl = import.meta.env.VITE_BACKEND_URL;
   const [avatarUrl, setAvatarUrl] = useState("/avatarDefault.jpg");
-  //const avatarUrl= userData.avatar ? `${apiUrl}/${userData.avatar}` : "/avatarDefault.jpg";
+  
 
-  useEffect(() => {
-    const fetchUserData = async () => {
-      try {
-        const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}users/profile/admin`, {
+  const fetchUserData = async () => {
+    try {
+      const response = await fetch(
+        `${import.meta.env.VITE_BACKEND_URL}users/profile/admin`, {
           method: "GET",
           headers: {
             Authorization: localStorage.getItem("AUTH_TOKEN_TJ"),
           },
-        });
+        }
+      );
       
-        const result = await response.json();
-        //const avatarFromApi = userData.avatar;      
-        //setAvatarUrl(avatarFromApi ? `${apiUrl}/${avatarFromApi}` : "/avatarDefault.jpg");
-        console.log("+++++",result.users);
-        setUserData(result.users);
-      } catch (error) {
-        console.log("error al obtener datos:", error);
-      }
-    };
+      const result = await response.json();
+      setUserData(result.users);
+    } catch (error) {
+      console.log("error al obtener datos:", error);
+    }
+  };
+
+  useEffect(() => {
     fetchUserData();
   }, [apiUrl]);
 
-
   const updateUsername = async () => {
     try {
-      const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}users/profile/username`, {
-        method: "PUT",
-        headers: {
-          Authorization: localStorage.getItem("AUTH_TOKEN_TJ"),
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ newUsername }),
-      });
-      const { ok, error } = await response.json();
+      const response = await fetch(
+        `${import.meta.env.VITE_BACKEND_URL}users/profile/username`, 
+        {
+          method: "PUT",
+          headers: {
+            Authorization: localStorage.getItem("AUTH_TOKEN_TJ"),
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ newUsername }),
+        }
+      );
 
-      if (!ok) {
-        console.error(error);
+      if (!response.ok) {
+        console.error("Error al actualizar el nombre de usuario");
         toast.error("Error al actualizar el nombre de usuario"); // Notificación de error
         return;
+      } else {
+        toast.success("Nombre de usuario actualizado con éxito"); // Notificación de éxito
+        await fetchUserData();
       }
-      toast.success("Nombre de usuario actualizado con éxito"); // Notificación de éxito
-      await AdminProfile();
+      
     } catch (error) {
       console.log("Error al actualizar los datos:", error);
       toast.error("Error al actualizar los datos"); // Notificación de error
@@ -75,32 +78,30 @@ const AdminProfile = () => {
       const tempAvatarUrl = URL.createObjectURL(file);
       
       try {
-        const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}users/profile/avatar`, {
-          method: "POST",
-          headers: {
-            Authorization: localStorage.getItem("AUTH_TOKEN_TJ"),
-          },
-          body: formData,
-        });
+        const response = await fetch(
+          `${import.meta.env.VITE_BACKEND_URL}users/profile/avatar`, 
+          {
+            method: "POST",
+            headers: {
+              Authorization: localStorage.getItem("AUTH_TOKEN_TJ"),
+            },
+            body: formData,
+          }         
+        );
+        
         if (!response.ok) {
           console.log("Error al actualizar el avatar:");
-          toast.error("Error1 al actualizar el avatar"); // Notificación de error
-          const avatarFromApi = userData.avatar;      
-          setAvatarUrl(avatarFromApi ? `${apiUrl}/${avatarFromApi}` : "/avatarDefault.jpg");
-          
+          toast.error("Error1 al actualizar el avatar"); // Notificación de error          
         } else {
           await fetchUserData();
           toast.success("Avatar actualizado con éxito"); // Notificación de éxito
         }
       } catch (error) {
         console.log("Error al actualizar tu avatar:", error);
-        const avatarFromApi = userData.avatar;      
-        setAvatarUrl(avatarFromApi ? `${apiUrl}/${avatarFromApi}` : "/avatarDefault.jpg");
         toast.error("Error al actualizar tu avatar"); // Notificación de error
       }
       // Actualizar el estado del avatar
       setAvatarUrl(tempAvatarUrl);
-      //setUserData();
     }
   };
   
@@ -123,7 +124,7 @@ const AdminProfile = () => {
 
             <div className="flex justify-center pb-4 relative">
               <img
-                src={avatarUrl}
+                src={(userData.avatar ? `${apiUrl}/${userData.avatar}` : "/avatarDefault.jpg")}
                 alt="Avatar"
                 className="rounded-full object-cover  h-[120px] lg:h-[150px] w-[120px] lg:w-[150px] p-3  bg-white border-2 border-black top-10 md:top-12 left-0"            
               />
