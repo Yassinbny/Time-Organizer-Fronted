@@ -1,9 +1,9 @@
 
-const Counter = ({subtasks}) => {
+const Counter = ({subtasks= []}) => {
     return (
       <div>
           <p>
-              <b>{subtasks.filter(subtask => subtask.done).length}</b>/{subtasks.length} subtareas finalizadas
+              {subtasks.filter (subtask => subtask.done).length}/{subtasks.length} subtareas finalizadas
           </p>
       </div>
     )
