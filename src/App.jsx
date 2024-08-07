@@ -16,6 +16,7 @@ import Help from "./pages/Help.jsx";
 import UserProfile from "./pages/UserProfile.jsx";
 import AdminProfile from "./pages/AdminProfile.jsx";
 import Administrator from "./pages/Administrator.jsx";
+import ChangeForgotPassword from "./pages/ChangeForgotPassword.jsx";
 
 import Listas from "./pages/Listas.jsx";
 
@@ -42,6 +43,7 @@ function App() {
             path="/confirmation-recover-password"
             element={<ConfirmRecoverPassword />}
           />
+          <Route path="/change-password" element={<ChangeForgotPassword />} />
         </Routes>
         <ToastContainer />
       </>

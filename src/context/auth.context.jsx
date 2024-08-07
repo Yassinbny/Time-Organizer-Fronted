@@ -11,6 +11,7 @@ export const AuthContext = createContext({
   },
   signOut: () => {},
   recoverPassword: async (email) => {},
+  changePassword: async (email, code, newPassword, confirmPassword) => {},
   selectedEvent: {},
   setSelectedEvent: () => {},
   navigate: () => {},
@@ -78,6 +79,40 @@ export function AuthContextProvider({ children }) {
     }
   }
 
+  async function changePassword(email, code, newPassword, confirmPassword) {
+    try {
+      const response = await fetch(
+        `${import.meta.env.VITE_BACKEND_URL}users/change-password`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ email, code, newPassword, confirmPassword }),
+        }
+      );
+  
+      if (!response.ok) {
+        const errorData = await response.json();
+        console.log("Error de respuesta:", errorData); // Agrega un mensaje de error para depuración
+        throw new Error(errorData.error || `HTTP error! status: ${response.status}`);
+      }
+  
+      const data = await response.json();
+      console.log("Cambio de contraseña exitoso:", data);
+      return {
+        ok: true,
+        message: data.message || "Contraseña cambiada exitosamente.",
+      };
+    } catch (error) {
+      console.error("Error al cambiar la contraseña:", error);
+      return {
+        ok: false,
+        message: error.message || "Error desconocido al cambiar la contraseña.",
+      };
+    }
+  }
+
   useEffect(() => {
     const token = localStorage.getItem("AUTH_TOKEN_TJ");
 
@@ -122,6 +157,7 @@ export function AuthContextProvider({ children }) {
         signIn,
         signOut,
         recoverPassword,
+        changePassword,
         selectedEvent,
         setSelectedEvent,
         navigate,
