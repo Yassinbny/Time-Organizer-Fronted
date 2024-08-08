@@ -60,7 +60,7 @@ const SignUp = () => {
           action=""
           noValidate
           onSubmit={onSubmit}
-          className="flex flex-col items-center w-full h-full justify-evenly content-center text-base sm:text-lg md:text-2xl "
+          className="flex flex-col items-center w-full h-full justify-evenly content-center text-base sm:text-lg md:text-xl lg:text-2xl "
         >
           <div className="flex flex-col space-y-2">
             <label htmlFor="username">Nombre:</label>

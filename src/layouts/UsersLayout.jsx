@@ -25,7 +25,7 @@ const UsersLayout = ({ children, componente }) => {
         >
           <img
             src="images\login-img.png"
-            className="object-cover  h-[600px]"
+            className="object-cover  md:h-[500px] lg:h-[600]"
             alt="logo"
           />
         </div>
