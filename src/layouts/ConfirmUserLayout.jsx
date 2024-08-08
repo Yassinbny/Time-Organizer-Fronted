@@ -23,18 +23,18 @@ const ConfirmUserLayout = ({ children }) => {
           <div className="text-center">
             <img
               src="../images/logo.png"
-              className="object-cover h-[400px]"
+              className="object-cover md:h-[250px] lg:h-[600]"
               alt="Logo"
             />
             <ul className="list-none mt-4 text-left text-black font-semibold">
-              <li className="py-1 text-lg" style={{ marginLeft: "100px" }}>• Visual</li>
-              <li className="py-1 text-lg" style={{ marginLeft: "150px" }}>• Motivadora</li>
-              <li className="py-1 text-lg" style={{ marginLeft: "250px" }}>• Dinámica</li>
-              <li className="py-1 text-lg" style={{ marginLeft: "320px" }}>• Rápida</li>
+              <li className="py-1 text-lg" style={{ marginLeft: "20px" }}>• Visual</li>
+              <li className="py-1 text-lg" style={{ marginLeft: "70px" }}>• Motivadora</li>
+              <li className="py-1 text-lg" style={{ marginLeft: "120px" }}>• Dinámica</li>
+              <li className="py-1 text-lg" style={{ marginLeft: "180px" }}>• Rápida</li>
             </ul>
           </div>
         </div>
-        <div className="flex flex-col w-full sm:basis-1/2 h-full rounded-b-3xl font-bold text-lg md:text-3xl bg-fondo p-4 justify-between">
+        <div className="flex flex-col w-full sm:basis-1/2 h-full  rounded-b-3xl font-bold text-lg md:text-2xl bg-fondo p-4 justify-between">
           {children}
         </div>
       </section>
