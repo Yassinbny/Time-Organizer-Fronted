@@ -110,7 +110,7 @@ const Administrator = () => {
   return (
     <div className="relative sm:w-[70vw] bg-black border-solid border-2 border-black rounded-3xl place-content-center">
       <Header />
-      <section className="flex flex-col rounded-3xl w-[80vw] sm:w-full h-[90vh] sm:h-[90vh] sm:flex-row">
+      <section className="flex flex-col rounded-3xl w-[80vw] sm:w-full h-[90vh] sm:h-[90vh] sm:flex-col md:flex-row">
         <div className="flex flex-col md:flex-row w-full md:w-[50vw] h-[75vh] md:h-full pb-20 rounded-bl-3xl text-center text-lg md:text-2xl bg-white">
           <div className="flex justify-start items-end md:bg-fondo rounded-bl-3xl md:h-[90vh] p-4 lg:pb-10 md:w-[24vw] lg:w-[20vw] md:space-y-20">
             <button
