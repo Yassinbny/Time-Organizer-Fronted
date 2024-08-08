@@ -55,7 +55,7 @@ const ChangeForgotPassword = () => {
       <div className="bg-rose-100 flex flex-col justify-evenly w-full h-full content-center rounded-xl">
         <form
           noValidate
-          className="flex flex-col items-center w-full h-full justify-evenly text-base sm:text-lg md:text-2xl"
+          className="flex flex-col items-center w-full h-full justify-evenly text-base sm:text-lg md:text-xl lg:text-2xl"
           onSubmit={handleSubmit}
         >
           <p className="text-center justify-center font-extrabold leading-[1.8]">
