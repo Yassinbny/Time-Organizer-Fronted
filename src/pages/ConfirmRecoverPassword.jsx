@@ -33,7 +33,7 @@ const ConfirmRecoverPassword = () => {
           <p>¿No tienes una cuenta?</p>
           <Link
             to="/signup"
-            className="text-fuchsia-400 underline decoration-solid mb-4"
+            className="text-fuchsia-400 underline decoration-solid mb-1"
           >
             Regístrate AQUÍ
             </Link>
