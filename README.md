@@ -136,6 +136,6 @@ usarla.
 
     ● Yassin Benyaiche
     ● Juan Coronado
-    ● Roberto Muresan
+    ● Robert Muresan
     ● Inez Siepak
     ● Beatriz Tejero

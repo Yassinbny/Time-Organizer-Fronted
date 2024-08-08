@@ -1,7 +1,6 @@
 import MainLayout from "../layouts/MainLayout.jsx";
 import { useEffect, useState } from "react";
 import Sidebar from "../components/Listas/Sidebar.jsx";
-import { initialSubtasks } from "../lib/constants.js";
 import SubtaskList from "../components/Listas/SubtaskList.jsx";
 import useAuth from "../hooks/useAuth.jsx";
 import { useNavigate } from "react-router-dom";
@@ -12,16 +11,7 @@ const Listas = () => {
 
   const [subtasks, setSubtasks] = useState();
   const [reload, setreload] = useState(true);
-  // const handleAddSubtask = (newSubtaskText) => {
-  //   const newSubtask = {
-  //     id: subtasks.length + 1,
-  //     name: newSubtaskText,
-  //     checked: false,
-  //   };
-  //   const newSubtasks = [...subtasks, newSubtask];
-  //   setSubtasks(newSubtasks);
-  //   setreload(!reload);
-  // };
+  
 
   const handleDeleteSubtask = async (subtaskId) => {
     try {

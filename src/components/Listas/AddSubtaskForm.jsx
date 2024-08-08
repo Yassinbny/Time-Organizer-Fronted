@@ -6,9 +6,7 @@ import Counter from "./Counter.jsx";
 import useAuth from "../../hooks/useAuth.jsx";
 
 const AddSubtaskForm = ({
-  onAddSubtask,
   subtasks,
-  setSubtasks,
   reload,
   setreload,
 }) => {
