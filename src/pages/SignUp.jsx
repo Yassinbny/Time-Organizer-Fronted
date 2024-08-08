@@ -35,7 +35,6 @@ const SignUp = () => {
         }
       );
 
-      
       const responseData = await response.json();
 
       if (!responseData.ok) {
@@ -62,7 +61,7 @@ const SignUp = () => {
           onSubmit={onSubmit}
           className="flex flex-col items-center w-full h-full justify-evenly content-center text-base sm:text-lg md:text-xl lg:text-2xl "
         >
-          <div className="flex flex-col space-y-2">
+          <div className="flex flex-col items-center space-y-2">
             <label htmlFor="username">Nombre:</label>
             <input
               className={`h-15 rounded-xl w-[250px] sm:w-[250px] sm:h-10 md:w-[25vw] md:h-16 p-3 bg-white ${
@@ -83,10 +82,12 @@ const SignUp = () => {
               })}
             />
             {errors.username && (
-              <span className="text-red-500">{errors.username.message}</span>
+              <span className="text-red-500 pl-11 pr-11">
+                {errors.username.message}
+              </span>
             )}
           </div>
-          <div className="flex flex-col space-y-2">
+          <div className="flex flex-col items-center space-y-2">
             <label htmlFor="email">Correo Electrónico:</label>
             <input
               className={`h-15 rounded-xl w-[250px] sm:w-[250px] sm:h-10 md:w-[25vw] md:h-16 p-3 bg-white ${
@@ -110,7 +111,7 @@ const SignUp = () => {
               <span className="text-red-500">{errors.email.message}</span>
             )}
           </div>
-          <div className="flex flex-col space-y-2">
+          <div className="flex flex-col items-center space-y-2">
             <label htmlFor="password">Contraseña:</label>
             <input
               className={`h-15 rounded-xl w-[250px] sm:w-[250px] sm:h-10 md:w-[25vw] md:h-16 p-3 bg-white ${
@@ -131,14 +132,16 @@ const SignUp = () => {
               })}
             />
             {errors.password && (
-              <span className="text-red-500">{errors.password.message}</span>
+              <span className="text-red-500 pl-11 pr-11">
+                {errors.password.message}
+              </span>
             )}
           </div>
-          <div className="flex flex-col space-y-2">
+          <div className="flex flex-col items-center space-y-2">
             <label htmlFor="password2">Confirmar contraseña:</label>
             <input
               className={`h-15 rounded-xl w-[250px] sm:w-[250px] sm:h-10 md:w-[25vw] md:h-16 p-3 bg-white ${
-                errors.password2 ? "border-red-500" : ""
+                errors.password2 ? "border-red-500 " : ""
               }`}
               type="password"
               name="password2"
@@ -153,7 +156,9 @@ const SignUp = () => {
               })}
             />
             {errors.password2 && (
-              <span className="text-red-500">{errors.password2.message}</span>
+              <span className="text-red-500 pl-11 pr-11">
+                {errors.password2.message}
+              </span>
             )}
           </div>
           <button
