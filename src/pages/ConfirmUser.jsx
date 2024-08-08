@@ -34,7 +34,7 @@ const ConfirmUser = () => {
 
   return (
     <ConfirmUserLayout>
-      <div className="flex flex-col h-full justify-between text-center text-black">
+      <div className="flex flex-col h-full justify-between text-center text-black py-20">
         <div className="text-center">
           {error ? (
             <div className="text-red-500">

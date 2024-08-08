@@ -6,16 +6,16 @@ const ConfirmUserLayout = ({ children }) => {
 
   return (
     <div className="relative bg-black border-solid border-2 border-black rounded-3xl place-content-center">
-      <header className="text-white flex flex-row justify-end items-center p-5 font-bold h-15">
+      <header className="text-white flex flex-row justify-end items-center h-[7vh] p-5 font-bold sm:h-[6vh] md:h-[7vh] lg:h-[8vh]">
         <img
           onClick={() => {
             navigate("/");
           }}
-          className="absolute -top-8 -left-2 sm:-top-17 sm:left-0 w-[22vh]"
+          className="absolute -top-3 -left-2 w-[15vh] sm:-top8  sm:left-1 sm:w-[18vh] md:w-[20vh] lg:w-[22vh]"
           src="../images/superLetteringMultBlanco-removebg-preview (1).png"
           alt="Logo"
         />
-        <h2 className="text-2xl">Confirmar Usuario</h2>
+        <h2 className="text-l md:text-2xl">Confirmar Usuario</h2>
       </header>
 
       <section className="flex flex-col rounded-3xl w-[80vw] sm:w-[60vw] h-[90vh] sm:h-[90vh] sm:flex-row">
