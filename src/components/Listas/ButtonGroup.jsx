@@ -5,14 +5,14 @@ const ButtonGroup = ({ handleRemoveAllSubtasks }) => {
   const { selectedEvent } = useAuth();
   const { id } = selectedEvent;
   return (
-    <section className="mt-auto p-8 flex flex-col gap-[8px]">
+    <section className="p-8 flex flex-col gap-[8px]">
       <Button
         
         onClick={() => {
           handleRemoveAllSubtasks(id);
         }}
       >
-        Borrar Todas
+        ¡LO LOGRASTE!
       </Button>
     </section>
   );

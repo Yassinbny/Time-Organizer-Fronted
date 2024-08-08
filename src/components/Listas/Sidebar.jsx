@@ -1,5 +1,6 @@
 import AddSubtaskForm from "./AddSubtaskForm.jsx";
 import ButtonGroup from "./ButtonGroup.jsx";
+import Image from "../../../images/superLetteringMultBlanco-removebg-preview (1).png";
 
 const Sidebar = ({
   handleAddSubtask,
@@ -24,6 +25,11 @@ const Sidebar = ({
         handleMarkAllAsFinished={handleMarkAllAsFinished}
         handleMarkAllAsUnfinished={handleMarkAllAsUnfinished}
       />
+      <img 
+        src="images/superLetteringMultBlanco-removebg-preview (1).png" 
+        alt="logo"
+        className="hidden md:block" />
+      
     </div>
   );
 };
