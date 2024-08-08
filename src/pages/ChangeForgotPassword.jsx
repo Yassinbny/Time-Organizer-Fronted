@@ -110,7 +110,8 @@ const ChangeForgotPassword = () => {
             />
           </div>
           {error && <p className="text-red-500">{error}</p>}
-          <button className="bg-black text-white text-center font-bold w-[180px] sm:w-[320px] md:w-[240px] h-10 sm:h-12 md:h-20 rounded-xl">
+          <button className="bg-black text-white text-center font-bold w-[180px] sm:w-[320px] md:w-[240px] h-10 sm:h-12 md:h-20 rounded-xl"
+          onClick = {() => navigate("/login")}>
             CÁMBIALA Y LOGUÉATE
           </button>
         </form>

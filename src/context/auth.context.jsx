@@ -61,7 +61,7 @@ export function AuthContextProvider({ children }) {
   
   async function changePassword(email, code, newPassword, confirmPassword) {
     try {
-      const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}auth/change-password`, {
+      const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}users/password/change`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
