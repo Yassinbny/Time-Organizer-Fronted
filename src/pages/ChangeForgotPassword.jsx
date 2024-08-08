@@ -111,7 +111,8 @@ const ChangeForgotPassword = () => {
           </div>
           {error && <p className="text-red-500">{error}</p>}
           <button className="bg-black text-white text-center font-bold w-[200px] sm:w-[320px] md:w-[240px] h-10 sm:h-12 md:h-20 rounded-xl"
-          onClick = {() => navigate("/login")}>
+          type="submit">
+        
             CÁMBIALA Y LOGUÉATE
           </button>
         </form>
