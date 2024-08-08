@@ -3,6 +3,7 @@ import useForm from "../hooks/useForm.jsx";
 import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../context/auth.context.jsx";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify"; // Importamos toast
 
 const ChangeForgotPassword = () => {
   const { changePassword, currentUser } = useContext(AuthContext);
@@ -14,7 +15,7 @@ const ChangeForgotPassword = () => {
   });
   const { email, code, newPassword, confirmPassword } = formValues;
   const navigate = useNavigate();
-  const [error, setError] = useState(null);
+  const [error] = useState(null);
 
   const validateEmail = (email) => {
     return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
@@ -24,21 +25,22 @@ const ChangeForgotPassword = () => {
     e.preventDefault();
 
     if (!validateEmail(email)) {
-      setError("El formato del correo electrónico es inválido.");
+      toast.error("El formato del correo electrónico es inválido.");
       return;
     }
 
     if (newPassword !== confirmPassword) {
-      setError("Las contraseñas no coinciden.");
+      toast.error("Las contraseñas no coinciden.");
       return;
     }
 
     const result = await changePassword(email, code, newPassword, confirmPassword);
 
     if (result.ok) {
+      toast.success("Contraseña cambiada correctamente. Puedes iniciar sesión.");
       navigate("/login");
     } else {
-      setError(result.message || "No se pudo cambiar la contraseña.");
+      toast.error(result.message || "No se pudo cambiar la contraseña.");
     }
   };
 
@@ -72,7 +74,7 @@ const ChangeForgotPassword = () => {
             />
           </div>
           <div className="flex flex-col space-y-2">
-            <label htmlFor="code"> Tu Código:</label>
+            <label htmlFor="code">Tu Código:</label>
             <input
               className="h-15 rounded-xl w-[250px] sm:w-[250px] sm:h-10 md:w-[25vw] md:h-16 p-3 bg-white"
               type="text"
@@ -108,12 +110,10 @@ const ChangeForgotPassword = () => {
             />
           </div>
           {error && <p className="text-red-500">{error}</p>}
-          <button className="bg-black text-white text-center font-bold w-[180px] sm:w-[320px] md:w-[240px] h-10 sm:h-12 md:h-20 rounded-xl"
-          onClick={() => navigate("/login")}>
+          <button className="bg-black text-white text-center font-bold w-[180px] sm:w-[320px] md:w-[240px] h-10 sm:h-12 md:h-20 rounded-xl">
             CÁMBIALA Y LOGUÉATE
           </button>
         </form>
-        
       </div>
     </UsersLayout>
   );
