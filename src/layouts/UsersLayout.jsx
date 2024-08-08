@@ -15,7 +15,7 @@ const UsersLayout = ({ children, componente }) => {
           src="images\superLetteringMultBlanco-removebg-preview (1).png"
           alt="logo"
         />
-        <h2 className="text-2xl">{componente}</h2>
+        <h2 className="text-lg md:text-2xl">{componente}</h2>
       </header>
 
       <section className="flex flex-col rounded-3xl w-[80vw] sm:w-[60vw] h-[90vh] sm:h-[90vh] sm:flex-row ">

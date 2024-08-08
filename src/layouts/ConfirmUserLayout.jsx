@@ -15,7 +15,7 @@ const ConfirmUserLayout = ({ children }) => {
           src="../images/superLetteringMultBlanco-removebg-preview (1).png"
           alt="Logo"
         />
-        <h2 className="text-l md:text-2xl">Confirmar Usuario</h2>
+        <h2 className="text-lg md:text-2xl">Confirmar Usuario</h2>
       </header>
 
       <section className="flex flex-col rounded-3xl w-[80vw] sm:w-[60vw] h-[90vh] sm:h-[90vh] sm:flex-row">
