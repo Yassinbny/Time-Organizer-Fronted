@@ -84,6 +84,7 @@ const MyCalendar = () => {
       return (
         <div className="flex flex-row justify-between">
           <h4>{e.title}</h4>
+          <p className="no-underline">{e.event.rating?e.event.rating:""}</p>
           <p
             className={`${
               e.event.color == "black" ? "text-white" : "text-black"
