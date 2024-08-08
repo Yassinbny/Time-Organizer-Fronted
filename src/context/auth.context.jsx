@@ -38,78 +38,46 @@ export function AuthContextProvider({ children }) {
 
   async function recoverPassword(email) {
     try {
-      const response = await fetch(
-        `${import.meta.env.VITE_BACKEND_URL}users/password/recover`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ email }),
-        }
-      );
-
-      if (!response.ok) {
-        if (response.status === 500) {
-          throw new Error(
-            "El correo electrónico es incorrecto. En unos segundos te redirigiremos a la página de registro de usuario."
-          );
-        } else {
-          throw new Error(`HTTP error! status: ${response.status}`);
-        }
+      const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}users/password/recover`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email }),
+      });
+  
+      const responseData = await response.json();
+  
+      if (response.ok) {
+        // Ajusta según cómo desees manejar el caso exitoso
+        return { ok: true, message: "Correo de recuperación enviado." };
+      } else {
+        return { ok: false, message: responseData.message || "Error en la solicitud de recuperación." };
       }
-
-      const data = await response.json();
-      console.log("Solicitud de recuperación de contraseña enviada:", data);
-      return {
-        ok: true,
-        message:
-          data.message ||
-          "Revisa tu correo para las instrucciones de recuperación.",
-      };
     } catch (error) {
-      console.error(
-        "Error al enviar solicitud de recuperación de contraseña:",
-        error
-      );
-      return {
-        ok: false,
-        message: error.message || "Error desconocido al enviar la solicitud.",
-      };
+      return { ok: false, message: error.message || "Error en la solicitud de recuperación." };
     }
   }
-
+  
   async function changePassword(email, code, newPassword, confirmPassword) {
     try {
-      const response = await fetch(
-        `${import.meta.env.VITE_BACKEND_URL}users/password/change`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ email, code, newPassword, confirmPassword }),
-        }
-      );
-  
-      if (!response.ok) {
-        const errorData = await response.json();
-        console.log("Error de respuesta:", errorData); // Agrega un mensaje de error para depuración
-        throw new Error(errorData.error || `HTTP error! status: ${response.status}`);
+      const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}auth/change-password`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email, code, newPassword, confirmPassword }),
+      });
+
+      const responseData = await response.json();
+
+      if (!responseData.ok) {
+        return { ok: false, message: responseData.message };
       }
-  
-      const data = await response.json();
-      console.log("Cambio de contraseña exitoso:", data);
-      return {
-        ok: true,
-        message: data.message || "Contraseña cambiada exitosamente.",
-      };
+
+      return { ok: true };
     } catch (error) {
-      console.error("Error al cambiar la contraseña:", error);
-      return {
-        ok: false,
-        message: error.message || "Error desconocido al cambiar la contraseña.",
-      };
+      return { ok: false, message: error.message || "Error en la solicitud de cambio de contraseña." };
     }
   }
 
