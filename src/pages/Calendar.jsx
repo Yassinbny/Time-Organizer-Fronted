@@ -89,6 +89,13 @@ const MyCalendar = () => {
               e.event.color == "black" ? "text-white" : "text-black"
             }`}
           >
+            {e.event.rating}
+          </p>
+          <p
+            className={`${
+              e.event.color == "black" ? "text-white" : "text-black"
+            }`}
+          >
             {e.event.family}
           </p>
         </div>
@@ -178,18 +185,16 @@ const MyCalendar = () => {
           culture="es"
           eventPropGetter={(event) => {
             const backgroundColor = event.color ? event.color : "white";
-            const textDecoration = event.done ? "line-through" : "none";
-            const textDecorationStyle = event.done ? "solid" : "";
-            const textDecorationColor = event.done ? "black" : "";
+
             const textDecorationThickness = event.done ? "4px" : ""; // Ajusta el grosor aquí
-            const color = event.color === "white" ? "black" : "white"; // Opcional, para mejor contraste
+            let color = event.color === "black" ? "white" : "black"; // Opcional, para mejor contraste
+            color = event.done ? "green" : "black"; // Opcional, para mejor contraste
+            color = event.color === "green" ? "white" : "black"; // Opcional, para mejor contraste
 
             return {
               style: {
                 backgroundColor,
-                textDecoration,
-                textDecorationStyle,
-                textDecorationColor,
+
                 textDecorationThickness,
                 color,
               },

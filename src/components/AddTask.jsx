@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { showErrorToast, showSuccessToast } from "../utils/toastUtils"; // Importa tus funciones de toastUtils
-
+import { useTranslation } from "react-i18next";
+import i18n from "../utils/i18nConfig.js";
 const AddTask = ({ setAddTask }) => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
@@ -10,7 +11,17 @@ const AddTask = ({ setAddTask }) => {
   const [families, setFamilies] = useState([]);
   const [colorId, setColorId] = useState(null); // Asegúrate de que el valor inicial sea null
   const [familyId, setFamilyId] = useState(null); // Asegúrate de que el valor inicial sea null
-
+  const { t } = useTranslation();
+  // Crear un objeto para mapear traducciones inversas
+  const reverseTranslations = Object.keys(
+    i18n.store.data.es.translation
+  ).reduce((acc, key) => {
+    acc[i18n.store.data.es.translation[key]] = key;
+    return acc;
+  }, {});
+  const undoTranslation = (translatedValue) => {
+    return reverseTranslations[translatedValue] || translatedValue;
+  };
   const getColorIdByName = (colorName) => {
     const color = colores.find(
       (c) => c.name.toLowerCase() === colorName.toLowerCase()
@@ -233,13 +244,15 @@ const AddTask = ({ setAddTask }) => {
               id="exampleListInput"
               onChange={(e) => {
                 e.preventDefault();
-                const id = getColorIdByName(e.target.value);
+                console.log(undoTranslation(e.target.value));
+
+                const id = getColorIdByName(undoTranslation(e.target.value));
                 setColorId(id);
               }}
             />
             <datalist id="color">
               {colores.map((co, i) => (
-                <option key={i} value={co.name} />
+                <option key={i} value={t(co.name)} />
               ))}
             </datalist>
           </div>
