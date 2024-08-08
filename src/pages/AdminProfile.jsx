@@ -157,7 +157,7 @@ const AdminProfile = () => {
               />
             </div>
 
-            <div className="flex flex-col py-4 relative">
+            <div className="flex flex-col py-1.5 relative">
               <label htmlFor="username">Nombre de usuario:</label>
               <input
                 type="text"
@@ -178,7 +178,7 @@ const AdminProfile = () => {
               </div>
             </div>
 
-            <div className="flex flex-col py-3 relative">
+            <div className="flex flex-col py-1.5 relative">
               <label>Contraseña:</label>
               <input
                 readOnly
@@ -201,10 +201,10 @@ const AdminProfile = () => {
               </div>
             </div>
 
-            <div className="flex flex-col items-center py-2">
+            <div className="flex flex-col items-center py-1">
               <label htmlFor="">Permisos Administrador:</label>
               <button
-                className="rounded-3xl w-[30vw] md:w-[25vw] text-center bg-black text-white text-xl lg:text-2xl h-[7vh] md:h-12 lg:h-15 transition duration-200"
+                className="rounded-3xl w-[32vw] md:w-[25vw] text-center bg-black text-white font-bold py-1 px-7 rounded-lgtransition duration-200"
                 onClick={() => navigate("/administrator")}
               >
                 Visualizar Usuarios
