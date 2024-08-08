@@ -1,5 +1,5 @@
-import { useContext } from "react";
 import { AuthContext, AuthContextProvider } from "./context/auth.context.jsx";
+import "./utils/i18nConfig.js";
 
 import { Route, Routes } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
