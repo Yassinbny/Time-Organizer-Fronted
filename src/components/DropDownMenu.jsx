@@ -2,7 +2,6 @@ import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/react";
 import { Bars3Icon } from "@heroicons/react/20/solid";
 import { NavLink } from "react-router-dom";
 import {
-  GrSearch,
   GrCircleQuestion,
   GrUserAdmin,
   GrLogout,
