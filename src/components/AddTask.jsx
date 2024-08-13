@@ -178,16 +178,16 @@ const AddTask = ({ setAddTask }) => {
      w-[100vw] h-[100vh] bg-gray-800 bg-opacity-85"
     >
       <h2
-        className="bg-fondoPopup pt-4  text-white rounded-t-2xl w-[70vw] sm:w-[60vw] md:w-[50vw]
+        className="bg-fondoPopup pt-4 text-white rounded-t-2xl w-[70vw] sm:w-[60vw] md:w-[50vw]
        text-center text-3xl sm:text-6xl"
       >
         Añadir Evento
       </h2>
       <form
         onSubmit={handleSubmit}
-        className="flex flex-col items-center mb-14  sm:justify-center content-center 
-        space-y-9  bg-fondoPopup p-6 
-        rounded-b-2xl shadow-lg w-[70vw] sm:w-[60vw] md:w-[50vw] h-[85vh] sm:text-2xl text-center"
+        className="flex flex-col items-center justify-evenly sm:justify-center content-center 
+        space-y-10  bg-fondoPopup p-6 
+        rounded-b-2xl shadow-lg w-[70vw] sm:w-[60vw] md:w-[50vw] h-[80vh] sm:text-2xl text-center"
       >
         <input
           type="text"
