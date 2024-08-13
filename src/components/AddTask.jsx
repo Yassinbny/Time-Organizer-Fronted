@@ -186,7 +186,7 @@ const AddTask = ({ setAddTask }) => {
       <form
         onSubmit={handleSubmit}
         className="flex flex-col items-center mb-14  sm:justify-center content-center 
-        space-y-5  bg-fondoPopup p-6 
+        space-y-9  bg-fondoPopup p-6 
         rounded-b-2xl shadow-lg w-[70vw] sm:w-[60vw] md:w-[50vw] h-[85vh] sm:text-2xl text-center"
       >
         <input
