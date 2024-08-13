@@ -123,9 +123,9 @@ const SelectedEvent = ({ selectedEvent, setSelectedEvent }) => {
       </h2>
       <form
         onSubmit={handleSubmit}
-        className="flex flex-col items-center  justify-evenly sm:justify-center space-y-12 content-center
+        className="flex flex-col items-center   sm:justify-center space-y-9 content-center
          sm:text-4xl  bg-fondoPopup
-         p-6 rounded-b-2xl shadow-lg  w-[70vw] sm:w-[60vw] md:w-[50vw] h-[70vh] md:h-[80vh] text-center"
+         p-6 rounded-b-2xl shadow-lg  w-[70vw] sm:w-[60vw] md:w-[50vw] h-[85vh] md:h-[80vh] text-center"
       >
         <input
           type="text"
